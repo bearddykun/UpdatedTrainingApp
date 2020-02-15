@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/fragment_training_day"
+        android:icon="@drawable/ic_fitness_center_black_24dp"
+        android:title="Training Day"
+        tools:ignore="HardcodedText" />
+
+    <item
+        android:id="@+id/fragment_exercise_choice"
+        android:icon="@drawable/ic_fitness_center_black_24dp"
+        android:title="Exercise Choice"
+        tools:ignore="HardcodedText" />
+
+    <item
+        android:id="@+id/fragment_create_new_exercise"
+        android:icon="@drawable/ic_fitness_center_black_24dp"
+        android:title="Create Exercise"
+        tools:ignore="HardcodedText" />
+
+</menu>

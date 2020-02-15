@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+>
+
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/trainingRecyclerView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/addTrainingBtn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp32"
+    android:src="@drawable/ic_add_black_24dp"
+    app:elevation="@dimen/dp16"
+    app:fabSize="normal"
+    app:layout_anchor="@id/trainingRecyclerView"
+    app:layout_anchorGravity="bottom|end" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

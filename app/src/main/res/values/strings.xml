@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">UpdatedTrainingApp</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="biceps">Biceps</string>
+    <string name="enter_training_name">Enter Training Name</string>
+    <string name="here">here</string>
+    <string name="app_error_dismiss">dismiss</string>
+    <string name="enter_name_for_new_exercise">New exersise name</string>
+    <string name="create">Create</string>
+</resources>

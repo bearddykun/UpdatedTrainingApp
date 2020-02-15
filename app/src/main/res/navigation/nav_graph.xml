@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragment_splash">
+
+    <fragment
+        android:id="@+id/fragment_splash"
+        android:name="com.example.updatedtrainingapp.fragments.splash.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_fragment_splash_to_fragment_main_menu"
+            app:destination="@id/fragment_main_menu" />
+    </fragment>
+
+ <fragment
+        android:id="@+id/fragment_main_menu"
+        android:name="com.example.updatedtrainingapp.fragments.mainMenu.MainMenuFragment"
+        android:label="FragmentMainMenu"
+        tools:layout="@layout/fragment_main_menu" >
+     <action
+         android:id="@+id/action_fragment_main_menu_to_fragment_this_training_fragment"
+         app:destination="@id/fragment_this_training_fragment" />
+ </fragment>
+
+      <fragment
+       android:id="@+id/fragment_training_day"
+       android:name="com.example.updatedtrainingapp.fragments.trainingDay.TrainingDayFragment"
+       android:label="FragmentTrainingDay"
+       tools:layout="@layout/training_day_fragment" />
+
+    <fragment
+       android:id="@+id/fragment_this_training_fragment"
+       android:name="com.example.updatedtrainingapp.fragments.trainingChoice.TrainingChoiceFragment"
+       android:label="FragmentTrainingChoice"
+       tools:layout="@layout/this_training_fragment" >
+        <action
+            android:id="@+id/action_fragment_this_training_fragment_to_fragment_training_day"
+            app:destination="@id/fragment_training_day" />
+        <action
+            android:id="@+id/action_fragment_this_training_fragment_to_fragment_create_training"
+            app:destination="@id/fragment_create_training" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_create_training"
+        android:name="com.example.updatedtrainingapp.fragments.trainingChoice.CreateTrainingFragment"
+        android:label="CreateTrainingFragment"
+        tools:layout="@layout/fragment_create_training" >
+        <action
+            android:id="@+id/action_fragment_create_training_to_fragment_this_training_fragment"
+            app:destination="@id/fragment_this_training_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_exercise_choice"
+        android:name="com.example.updatedtrainingapp.fragments.exerciseChoice.ExerciseChoiceFragment"
+        android:label="ExerciseChoiceFragment"
+        tools:layout="@layout/fragment_exercise_choice" />
+
+    <fragment
+        android:id="@+id/fragment_create_new_exercise"
+        android:name="com.example.updatedtrainingapp.fragments.newExercise.CreateNewExerciseFragment"
+        android:label="CreateNewExerciseFragment"
+        tools:layout="@layout/fragment_create_new_exercise" />
+
+</navigation>
