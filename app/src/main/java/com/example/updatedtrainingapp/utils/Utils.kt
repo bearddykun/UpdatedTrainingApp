@@ -1,9 +1,12 @@
 package com.example.updatedtrainingapp.utils
 
+import android.os.Build
+import android.util.Log
 import com.example.updatedtrainingapp.application.MySharedPreferences
 import com.example.updatedtrainingapp.dataBase.Constants
 import java.lang.StringBuilder
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 class Utils {
@@ -39,6 +42,18 @@ class Utils {
         fun getCurrentTrainingList(): String {
             val trainingName = MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME)
             return trainingName + Constants.SAVE_NEW_EXERCISE_LIST
+        }
+
+        fun getTrainingNameWithDate(name: String): String {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                Log.i("TAGGER", name + LocalDate.now().toString())
+                name + LocalDate.now().toString()
+            } else {
+                val date = Calendar.getInstance().time
+                val dateFormat = SimpleDateFormat("YYYY-MM-dd", Locale.UK)
+                Log.i("TAGGER", name + dateFormat.format(date))
+                name + dateFormat.format(date)
+            }
         }
     }
 }

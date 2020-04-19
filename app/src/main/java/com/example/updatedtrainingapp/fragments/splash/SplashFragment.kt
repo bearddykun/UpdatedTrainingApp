@@ -6,14 +6,11 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.postAtTime
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.ThisApplication
-import java.util.*
 import javax.inject.Inject
-import kotlin.concurrent.schedule
 
 /**
  * A simple [Fragment] subclass.

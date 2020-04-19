@@ -1,4 +1,4 @@
-package com.example.updatedtrainingapp.fragments.trainingChoice
+package com.example.updatedtrainingapp.fragments.trainingsChoice
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,7 @@ import com.example.updatedtrainingapp.dataBase.Constants
 import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
 import org.jetbrains.anko.find
 
-class TrainingAdapter : RecyclerView.Adapter<TrainingAdapter.TrainingViewHolder>() {
+class TrainingsAdapter : RecyclerView.Adapter<TrainingsAdapter.TrainingViewHolder>() {
 
     private var listener: OnTrainingItemListener? = null
     private var listenerLong: OnTrainingItemLongListener? = null

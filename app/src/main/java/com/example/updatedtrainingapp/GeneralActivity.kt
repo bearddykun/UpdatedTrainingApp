@@ -1,4 +1,4 @@
-package com.example.updatedtrainingapp.utils
+package com.example.updatedtrainingapp
 
 import android.content.Intent
 import android.view.LayoutInflater

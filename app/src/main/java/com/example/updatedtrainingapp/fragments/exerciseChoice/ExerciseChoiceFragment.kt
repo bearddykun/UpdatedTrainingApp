@@ -1,6 +1,5 @@
 package com.example.updatedtrainingapp.fragments.exerciseChoice
 
-
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -10,12 +9,11 @@ import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
 import com.example.updatedtrainingapp.application.ThisApplication
 import com.example.updatedtrainingapp.dataBase.Constants
-import com.example.updatedtrainingapp.dataBase.ExerciseViewModel
-import com.example.updatedtrainingapp.dataBase.TrainingViewModel
+import com.example.updatedtrainingapp.dataBase.dbViewModels.ExerciseDBViewModel
+import com.example.updatedtrainingapp.dataBase.dbViewModels.TrainingDBViewModel
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
 import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
 import com.example.updatedtrainingapp.utils.Utils
-import com.iamagamedev.trainingapp.ui.thisTraining.fragments.exerciseChoice.ExercisesChoiceAdapter
 import kotlinx.android.synthetic.main.fragment_exercise_choice.*
 import org.jetbrains.anko.backgroundColor
 import javax.inject.Inject
@@ -25,9 +23,9 @@ class ExerciseChoiceFragment : Fragment(R.layout.fragment_exercise_choice),
 
     private val list: MutableList<String> = mutableListOf()
     @Inject
-    lateinit var exerciseViewModel: ExerciseViewModel
+    lateinit var exerciseDBViewModel: ExerciseDBViewModel
     @Inject
-    lateinit var trainingViewModel: TrainingViewModel
+    lateinit var trainingViewModel: TrainingDBViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,16 +54,24 @@ class ExerciseChoiceFragment : Fragment(R.layout.fragment_exercise_choice),
     }
 
     private fun setAdapter() {
-        val adapter = ExercisesChoiceAdapter()
-        exerciseViewModel.getAllExercises().observe(viewLifecycleOwner, Observer { exerciseList ->
-            adapter.swapAdapter(getList(exerciseList!!))
+        exerciseDBViewModel.getAllExercises().observe(viewLifecycleOwner, Observer { exerciseList ->
+            showExerciseList(getList(exerciseList))
         })
+    }
+
+    private fun showExerciseList(exerciseList: List<ExerciseObject>) {
+        if (exerciseList.isEmpty()) {
+            imageViewNoExercise.visibility = View.VISIBLE
+            return
+        }
+        val adapter = ExercisesChoiceAdapter()
+        adapter.swapAdapter(getList(exerciseList))
         adapter.setOnExerciseChoiceItemListener(this)
         exerciseChoiceRecyclerView.adapter = adapter
     }
 
     private fun addToTraining() {
-        trainingViewModel.getTraining(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
+        trainingViewModel.getTrainingWithDate(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
             .observe(viewLifecycleOwner,
                 Observer<TrainingObject> { training ->
                     training?.trainingExerciseNameList = buildString()
@@ -75,7 +81,8 @@ class ExerciseChoiceFragment : Fragment(R.layout.fragment_exercise_choice),
 
     private fun getList(exerciseList: List<ExerciseObject>): List<ExerciseObject> {
         val oldList =
-            Utils.stringToList(MySharedPreferences.getString(Utils.getCurrentTrainingList()))
+            Utils.stringToList(MySharedPreferences.getString(
+                Utils.getCurrentTrainingList()))
         val newExList: MutableList<ExerciseObject> = mutableListOf()
         for (i in exerciseList) {
             if (!oldList.contains(i.exerciseName)) {

@@ -1,13 +1,14 @@
-package com.example.updatedtrainingapp.dataBase
+package com.example.updatedtrainingapp.dataBase.dbViewModels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import com.example.updatedtrainingapp.dataBase.TrainingDatabase
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
 import com.example.updatedtrainingapp.dataBase.repositories.ExerciseRepository
 import javax.inject.Inject
 
-class ExerciseViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
+class ExerciseDBViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
 
     private val exerciseRepository: ExerciseRepository = ExerciseRepository(
         TrainingDatabase.getDatabase(

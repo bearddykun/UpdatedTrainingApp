@@ -2,13 +2,14 @@ package com.example.updatedtrainingapp.di
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
-import com.example.updatedtrainingapp.dataBase.ExerciseViewModel
-import com.example.updatedtrainingapp.dataBase.TrainingViewModel
-import com.example.updatedtrainingapp.dataBase.repositories.TrainingRepository
+import com.example.updatedtrainingapp.dataBase.dbViewModels.ExerciseDBViewModel
+import com.example.updatedtrainingapp.dataBase.dbViewModels.ExerciseInfoDBViewModel
+import com.example.updatedtrainingapp.dataBase.dbViewModels.TrainingDBViewModel
+import com.example.updatedtrainingapp.fragments.currentExercise.CurrentExerciseViewModel
+import com.example.updatedtrainingapp.fragments.exerciseChoice.ExerciseChoiceViewModel
 import com.example.updatedtrainingapp.fragments.mainMenu.MainMenuViewModel
 import com.example.updatedtrainingapp.fragments.splash.SplashViewModel
-import com.example.updatedtrainingapp.fragments.trainingChoice.TrainingChoiceViewModel
-import com.example.updatedtrainingapp.fragments.trainingDay.TrainingDayViewModel
+import com.example.updatedtrainingapp.fragments.trainingsChoice.TrainingsChoiceViewModel
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -19,9 +20,9 @@ class ViewModelModel {
     @Provides
     @Singleton
     fun provideSplashViewModel(
-        exerciseViewModel: ExerciseViewModel,
-        trainingViewModel: TrainingViewModel
-    ): ViewModel = SplashViewModel(exerciseViewModel, trainingViewModel)
+        exerciseDBViewModel: ExerciseDBViewModel,
+        trainingViewModel: TrainingDBViewModel
+    ): ViewModel = SplashViewModel(exerciseDBViewModel, trainingViewModel)
 
     @Provides
     @Singleton
@@ -29,20 +30,37 @@ class ViewModelModel {
 
     @Provides
     @Singleton
-    fun provideTrainingDayViewModel(trainingRepository: TrainingRepository): ViewModel =
-        TrainingDayViewModel(trainingRepository)
+    fun provideTrainingDayViewModel(application: Application): ViewModel =
+        TrainingDBViewModel(
+            application
+        )
 
     @Provides
     @Singleton
-    fun provideThisTrainingViewModel(): ViewModel = TrainingChoiceViewModel()
+    fun provideTrainingsChoiceViewModel(): ViewModel = TrainingsChoiceViewModel()
 
     @Provides
     @Singleton
     fun provideTrainingViewModel(application: Application): ViewModel =
-        TrainingViewModel(application)
+        TrainingDBViewModel(
+            application
+        )
 
     @Provides
     @Singleton
     fun provideExerciseViewModel(application: Application): ViewModel =
-        ExerciseViewModel(application)
+        ExerciseDBViewModel(
+            application
+        )
+
+    @Provides
+    @Singleton
+    fun provideExerciseChoiceViewModel(): ViewModel = ExerciseChoiceViewModel()
+
+    @Provides
+    @Singleton
+    fun provideCurrentExerciseViewModel(
+        trainingViewModel: TrainingDBViewModel,
+        exerciseInfoDBViewModel: ExerciseInfoDBViewModel
+    ): ViewModel = CurrentExerciseViewModel(trainingViewModel, exerciseInfoDBViewModel)
 }

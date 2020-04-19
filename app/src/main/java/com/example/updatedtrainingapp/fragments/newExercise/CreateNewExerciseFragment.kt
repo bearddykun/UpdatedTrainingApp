@@ -2,13 +2,12 @@ package com.example.updatedtrainingapp.fragments.newExercise
 
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.updatedtrainingapp.MainActivity
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.ThisApplication
-import com.example.updatedtrainingapp.dataBase.ExerciseViewModel
+import com.example.updatedtrainingapp.dataBase.dbViewModels.ExerciseDBViewModel
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
 import kotlinx.android.synthetic.main.fragment_create_new_exercise.*
 import javax.inject.Inject
@@ -16,7 +15,8 @@ import javax.inject.Inject
 class CreateNewExerciseFragment : Fragment(R.layout.fragment_create_new_exercise),
     CreateNewExerciseAdapter.OnCreateNewExerciseListener {
 
-    @Inject lateinit var exerciseViewModel: ExerciseViewModel
+    @Inject
+    lateinit var exerciseDBViewModel: ExerciseDBViewModel
     private var exImageId = 0
     private var exGroupName = ""
     private var isExerciseInside = false
@@ -44,13 +44,11 @@ class CreateNewExerciseFragment : Fragment(R.layout.fragment_create_new_exercise
     }
 
     private fun isExerciseInside(): Boolean {
-        exerciseViewModel.getExerciseWithName(
+        exerciseDBViewModel.getExerciseWithName(
             createExerciseNameEdit.text.toString()
         ).observe(viewLifecycleOwner, Observer {
             isExerciseInside = it != null
-            Log.i("TAGGER", "inside")
         })
-        Log.i("TAGGER", "out")
         return isExerciseInside
     }
 
@@ -75,7 +73,7 @@ class CreateNewExerciseFragment : Fragment(R.layout.fragment_create_new_exercise
             return
         }
         val exercise = ExerciseObject(null, exName, exGroupName, exImageId.toString())
-        exerciseViewModel.insertExercise(exercise)
+        exerciseDBViewModel.insertExercise(exercise)
     }
 
     private fun validateFields(exName: String, exGroupName: String, exImageId: Int) {

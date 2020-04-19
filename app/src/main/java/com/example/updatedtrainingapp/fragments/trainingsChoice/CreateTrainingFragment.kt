@@ -1,4 +1,4 @@
-package com.example.updatedtrainingapp.fragments.trainingChoice
+package com.example.updatedtrainingapp.fragments.trainingsChoice
 
 import android.app.Activity
 import android.os.Bundle
@@ -21,7 +21,7 @@ import javax.inject.Inject
 class CreateTrainingFragment :
     DialogFragment(), TextView.OnEditorActionListener {
 
-    @Inject lateinit var trainingChoiceFragment: TrainingChoiceFragment
+    @Inject lateinit var trainingChoiceFragment: TrainingsChoiceFragment
 
     override fun onCreateView(
         inflater: LayoutInflater,

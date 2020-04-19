@@ -8,10 +8,14 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.updatedtrainingapp.application.ThisApplication
-import com.example.updatedtrainingapp.utils.GeneralActivity
+import com.example.updatedtrainingapp.utils.SoundManager
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class MainActivity : GeneralActivity() {
+
+    @Inject
+    lateinit var soundManager: SoundManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +28,7 @@ class MainActivity : GeneralActivity() {
         findNavController(R.id.nav_host_fragment).addOnDestinationChangedListener { _, destination, _ ->
             showBottomNavigation(destination)
         }
+        soundManager.loadSound()
     }
 
     private fun setupBottomNavigation() {

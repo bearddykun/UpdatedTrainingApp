@@ -1,9 +1,7 @@
-package com.example.updatedtrainingapp.fragments.trainingChoice
+package com.example.updatedtrainingapp.fragments.trainingsChoice
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -12,28 +10,21 @@ import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
 import com.example.updatedtrainingapp.application.ThisApplication
 import com.example.updatedtrainingapp.dataBase.Constants
-import com.example.updatedtrainingapp.dataBase.TrainingViewModel
+import com.example.updatedtrainingapp.dataBase.dbViewModels.TrainingDBViewModel
 import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
-import kotlinx.android.synthetic.main.this_training_fragment.*
+import com.example.updatedtrainingapp.utils.Utils
+import kotlinx.android.synthetic.main.trainings_choice_fragment.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.yesButton
 import javax.inject.Inject
 
-class TrainingChoiceFragment @Inject constructor() : Fragment(),
-    TrainingAdapter.OnTrainingItemListener,
-    TrainingAdapter.OnTrainingItemLongListener {
+class TrainingsChoiceFragment @Inject constructor() : Fragment(R.layout.trainings_choice_fragment),
+    TrainingsAdapter.OnTrainingItemListener,
+    TrainingsAdapter.OnTrainingItemLongListener {
 
     @Inject
-    lateinit var trainingViewModel: TrainingViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.this_training_fragment, container, false)
-    }
+    lateinit var trainingViewModel: TrainingDBViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,13 +46,22 @@ class TrainingChoiceFragment @Inject constructor() : Fragment(),
             val startTime = System.currentTimeMillis()
             MySharedPreferences.saveLong(Constants.SAVE_START_TIME, startTime)
         }
-        findNavController().navigate(TrainingChoiceFragmentDirections.actionFragmentThisTrainingFragmentToFragmentTrainingDay())
+        findNavController().navigate(TrainingsChoiceFragmentDirections.actionFragmentThisTrainingFragmentToFragmentTrainingDay())
     }
 
     override fun onTrainingListItemClick(name: String) {
-        activity?.alert("Start Training", "Start training timer?") {
+        activity?.alert(getString(R.string.start_training), getString(R.string.strat_timer)) {
             yesButton {
-                MySharedPreferences.saveString(Constants.SAVE_TRAINING_NAME, name)
+                MySharedPreferences.saveString(
+                    Constants.SAVE_TRAINING_NAME,
+                    Utils.getTrainingNameWithDate(name)
+                )
+                trainingViewModel.insertTraining(
+                    TrainingObject(
+                        null,
+                        name
+                    )
+                )
                 startTraining()
             }
             noButton { }
@@ -69,9 +69,9 @@ class TrainingChoiceFragment @Inject constructor() : Fragment(),
     }
 
     override fun onTrainingListItemLongClick(name: String) {
-        activity?.alert("Delete", "Want to delete this Training?") {
+        activity?.alert(getString(R.string.delete), getString(R.string.delete_training)) {
             yesButton {
-                (trainingViewModel.getTraining(name).observe(viewLifecycleOwner,
+                (trainingViewModel.getTrainingWithDate(name).observe(viewLifecycleOwner,
                     Observer { training -> deleteTraining(training) }))
             }
             noButton { }
@@ -81,16 +81,16 @@ class TrainingChoiceFragment @Inject constructor() : Fragment(),
     override fun onStart() {
         super.onStart()
         addTrainingBtn.setOnClickListener {
-            findNavController().navigate(TrainingChoiceFragmentDirections.actionFragmentThisTrainingFragmentToFragmentCreateTraining())
+            findNavController().navigate(TrainingsChoiceFragmentDirections.actionFragmentThisTrainingFragmentToFragmentCreateTraining())
         }
         setAdapter()
     }
 
     private fun setAdapter() {
-        val adapter = TrainingAdapter()
+        val adapter = TrainingsAdapter()
         trainingViewModel.getTrainings().observe(
             viewLifecycleOwner,
-            Observer<List<TrainingObject>> { trainingList -> adapter.swapAdapter(trainingList!!) })
+            Observer { trainingList -> adapter.swapAdapter(trainingList!!) })
         adapter.setOnTrainingItemListener(this)
         adapter.setOnTrainingItemLongListener(this)
         trainingRecyclerView.adapter = adapter

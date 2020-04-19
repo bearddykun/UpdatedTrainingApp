@@ -18,7 +18,7 @@
         android:padding="@dimen/dp16">
 
         <ImageView
-            android:id="@+id/exerciseChoiceImage"
+            android:id="@+id/thisTrainingExerciseImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />

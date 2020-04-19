@@ -27,15 +27,19 @@
 
       <fragment
        android:id="@+id/fragment_training_day"
-       android:name="com.example.updatedtrainingapp.fragments.trainingDay.TrainingDayFragment"
+       android:name="com.example.updatedtrainingapp.fragments.training.TrainingFragment"
        android:label="FragmentTrainingDay"
-       tools:layout="@layout/training_day_fragment" />
+       tools:layout="@layout/training_fragment" >
+          <action
+              android:id="@+id/action_fragment_training_day_to_current_exercise_fragment"
+              app:destination="@id/current_exercise_fragment" />
+      </fragment>
 
     <fragment
        android:id="@+id/fragment_this_training_fragment"
-       android:name="com.example.updatedtrainingapp.fragments.trainingChoice.TrainingChoiceFragment"
+       android:name="com.example.updatedtrainingapp.fragments.trainingsChoice.TrainingsChoiceFragment"
        android:label="FragmentTrainingChoice"
-       tools:layout="@layout/this_training_fragment" >
+       tools:layout="@layout/trainings_choice_fragment" >
         <action
             android:id="@+id/action_fragment_this_training_fragment_to_fragment_training_day"
             app:destination="@id/fragment_training_day" />
@@ -46,7 +50,7 @@
 
     <fragment
         android:id="@+id/fragment_create_training"
-        android:name="com.example.updatedtrainingapp.fragments.trainingChoice.CreateTrainingFragment"
+        android:name="com.example.updatedtrainingapp.fragments.trainingsChoice.CreateTrainingFragment"
         android:label="CreateTrainingFragment"
         tools:layout="@layout/fragment_create_training" >
         <action
@@ -65,5 +69,19 @@
         android:name="com.example.updatedtrainingapp.fragments.newExercise.CreateNewExerciseFragment"
         android:label="CreateNewExerciseFragment"
         tools:layout="@layout/fragment_create_new_exercise" />
+
+    <fragment
+        android:id="@+id/current_exercise_fragment"
+        android:name="com.example.updatedtrainingapp.fragments.currentExercise.CurrentExerciseFragment"
+        android:label="CurrentExerciseFragment"
+        tools:layout="@layout/current_exercise_fragment" >
+        <action
+            android:id="@+id/action_current_exercise_fragment_to_fragment_training_day"
+            app:destination="@id/fragment_training_day" />
+
+        <argument
+            android:name="exName"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

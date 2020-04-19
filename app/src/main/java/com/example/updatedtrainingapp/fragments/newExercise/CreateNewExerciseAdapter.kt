@@ -45,7 +45,7 @@ class CreateNewExerciseAdapter : RecyclerView.Adapter<CreateNewExerciseAdapter.C
     }
 
     class CreateNewExerciseViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val icon = itemView.find<ImageView>(R.id.exerciseChoiceImage)
+        val icon = itemView.find<ImageView>(R.id.thisTrainingExerciseImageView)
         val text = itemView.find<TextView>(R.id.thisTrainingExerciseTextView)
     }
 }

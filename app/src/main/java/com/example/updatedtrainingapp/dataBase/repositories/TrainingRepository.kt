@@ -24,7 +24,7 @@ class TrainingRepository @Inject constructor(private val trainingDao: TrainingDa
         doAsync { trainingDao.deleteTraining(trainingObject) }
     }
 
-    fun getTraining(name: String):LiveData<TrainingObject>{
-        return trainingDao.getTraining(name)
+    fun getTrainingWithDate(name: String):LiveData<TrainingObject>{
+        return trainingDao.getTrainingWithDate(name)
     }
 }

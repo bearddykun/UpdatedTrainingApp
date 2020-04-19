@@ -5,18 +5,18 @@ import androidx.lifecycle.ViewModel
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
 import com.example.updatedtrainingapp.dataBase.Constants
-import com.example.updatedtrainingapp.dataBase.ExerciseViewModel
-import com.example.updatedtrainingapp.dataBase.TrainingViewModel
+import com.example.updatedtrainingapp.dataBase.dbViewModels.ExerciseDBViewModel
+import com.example.updatedtrainingapp.dataBase.dbViewModels.TrainingDBViewModel
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
 import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
 import javax.inject.Inject
 
 class SplashViewModel @Inject constructor(
-    private val exerciseViewModel: ExerciseViewModel,
-    private val trainingViewModel: TrainingViewModel
+    private val exerciseDBViewModel: ExerciseDBViewModel,
+    private val trainingViewModel: TrainingDBViewModel
 ) : ViewModel() {
 
-    public fun databaseLoading() {
+    fun databaseLoading() {
         if (!MySharedPreferences.isInside(SplashFragment::class.java.simpleName)) {
             putInDB()
 
@@ -33,7 +33,7 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun putInDB() {
-        exerciseViewModel.insertExercise(
+        exerciseDBViewModel.insertExercise(
             ExerciseObject(
                 null,
                 "Biceps Curls",
@@ -41,7 +41,7 @@ class SplashViewModel @Inject constructor(
                 R.drawable.ic_fitness_center_black_24dp.toString()
             )
         )
-        exerciseViewModel.insertExercise(
+        exerciseDBViewModel.insertExercise(
             ExerciseObject(
                 null,
                 "Shoulder Press",
@@ -49,7 +49,7 @@ class SplashViewModel @Inject constructor(
                 R.drawable.ic_fitness_center_black_24dp.toString()
             )
         )
-        exerciseViewModel.insertExercise(
+        exerciseDBViewModel.insertExercise(
             ExerciseObject(
                 null,
                 "Triceps Press",
@@ -57,7 +57,7 @@ class SplashViewModel @Inject constructor(
                 R.drawable.ic_fitness_center_black_24dp.toString()
             )
         )
-        exerciseViewModel.insertExercise(
+        exerciseDBViewModel.insertExercise(
             ExerciseObject(
                 null,
                 "Pull ups",
@@ -65,7 +65,7 @@ class SplashViewModel @Inject constructor(
                 R.drawable.ic_fitness_center_black_24dp.toString()
             )
         )
-        exerciseViewModel.insertExercise(
+        exerciseDBViewModel.insertExercise(
             ExerciseObject(
                 null,
                 "Bench Press",
@@ -73,7 +73,7 @@ class SplashViewModel @Inject constructor(
                 R.drawable.ic_fitness_center_black_24dp.toString()
             )
         )
-        exerciseViewModel.insertExercise(
+        exerciseDBViewModel.insertExercise(
             ExerciseObject(
                 null,
                 "Squats",
@@ -81,7 +81,7 @@ class SplashViewModel @Inject constructor(
                 R.drawable.ic_fitness_center_black_24dp.toString()
             )
         )
-        exerciseViewModel.insertExercise(
+        exerciseDBViewModel.insertExercise(
             ExerciseObject(
                 null,
                 "Curls",
