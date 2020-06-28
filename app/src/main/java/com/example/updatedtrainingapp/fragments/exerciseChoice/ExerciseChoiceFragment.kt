@@ -73,7 +73,7 @@ class ExerciseChoiceFragment : Fragment(R.layout.fragment_exercise_choice),
     private fun addToTraining() {
         trainingViewModel.getTrainingWithDate(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
             .observe(viewLifecycleOwner,
-                Observer<TrainingObject> { training ->
+                Observer { training ->
                     training?.trainingExerciseNameList = buildString()
                     training?.let { trainingViewModel.updateTraining(it) }
                 })

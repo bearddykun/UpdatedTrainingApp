@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_main_menu" >
      <action
          android:id="@+id/action_fragment_main_menu_to_fragment_this_training_fragment"
-         app:destination="@id/fragment_this_training_fragment" />
+         app:destination="@id/trainings_choice_fragment" />
  </fragment>
 
       <fragment
@@ -36,7 +36,7 @@
       </fragment>
 
     <fragment
-       android:id="@+id/fragment_this_training_fragment"
+       android:id="@+id/trainings_choice_fragment"
        android:name="com.example.updatedtrainingapp.fragments.trainingsChoice.TrainingsChoiceFragment"
        android:label="FragmentTrainingChoice"
        tools:layout="@layout/trainings_choice_fragment" >
@@ -55,7 +55,7 @@
         tools:layout="@layout/fragment_create_training" >
         <action
             android:id="@+id/action_fragment_create_training_to_fragment_this_training_fragment"
-            app:destination="@id/fragment_this_training_fragment" />
+            app:destination="@id/trainings_choice_fragment" />
     </fragment>
 
     <fragment

@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class TrainingViewModel @Inject constructor(private val trainingDBViewModel: TrainingDBViewModel): ViewModel() {
 
-    fun getTraining(trainingName: String): LiveData<TrainingObject> {
+    fun getTrainingWithDate(trainingName: String): LiveData<TrainingObject> {
         return trainingDBViewModel.getTrainingWithDate(trainingName)
     }
 }

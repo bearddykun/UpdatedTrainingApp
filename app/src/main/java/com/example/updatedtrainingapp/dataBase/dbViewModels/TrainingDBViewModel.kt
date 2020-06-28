@@ -15,14 +15,15 @@ class TrainingDBViewModel @Inject constructor(application: Application) :
         TrainingRepository(
             TrainingDatabase.getDatabase(
                 application
-            )!!.trainingDao())
+            )!!.trainingDao()
+        )
 
     fun getTrainings(): LiveData<List<TrainingObject>> {
         return trainingRepository.returnAllTrainings()
     }
 
-    fun getAllTrainingsWithName(name: String): LiveData<List<TrainingObject>> {
-        return trainingRepository.returnAllTrainings()
+    fun getTraining(trainingName: String): LiveData<TrainingObject> {
+        return trainingRepository.getTraining(trainingName)
     }
 
     fun getTrainingWithDate(trainingName: String): LiveData<TrainingObject> {
@@ -38,6 +39,6 @@ class TrainingDBViewModel @Inject constructor(application: Application) :
     }
 
     fun deleteTraining(trainingName: String) {
-        trainingRepository.getTrainingWithDate(trainingName)
+        trainingRepository.getTraining(trainingName)
     }
 }

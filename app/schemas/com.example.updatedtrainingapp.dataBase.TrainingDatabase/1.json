@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "50deab1ea76149cc6e82fc33a4358985",
+    "identityHash": "c5af2996609192ec66067b969c0d2eed",
     "entities": [
       {
         "tableName": "TABLE_EXERCISE",
@@ -44,7 +44,7 @@
       },
       {
         "tableName": "TABLE_TRAINING",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `trainingName` TEXT NOT NULL, `trainingDate` TEXT NOT NULL, `trainingExerciseNameList` TEXT NOT NULL, `trainingExerciseRepetitions` TEXT NOT NULL, `trainingTimeBetweenSets` TEXT NOT NULL, `trainingTotalTime` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `trainingName` TEXT NOT NULL, `trainingNameWithDate` TEXT NOT NULL, `trainingDate` TEXT NOT NULL, `trainingExerciseNameList` TEXT NOT NULL, `trainingTimeBetweenSets` TEXT NOT NULL, `trainingTotalTime` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -59,6 +59,12 @@
             "notNull": true
           },
           {
+            "fieldPath": "trainingNameWithDate",
+            "columnName": "trainingNameWithDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "trainingDate",
             "columnName": "trainingDate",
             "affinity": "TEXT",
@@ -67,12 +73,6 @@
           {
             "fieldPath": "trainingExerciseNameList",
             "columnName": "trainingExerciseNameList",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "trainingExerciseRepetitions",
-            "columnName": "trainingExerciseRepetitions",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -97,11 +97,55 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "TABLE_EXERCISE_INFO",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `exerciseName` TEXT NOT NULL, `exerciseTrainingName` TEXT NOT NULL, `exerciseReps` TEXT NOT NULL, `exerciseMaxWeight` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "exerciseName",
+            "columnName": "exerciseName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "exerciseTrainingName",
+            "columnName": "exerciseTrainingName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "exerciseReps",
+            "columnName": "exerciseReps",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "exerciseMaxWeight",
+            "columnName": "exerciseMaxWeight",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"50deab1ea76149cc6e82fc33a4358985\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"c5af2996609192ec66067b969c0d2eed\")"
     ]
   }
 }

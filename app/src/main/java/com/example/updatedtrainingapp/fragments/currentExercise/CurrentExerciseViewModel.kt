@@ -52,7 +52,7 @@ class CurrentExerciseViewModel @Inject constructor(
         }
     }
 
-    fun getRemainingTime(): LiveData<String>? {
+    fun getRemainingTime(): MutableLiveData<String>? {
         return remainingTime
     }
 
@@ -60,7 +60,7 @@ class CurrentExerciseViewModel @Inject constructor(
         timer = object : CountDownTimer(time, TimeUnit.SECONDS.toMillis(1)) {
             override fun onTick(millisUntilFinished: Long) {
                 remainingTime.value =
-                    TimeUnit.MICROSECONDS.toSeconds(millisUntilFinished).toString()
+                    TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished).toString()
             }
 
             override fun onFinish() {

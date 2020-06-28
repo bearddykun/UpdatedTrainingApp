@@ -59,7 +59,8 @@ class TrainingsChoiceFragment @Inject constructor() : Fragment(R.layout.training
                 trainingViewModel.insertTraining(
                     TrainingObject(
                         null,
-                        name
+                        name,
+                        Utils.getTrainingNameWithDate(name)
                     )
                 )
                 startTraining()
@@ -71,7 +72,7 @@ class TrainingsChoiceFragment @Inject constructor() : Fragment(R.layout.training
     override fun onTrainingListItemLongClick(name: String) {
         activity?.alert(getString(R.string.delete), getString(R.string.delete_training)) {
             yesButton {
-                (trainingViewModel.getTrainingWithDate(name).observe(viewLifecycleOwner,
+                (trainingViewModel.getTraining(name).observe(viewLifecycleOwner,
                     Observer { training -> deleteTraining(training) }))
             }
             noButton { }
@@ -90,7 +91,10 @@ class TrainingsChoiceFragment @Inject constructor() : Fragment(R.layout.training
         val adapter = TrainingsAdapter()
         trainingViewModel.getTrainings().observe(
             viewLifecycleOwner,
-            Observer { trainingList -> adapter.swapAdapter(trainingList!!) })
+            Observer { trainingList ->
+                val trainingListNoDuplicates = trainingList?.toSet()
+                adapter.swapAdapter(trainingListNoDuplicates!!.toList())
+            })
         adapter.setOnTrainingItemListener(this)
         adapter.setOnTrainingItemLongListener(this)
         trainingRecyclerView.adapter = adapter

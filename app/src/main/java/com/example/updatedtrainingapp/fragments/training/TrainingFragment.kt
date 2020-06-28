@@ -25,7 +25,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment), TrainingAdapter.O
 
     override fun onStart() {
         super.onStart()
-        trainingDayViewModel.getTraining(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
+        trainingDayViewModel.getTrainingWithDate(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
             .observe(viewLifecycleOwner, Observer { training ->
                 val list = Utils.stringToList(training.trainingExerciseNameList)
                 list.remove("")

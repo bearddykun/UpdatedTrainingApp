@@ -10,10 +10,13 @@ interface TrainingDao {
     @Query("SELECT * FROM table_training")
     fun getAllTrainings(): LiveData<List<TrainingObject>>
 
+    @Query("SELECT * FROM table_training WHERE trainingName LIKE :name LIMIT 1")
+    fun getTraining(name: String): LiveData<TrainingObject>
+
     @Query("SELECT * FROM table_training WHERE trainingNameWithDate LIKE :name LIMIT 1")
     fun getTrainingWithDate(name: String): LiveData<TrainingObject>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTraining(trainingObject: TrainingObject)
 
     @Update
