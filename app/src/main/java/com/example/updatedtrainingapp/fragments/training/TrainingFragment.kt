@@ -20,19 +20,21 @@ class TrainingFragment : BaseFragment(R.layout.training_fragment),
     override fun onStart() {
         super.onStart()
         trainingDayViewModel.getTrainingWithDate(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
-            .observe(viewLifecycleOwner, Observer { training ->
-                val list = Utils.stringToList(training.trainingExerciseNameList)
-                list.remove("")
+            ?.let {
+                it.observe(viewLifecycleOwner, Observer { training ->
+                        val list = Utils.stringToList(training.trainingExerciseNameList)
+                        list.remove("")
 
-                val adapter = TrainingAdapter()
-                adapter.swapAdapter(list)
-                adapter.setOnTrainingItemClickListener(this)
-                recyclerViewThisTraining.adapter = adapter
-                MySharedPreferences.saveString(
-                    Utils.getCurrentTrainingList(),
-                    Utils.listToString(list)
-                )
-            })
+                        val adapter = TrainingAdapter()
+                        adapter.swapAdapter(list)
+                        adapter.setOnTrainingItemClickListener(this)
+                        recyclerViewThisTraining.adapter = adapter
+                        MySharedPreferences.saveString(
+                            Utils.getCurrentTrainingList(),
+                            Utils.listToString(list)
+                        )
+                    })
+            }
     }
 
     override fun onTrainingItemClick(exerciseName: String) {

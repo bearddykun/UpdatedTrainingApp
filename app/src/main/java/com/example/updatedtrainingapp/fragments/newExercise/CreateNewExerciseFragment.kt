@@ -40,7 +40,7 @@ class CreateNewExerciseFragment : BaseFragment(R.layout.fragment_create_new_exer
     private fun isExerciseInside(): Boolean {
         exerciseDBViewModel.getExerciseWithName(
             createExerciseNameEdit.text.toString()
-        ).observe(viewLifecycleOwner, Observer {
+        )?.observe(viewLifecycleOwner, Observer {
             isExerciseInside = it != null
         })
         return isExerciseInside

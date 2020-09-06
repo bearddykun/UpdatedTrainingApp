@@ -65,7 +65,7 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
     override fun onTrainingListItemLongClick(name: String) {
         activity?.alert(getString(R.string.delete), getString(R.string.delete_training)) {
             yesButton {
-                (trainingViewModel.getTraining(name).observe(viewLifecycleOwner,
+                (trainingViewModel.getTraining(name)?.observe(viewLifecycleOwner,
                     Observer { training -> deleteTraining(training) }))
             }
             noButton { }
@@ -82,7 +82,7 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
 
     private fun setAdapter() {
         val adapter = TrainingsAdapter()
-        trainingViewModel.getTrainings().observe(
+        trainingViewModel.getTrainings()?.observe(
             viewLifecycleOwner,
             Observer { trainingList ->
                 val trainingListNoDuplicates = trainingList?.toSet()

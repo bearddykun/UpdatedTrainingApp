@@ -84,7 +84,7 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
         timer?.cancel()
     }
 
-    fun getExerciseData(exName: String, trainingName: String): LiveData<ExerciseInfoObject> {
+    fun getExerciseData(exName: String, trainingName: String): LiveData<ExerciseInfoObject>? {
         return exerciseInfoDBViewModel.getExerciseInfoWithName(exName, trainingName)
     }
 

@@ -22,18 +22,18 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideTrainingDao(): TrainingDao =
-        TrainingDatabase.getDatabase(ThisApplication.instance)!!.trainingDao()
+    fun provideTrainingDao(): TrainingDao? =
+        TrainingDatabase.getDatabase(ThisApplication.instance)?.trainingDao()
 
     @Provides
     @Singleton
-    fun provideExerciseDao(): ExerciseDao =
-        TrainingDatabase.getDatabase(ThisApplication.instance)!!.exerciseDao()
+    fun provideExerciseDao(): ExerciseDao? =
+        TrainingDatabase.getDatabase(ThisApplication.instance)?.exerciseDao()
 
     @Provides
     @Singleton
-    fun provideExerciseInfoDao(): ExerciseInfoDao =
-        TrainingDatabase.getDatabase(ThisApplication.instance)!!.exerciseInfoDao()
+    fun provideExerciseInfoDao(): ExerciseInfoDao? =
+        TrainingDatabase.getDatabase(ThisApplication.instance)?.exerciseInfoDao()
 
     @Provides
     @Singleton

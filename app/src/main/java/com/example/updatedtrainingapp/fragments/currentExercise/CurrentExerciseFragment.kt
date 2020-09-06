@@ -67,7 +67,7 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
             args.exName,
             MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME)
         )
-            .observe(viewLifecycleOwner, Observer {
+            ?.observe(viewLifecycleOwner, Observer {
                 if (it != null) {
                     exerciseInfoObject = it
                 }

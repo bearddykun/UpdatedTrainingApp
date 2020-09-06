@@ -49,7 +49,7 @@ class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_exercise_choice),
     }
 
     private fun setAdapter() {
-        exerciseDBViewModel.getAllExercises().observe(viewLifecycleOwner, Observer { exerciseList ->
+        exerciseDBViewModel.getAllExercises()?.observe(viewLifecycleOwner, Observer { exerciseList ->
             showExerciseList(getList(exerciseList))
         })
     }
@@ -67,7 +67,7 @@ class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_exercise_choice),
 
     private fun addToTraining() {
         trainingViewModel.getTrainingWithDate(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
-            .observe(viewLifecycleOwner,
+            ?.observe(viewLifecycleOwner,
                 Observer { training ->
                     training?.trainingExerciseNameList = buildString()
                     training?.let { trainingViewModel.updateTraining(it) }
