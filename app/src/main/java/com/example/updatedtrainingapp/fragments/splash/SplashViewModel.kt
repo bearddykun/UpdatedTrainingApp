@@ -1,6 +1,7 @@
 package com.example.updatedtrainingapp.fragments.splash
 
 import android.util.Log
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
@@ -9,9 +10,8 @@ import com.example.updatedtrainingapp.dataBase.dbViewModels.ExerciseDBViewModel
 import com.example.updatedtrainingapp.dataBase.dbViewModels.TrainingDBViewModel
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
 import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
-import javax.inject.Inject
 
-class SplashViewModel @Inject constructor(
+class SplashViewModel @ViewModelInject constructor(
     private val exerciseDBViewModel: ExerciseDBViewModel,
     private val trainingViewModel: TrainingDBViewModel
 ) : ViewModel() {

@@ -2,32 +2,31 @@ package com.example.updatedtrainingapp.fragments.currentExercise
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.example.updatedtrainingapp.MainActivity
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
-import com.example.updatedtrainingapp.application.ThisApplication
 import com.example.updatedtrainingapp.dataBase.Constants
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseInfoObject
-import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
+import com.example.updatedtrainingapp.fragments.BaseFragment
 import com.example.updatedtrainingapp.utils.Utils
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.current_exercise_fragment.*
 import org.jetbrains.anko.selector
-import javax.inject.Inject
 
-class CurrentExerciseFragment : Fragment(R.layout.current_exercise_fragment) {
+@AndroidEntryPoint
+class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment) {
 
     private val args: CurrentExerciseFragmentArgs by navArgs()
     private var adapter: CurrentExerciseAdapter? = null
     private var exerciseInfoObject: ExerciseInfoObject = ExerciseInfoObject(null)
 
-    @Inject
-    lateinit var viewModel: CurrentExerciseViewModel
+    private val viewModel: CurrentExerciseViewModel by viewModels()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (activity?.application as ThisApplication).appComponent.inject(this)
         adapter = CurrentExerciseAdapter()
         loadAdapter()
     }
@@ -66,7 +65,8 @@ class CurrentExerciseFragment : Fragment(R.layout.current_exercise_fragment) {
     private fun loadAdapter() {
         viewModel.getExerciseData(
             args.exName,
-            MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
+            MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME)
+        )
             .observe(viewLifecycleOwner, Observer {
                 if (it != null) {
                     exerciseInfoObject = it

@@ -1,6 +1,7 @@
 package com.example.updatedtrainingapp.dataBase.dbViewModels
 
 import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.updatedtrainingapp.dataBase.TrainingDatabase

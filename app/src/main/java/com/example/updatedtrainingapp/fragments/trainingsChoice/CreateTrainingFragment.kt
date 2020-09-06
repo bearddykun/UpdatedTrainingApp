@@ -11,17 +11,19 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.updatedtrainingapp.R
-import com.example.updatedtrainingapp.application.ThisApplication
+import dagger.hilt.android.AndroidEntryPoint
 import org.jetbrains.anko.find
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class CreateTrainingFragment :
     DialogFragment(), TextView.OnEditorActionListener {
 
-    @Inject lateinit var trainingChoiceFragment: TrainingsChoiceFragment
+    @Inject
+    lateinit var trainingChoiceFragment: TrainingsChoiceFragment
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,12 +34,6 @@ class CreateTrainingFragment :
         view.find<EditText>(R.id.trainingFragmentText).setOnEditorActionListener(this)
         return view
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        (activity?.application as ThisApplication).appComponent.inject(this)
-    }
-
 
     override fun onEditorAction(textView: TextView?, i: Int, keyEvent: KeyEvent?): Boolean {
         if (i == EditorInfo.IME_ACTION_DONE) {

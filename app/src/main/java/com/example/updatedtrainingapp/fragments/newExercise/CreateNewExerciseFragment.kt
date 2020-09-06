@@ -1,22 +1,21 @@
 package com.example.updatedtrainingapp.fragments.newExercise
 
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.updatedtrainingapp.MainActivity
 import com.example.updatedtrainingapp.R
-import com.example.updatedtrainingapp.application.ThisApplication
 import com.example.updatedtrainingapp.dataBase.dbViewModels.ExerciseDBViewModel
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
+import com.example.updatedtrainingapp.fragments.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_create_new_exercise.*
-import javax.inject.Inject
 
-class CreateNewExerciseFragment : Fragment(R.layout.fragment_create_new_exercise),
+@AndroidEntryPoint
+class CreateNewExerciseFragment : BaseFragment(R.layout.fragment_create_new_exercise),
     CreateNewExerciseAdapter.OnCreateNewExerciseListener {
 
-    @Inject
-    lateinit var exerciseDBViewModel: ExerciseDBViewModel
+    private val exerciseDBViewModel: ExerciseDBViewModel by viewModels()
     private var exImageId = 0
     private var exGroupName = ""
     private var isExerciseInside = false
@@ -27,11 +26,6 @@ class CreateNewExerciseFragment : Fragment(R.layout.fragment_create_new_exercise
         adapter.setOnCreateNewExerciseListener(this)
         createNewExerciseRecyclerView.adapter = adapter
         createNewExOnClick()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        (activity?.application as ThisApplication).appComponent.inject(this)
     }
 
     private fun createNewExOnClick() {

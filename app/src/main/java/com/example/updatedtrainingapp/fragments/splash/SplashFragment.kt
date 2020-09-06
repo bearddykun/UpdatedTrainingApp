@@ -7,34 +7,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.updatedtrainingapp.R
-import com.example.updatedtrainingapp.application.ThisApplication
+import com.example.updatedtrainingapp.fragments.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
  */
-class SplashFragment : Fragment() {
+@AndroidEntryPoint
+class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 
-    @Inject
-    lateinit var splashViewModel: SplashViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_splash, container, false)
-    }
+    private val splashViewModel: SplashViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity?.application as ThisApplication).appComponent.inject(this)
         splashViewModel.databaseLoading()
         startApp()
     }
-
 
     private fun startApp() {
         Handler().postDelayed(

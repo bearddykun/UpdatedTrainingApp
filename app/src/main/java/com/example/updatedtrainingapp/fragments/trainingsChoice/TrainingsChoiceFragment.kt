@@ -1,35 +1,28 @@
 package com.example.updatedtrainingapp.fragments.trainingsChoice
 
-import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.updatedtrainingapp.MainActivity
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
-import com.example.updatedtrainingapp.application.ThisApplication
 import com.example.updatedtrainingapp.dataBase.Constants
 import com.example.updatedtrainingapp.dataBase.dbViewModels.TrainingDBViewModel
 import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
+import com.example.updatedtrainingapp.fragments.BaseFragment
 import com.example.updatedtrainingapp.utils.Utils
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.trainings_choice_fragment.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.yesButton
-import javax.inject.Inject
 
-class TrainingsChoiceFragment @Inject constructor() : Fragment(R.layout.trainings_choice_fragment),
+@AndroidEntryPoint
+class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment),
     TrainingsAdapter.OnTrainingItemListener,
     TrainingsAdapter.OnTrainingItemLongListener {
 
-    @Inject
-    lateinit var trainingViewModel: TrainingDBViewModel
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        (activity?.application as ThisApplication).appComponent.inject(this)
-    }
+    private val trainingViewModel: TrainingDBViewModel by viewModels()
 
     fun updateList(trainingName: String) {
         trainingViewModel.insertTraining(TrainingObject(null, trainingName))

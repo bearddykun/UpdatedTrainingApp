@@ -1,7 +1,7 @@
 package com.example.updatedtrainingapp.fragments.exerciseChoice
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
-import javax.inject.Inject
 
-class ExerciseChoiceViewModel @Inject constructor(): ViewModel() {
+class ExerciseChoiceViewModel @ViewModelInject constructor(): ViewModel() {
 }

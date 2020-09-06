@@ -9,9 +9,11 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.updatedtrainingapp.application.ThisApplication
 import com.example.updatedtrainingapp.utils.SoundManager
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : GeneralActivity() {
 
     @Inject
@@ -21,7 +23,6 @@ class MainActivity : GeneralActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        (application as ThisApplication).appComponent.inject(this)
         runOnUiThread {
             setupBottomNavigation()
         }

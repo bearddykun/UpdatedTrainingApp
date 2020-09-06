@@ -1,11 +1,11 @@
 package com.example.updatedtrainingapp.fragments.mainMenu
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
-import javax.inject.Inject
 
-class MainMenuViewModel @Inject constructor(): ViewModel() {
+class MainMenuViewModel @ViewModelInject constructor(): ViewModel() {
 
     fun getSeries(): LineGraphSeries<DataPoint>? {
         return LineGraphSeries(

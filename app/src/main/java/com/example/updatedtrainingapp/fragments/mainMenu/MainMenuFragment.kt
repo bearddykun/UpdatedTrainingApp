@@ -4,35 +4,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.updatedtrainingapp.R
-import com.example.updatedtrainingapp.application.ThisApplication
+import com.example.updatedtrainingapp.fragments.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_main_menu.*
-import javax.inject.Inject
 
-class MainMenuFragment : Fragment() {
+@AndroidEntryPoint
+class MainMenuFragment : BaseFragment(R.layout.fragment_main_menu) {
 
-    @Inject
-    lateinit var viewModel: MainMenuViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_main_menu, container, false)
-    }
+    private val viewModel: MainMenuViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        (activity?.application as ThisApplication).appComponent.inject(this)
 
         graphView.addSeries(viewModel.getSeries())
     }
 
     override fun onStart() {
         super.onStart()
-        trainingContainer.setOnClickListener { findNavController().navigate(MainMenuFragmentDirections.actionFragmentMainMenuToFragmentThisTrainingFragment()) }
+        trainingContainer.setOnClickListener {
+            findNavController().navigate(
+                MainMenuFragmentDirections.actionFragmentMainMenuToFragmentThisTrainingFragment()
+            )
+        }
     }
 }

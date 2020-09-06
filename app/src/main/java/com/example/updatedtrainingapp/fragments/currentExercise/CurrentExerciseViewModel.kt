@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.CountDownTimer
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,13 +16,18 @@ import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.dataBase.dbViewModels.ExerciseInfoDBViewModel
 import com.example.updatedtrainingapp.dataBase.dbViewModels.TrainingDBViewModel
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseInfoObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
-class CurrentExerciseViewModel @Inject constructor(
+class CurrentExerciseViewModel @ViewModelInject constructor(
     private val trainingViewModel: TrainingDBViewModel,
     private val exerciseInfoDBViewModel: ExerciseInfoDBViewModel
 ) : ViewModel() {
+
+    private val mainJob = Job()
+    private val coroutineScope = CoroutineScope(Dispatchers.Main + mainJob)
 
     private val channelId: String = "com.example.updatedtrainingapp.fragments.currentExercise"
     private var remainingTime: MutableLiveData<String> = MutableLiveData("60")
