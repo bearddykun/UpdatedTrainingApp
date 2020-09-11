@@ -11,6 +11,8 @@ data class TrainingObject(
         @ColumnInfo(name = DatabaseContract.TrainingColumns.TRAINING_NAME) var trainingName: String = "",
         @ColumnInfo(name = DatabaseContract.TrainingColumns.TRAINING_NAME_WITH_DATE) var trainingNameWithDate: String = "",
         @ColumnInfo(name = DatabaseContract.TrainingColumns.TRAINING_DATE) var trainingDate: String = "",
-        @ColumnInfo(name = DatabaseContract.TrainingColumns.TRAINING_EXERCISE_NAME) var trainingExerciseNameList: String = "",
+        @ColumnInfo(name = DatabaseContract.TrainingColumns.TRAINING_EXERCISE_NAME_LIST) var trainingExerciseNameList: String = "",
         @ColumnInfo(name = DatabaseContract.TrainingColumns.TRAINING_TIME_BETWEEN_SETS) var trainingTimeBetweenSets: String = "",
-        @ColumnInfo(name = DatabaseContract.TrainingColumns.TRAINING_TOTAL_TIME) var trainingTotalTime: String = "")
+        @ColumnInfo(name = DatabaseContract.TrainingColumns.TRAINING_TOTAL_TIME) var trainingTotalTime: String = "",
+        @ColumnInfo(name = DatabaseContract.TrainingColumns.TRAINING_PROGRESS_LIST) var trainingProgressList: String = ""
+)

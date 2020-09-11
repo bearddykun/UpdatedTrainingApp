@@ -24,7 +24,7 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
 
     private val trainingViewModel: TrainingDBViewModel by viewModels()
 
-    fun updateList(trainingName: String) {
+    fun addToList(trainingName: String) {
         trainingViewModel.insertTraining(TrainingObject(null, trainingName))
     }
 
@@ -49,13 +49,18 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
                     Constants.SAVE_TRAINING_NAME,
                     Utils.getTrainingNameWithDate(name)
                 )
-                trainingViewModel.insertTraining(
-                    TrainingObject(
-                        null,
-                        name,
-                        Utils.getTrainingNameWithDate(name)
-                    )
-                )
+                    trainingViewModel.getTrainingWithDate(Utils.getTrainingNameWithDate(name))
+                        ?.observe(viewLifecycleOwner, Observer {
+                            if (it == null) {
+                                trainingViewModel.insertTraining(
+                                    TrainingObject(
+                                        null,
+                                        name,
+                                        Utils.getTrainingNameWithDate(name)
+                                    )
+                                )
+                            }
+                        })
                 startTraining()
             }
             noButton { }

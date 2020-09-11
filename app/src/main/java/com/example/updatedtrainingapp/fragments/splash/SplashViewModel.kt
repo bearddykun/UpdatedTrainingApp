@@ -7,13 +7,10 @@ import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
 import com.example.updatedtrainingapp.dataBase.Constants
 import com.example.updatedtrainingapp.dataBase.dbViewModels.ExerciseDBViewModel
-import com.example.updatedtrainingapp.dataBase.dbViewModels.TrainingDBViewModel
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
-import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
 
 class SplashViewModel @ViewModelInject constructor(
-    private val exerciseDBViewModel: ExerciseDBViewModel,
-    private val trainingViewModel: TrainingDBViewModel
+    private val exerciseDBViewModel: ExerciseDBViewModel
 ) : ViewModel() {
 
     fun databaseLoading() {
@@ -24,8 +21,6 @@ class SplashViewModel @ViewModelInject constructor(
                 SplashFragment::class.java.simpleName,
                 SplashFragment::class.java.simpleName
             )
-
-            trainingViewModel.insertTraining(TrainingObject(null, Constants.DEFAULT_SET))
             Log.i("Inserted", "inserted")
         } else {
             Log.i("Inserted", "not")

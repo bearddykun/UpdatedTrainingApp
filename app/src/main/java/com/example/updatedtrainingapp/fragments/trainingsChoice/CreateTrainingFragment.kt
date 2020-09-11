@@ -11,7 +11,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.updatedtrainingapp.R
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,7 +36,7 @@ class CreateTrainingFragment :
 
     override fun onEditorAction(textView: TextView?, i: Int, keyEvent: KeyEvent?): Boolean {
         if (i == EditorInfo.IME_ACTION_DONE) {
-            trainingChoiceFragment.updateList(textView?.text.toString())
+            trainingChoiceFragment.addToList(textView?.text.toString())
             hideKeyboard()
             findNavController().navigate(CreateTrainingFragmentDirections.actionFragmentCreateTrainingToFragmentThisTrainingFragment())
             return true

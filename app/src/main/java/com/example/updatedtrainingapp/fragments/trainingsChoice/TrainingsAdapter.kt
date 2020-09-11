@@ -40,10 +40,7 @@ class TrainingsAdapter : RecyclerView.Adapter<TrainingsAdapter.TrainingViewHolde
     }
 
     override fun getItemCount(): Int {
-        return if (trainingList != null) {
-            trainingList!!.size
-        } else
-            0
+        return trainingList?.size ?: 0
     }
 
     fun swapAdapter(list: List<TrainingObject>) {
@@ -53,17 +50,16 @@ class TrainingsAdapter : RecyclerView.Adapter<TrainingsAdapter.TrainingViewHolde
 
     override fun onBindViewHolder(holder: TrainingViewHolder, position: Int) {
         if (trainingList != null) {
-            if (listener != null) {
+            trainingList?.let { trainingList ->
                 holder.itemView.setOnClickListener {
-                    listener?.onTrainingListItemClick(trainingList!![holder.adapterPosition].trainingName)
+                    listener?.onTrainingListItemClick(trainingList[holder.adapterPosition].trainingName)
                 }
                 holder.itemView.setOnLongClickListener {
-                    listenerLong?.onTrainingListItemLongClick(trainingList!![holder.adapterPosition].trainingName)
+                    listenerLong?.onTrainingListItemLongClick(trainingList[holder.adapterPosition].trainingName)
                     true
                 }
+                holder.text.text = trainingList[position].trainingName
             }
-
-            holder.text.text = trainingList!![position].trainingName
         } else {
             holder.text.text = Constants.DEFAULT_SET
         }

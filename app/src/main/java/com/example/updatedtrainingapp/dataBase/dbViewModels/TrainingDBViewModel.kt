@@ -17,15 +17,15 @@ class TrainingDBViewModel @Inject constructor(application: Application) :
         )?.let { TrainingRepository(it.trainingDao()) }
 
     fun getTrainings(): LiveData<List<TrainingObject>>? {
-        return trainingRepository?.let { it.returnAllTrainings() }
+        return trainingRepository?.returnAllTrainings()
     }
 
     fun getTraining(trainingName: String): LiveData<TrainingObject>? {
-        return trainingRepository?.let { it.getTraining(trainingName) }
+        return trainingRepository?.getTraining(trainingName)
     }
 
     fun getTrainingWithDate(trainingName: String): LiveData<TrainingObject>? {
-        return trainingRepository?.let { it.getTrainingWithDate(trainingName) }
+        return trainingRepository?.getTrainingWithDate(trainingName)
     }
 
     fun insertTraining(trainingObject: TrainingObject) {

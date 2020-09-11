@@ -17,11 +17,11 @@ class ExerciseDBViewModel @Inject constructor(application: Application) :
         )?.let { ExerciseRepository(it.exerciseDao()) }
 
     fun getAllExercises(): LiveData<List<ExerciseObject>>? {
-        return exerciseRepository?.let { it.getAllExercises() }
+        return exerciseRepository?.getAllExercises()
     }
 
     fun getExerciseWithName(name: String): LiveData<ExerciseObject>? {
-        return exerciseRepository?.let { it.getExerciseWithName(name) }
+        return exerciseRepository?.getExerciseWithName(name)
     }
 
     fun insertExercise(exerciseObject: ExerciseObject) {

@@ -13,17 +13,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.updatedtrainingapp.MainActivity
 import com.example.updatedtrainingapp.R
-import com.example.updatedtrainingapp.dataBase.dbViewModels.ExerciseInfoDBViewModel
 import com.example.updatedtrainingapp.dataBase.dbViewModels.TrainingDBViewModel
-import com.example.updatedtrainingapp.dataBase.objects.ExerciseInfoObject
+import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import java.util.concurrent.TimeUnit
 
 class CurrentExerciseViewModel @ViewModelInject constructor(
-    private val trainingViewModel: TrainingDBViewModel,
-    private val exerciseInfoDBViewModel: ExerciseInfoDBViewModel
+    private val trainingViewModel: TrainingDBViewModel
 ) : ViewModel() {
 
     private val mainJob = Job()
@@ -31,6 +29,7 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
 
     private val channelId: String = "com.example.updatedtrainingapp.fragments.currentExercise"
     private var remainingTime: MutableLiveData<String> = MutableLiveData("60")
+    private var lastSetTime: Long = 60000
     private var timer: CountDownTimer? = null
 
     private fun sendNotification(context: Context) {
@@ -84,17 +83,25 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
         timer?.cancel()
     }
 
-    fun getExerciseData(exName: String, trainingName: String): LiveData<ExerciseInfoObject>? {
-        return exerciseInfoDBViewModel.getExerciseInfoWithName(exName, trainingName)
+    fun getTrainingData(exName: String): LiveData<TrainingObject>? {
+        return trainingViewModel.getTrainingWithDate(exName)
     }
 
     fun updateExerciseInfoDataBase(
-        exerciseInfoObject: ExerciseInfoObject,
+        trainingObject: TrainingObject,
         kiloText: String,
         repsText: String
     ) {
-        exerciseInfoObject.exerciseReps +=
+        trainingObject.trainingProgressList +=
             "$kiloText $repsText "
-        exerciseInfoDBViewModel.updateInfoExercise(exerciseInfoObject = exerciseInfoObject)
+        trainingViewModel.updateTraining(trainingObject = trainingObject)
+    }
+
+    fun getLastSetTime(): Long {
+        return lastSetTime
+    }
+
+    fun setLastSetTime(time: Long) {
+        lastSetTime = time
     }
 }
