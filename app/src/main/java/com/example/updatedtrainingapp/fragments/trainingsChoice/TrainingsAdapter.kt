@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.updatedtrainingapp.R
-import com.example.updatedtrainingapp.dataBase.Constants
 import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
 import org.jetbrains.anko.find
 
@@ -14,7 +13,7 @@ class TrainingsAdapter : RecyclerView.Adapter<TrainingsAdapter.TrainingViewHolde
 
     private var listener: OnTrainingItemListener? = null
     private var listenerLong: OnTrainingItemLongListener? = null
-    private var trainingList: List<TrainingObject>? = null
+    private var trainingList: List<String>? = null
 
     interface OnTrainingItemListener {
         fun onTrainingListItemClick(name: String)
@@ -43,7 +42,7 @@ class TrainingsAdapter : RecyclerView.Adapter<TrainingsAdapter.TrainingViewHolde
         return trainingList?.size ?: 0
     }
 
-    fun swapAdapter(list: List<TrainingObject>) {
+    fun swapAdapter(list: List<String>) {
         trainingList = list
         notifyDataSetChanged()
     }
@@ -52,16 +51,14 @@ class TrainingsAdapter : RecyclerView.Adapter<TrainingsAdapter.TrainingViewHolde
         if (trainingList != null) {
             trainingList?.let { trainingList ->
                 holder.itemView.setOnClickListener {
-                    listener?.onTrainingListItemClick(trainingList[holder.adapterPosition].trainingName)
+                    listener?.onTrainingListItemClick(trainingList[holder.adapterPosition])
                 }
                 holder.itemView.setOnLongClickListener {
-                    listenerLong?.onTrainingListItemLongClick(trainingList[holder.adapterPosition].trainingName)
+                    listenerLong?.onTrainingListItemLongClick(trainingList[holder.adapterPosition])
                     true
                 }
-                holder.text.text = trainingList[position].trainingName
+                holder.text.text = trainingList[position]
             }
-        } else {
-            holder.text.text = Constants.DEFAULT_SET
         }
     }
 

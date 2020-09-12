@@ -11,18 +11,21 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.updatedtrainingapp.R
+import com.example.updatedtrainingapp.application.MySharedPreferences
+import com.example.updatedtrainingapp.dataBase.Constants
+import com.example.updatedtrainingapp.dataBase.dbViewModels.TrainingDBViewModel
+import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
 import dagger.hilt.android.AndroidEntryPoint
 import org.jetbrains.anko.find
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class CreateTrainingFragment :
     DialogFragment(), TextView.OnEditorActionListener {
 
-    @Inject
-    lateinit var trainingChoiceFragment: TrainingsChoiceFragment
+    private val trainingViewModel: TrainingDBViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,7 +39,11 @@ class CreateTrainingFragment :
 
     override fun onEditorAction(textView: TextView?, i: Int, keyEvent: KeyEvent?): Boolean {
         if (i == EditorInfo.IME_ACTION_DONE) {
-            trainingChoiceFragment.addToList(textView?.text.toString())
+            val list = MySharedPreferences.getList(Constants.SAVE_NEW_EXERCISE_LIST)
+            list?.also {
+                it.add(textView?.text.toString())
+                MySharedPreferences.saveList(Constants.SAVE_NEW_EXERCISE_LIST, it)
+            }
             hideKeyboard()
             findNavController().navigate(CreateTrainingFragmentDirections.actionFragmentCreateTrainingToFragmentThisTrainingFragment())
             return true

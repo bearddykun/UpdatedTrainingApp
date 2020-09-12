@@ -41,7 +41,7 @@ class MySharedPreferences {
         }
 
         fun getList(listKey: String): MutableSet<String> {
-            return sharedPreferences.getStringSet(listKey, sortedSetOf(Constants.DEFAULT_SET))!!
+            return sharedPreferences.getStringSet(listKey, mutableSetOf()) as MutableSet<String>
         }
 
         fun saveList(key: String, set: Set<String>) {

@@ -3,7 +3,6 @@ package com.example.updatedtrainingapp.fragments.trainingsChoice
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.example.updatedtrainingapp.MainActivity
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
 import com.example.updatedtrainingapp.dataBase.Constants
@@ -24,16 +23,6 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
 
     private val trainingViewModel: TrainingDBViewModel by viewModels()
 
-    fun addToList(trainingName: String) {
-        trainingViewModel.insertTraining(TrainingObject(null, trainingName))
-    }
-
-    private fun deleteTraining(training: TrainingObject) {
-        if (training.trainingName == Constants.DEFAULT_SET) {
-            (activity as MainActivity).showErrorSnack("Sorry, can't delete ${Constants.DEFAULT_SET}")
-        }
-    }
-
     private fun startTraining() {
         if (!MySharedPreferences.isInside(Constants.SAVE_START_TIME)) {
             val startTime = System.currentTimeMillis()
@@ -49,19 +38,19 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
                     Constants.SAVE_TRAINING_NAME,
                     Utils.getTrainingNameWithDate(name)
                 )
-                    trainingViewModel.getTrainingWithDate(Utils.getTrainingNameWithDate(name))
-                        ?.observe(viewLifecycleOwner, Observer {
-                            if (it == null) {
-                                trainingViewModel.insertTraining(
-                                    TrainingObject(
-                                        null,
-                                        name,
-                                        Utils.getTrainingNameWithDate(name)
-                                    )
+                trainingViewModel.getTrainingWithDate(name)
+                    ?.observe(viewLifecycleOwner, Observer {
+                        if (it == null) {
+                            trainingViewModel.insertTraining(
+                                TrainingObject(
+                                    null,
+                                    name,
+                                    Utils.getTrainingNameWithDate(name)
                                 )
-                            }
-                        })
-                startTraining()
+                            )
+                        }
+                        startTraining()
+                    })
             }
             noButton { }
         }?.show()
@@ -70,8 +59,9 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
     override fun onTrainingListItemLongClick(name: String) {
         activity?.alert(getString(R.string.delete), getString(R.string.delete_training)) {
             yesButton {
-                (trainingViewModel.getTraining(name)?.observe(viewLifecycleOwner,
-                    Observer { training -> deleteTraining(training) }))
+                val list = MySharedPreferences.getList(Constants.SAVE_NEW_EXERCISE_LIST)
+                list.remove(name)
+                MySharedPreferences.saveList(Constants.SAVE_NEW_EXERCISE_LIST, list)
             }
             noButton { }
         }?.show()
@@ -87,12 +77,7 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
 
     private fun setAdapter() {
         val adapter = TrainingsAdapter()
-        trainingViewModel.getTrainings()?.observe(
-            viewLifecycleOwner,
-            Observer { trainingList ->
-                val trainingListNoDuplicates = trainingList?.toSet()
-                adapter.swapAdapter(trainingListNoDuplicates!!.toList())
-            })
+        adapter.swapAdapter(MySharedPreferences.getList(Constants.SAVE_NEW_EXERCISE_LIST).toList())
         adapter.setOnTrainingItemListener(this)
         adapter.setOnTrainingItemLongListener(this)
         trainingRecyclerView.adapter = adapter
