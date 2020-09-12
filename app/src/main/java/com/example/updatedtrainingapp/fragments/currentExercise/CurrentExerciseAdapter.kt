@@ -1,6 +1,5 @@
 package com.example.updatedtrainingapp.fragments.currentExercise
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,12 +38,8 @@ class CurrentExerciseAdapter :
     }
 
     fun updateList(set: String) {
-        if (list == null) {
-            list = mutableListOf(set)
-            Log.i("TAGGER", list!![0])
-        } else {
-            list?.add(set)
-        }
+        list = mutableListOf()
+        list?.add(set)
         notifyDataSetChanged()
     }
 }

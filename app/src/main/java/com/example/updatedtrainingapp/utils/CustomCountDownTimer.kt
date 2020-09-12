@@ -2,7 +2,7 @@ package com.example.updatedtrainingapp.utils
 
 import android.os.CountDownTimer
 
-class CustomCountDowntTimer(private val startTime: Long, private val endTime: Long) :
+class CustomCountDownTimer(private val startTime: Long, private val endTime: Long) :
     CountDownTimer(endTime, startTime) {
 
     override fun onFinish() {

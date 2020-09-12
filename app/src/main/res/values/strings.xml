@@ -1,13 +1,11 @@
 <resources>
     <string name="app_name">UpdatedTrainingApp</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="biceps">Biceps</string>
     <string name="enter_training_name">Enter Training Name</string>
     <string name="here">here</string>
     <string name="app_error_dismiss">dismiss</string>
-    <string name="enter_name_for_new_exercise">New exersise name</string>
+    <string name="enter_name_for_new_exercise">New exercise name</string>
     <string name="create">Create</string>
     <string name="start_timer">Start Timer</string>
     <string name="rest_over">Rest time is over!</string>
@@ -17,7 +15,9 @@
     <string name="enter_kilograms">Enter kilograms</string>
     <string name="enter_reps">Enter Reps</string>
     <string name="start_training">Start Training</string>
-    <string name="strat_timer">Start training timer?</string>
+    <string name="start_training_timer">Start training timer?</string>
     <string name="delete">Delete</string>
     <string name="delete_training">Want to delete this Training?</string>
+    <string name="init_timer_value">60</string>
+    <string name="no_exercises">No exercises</string>
 </resources>

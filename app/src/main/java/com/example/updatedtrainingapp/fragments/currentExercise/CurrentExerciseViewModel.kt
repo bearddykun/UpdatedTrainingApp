@@ -24,9 +24,6 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
     private val trainingViewModel: TrainingDBViewModel
 ) : ViewModel() {
 
-    private val mainJob = Job()
-    private val coroutineScope = CoroutineScope(Dispatchers.Main + mainJob)
-
     private val channelId: String = "com.example.updatedtrainingapp.fragments.currentExercise"
     private var remainingTime: MutableLiveData<String> = MutableLiveData("60")
     private var lastSetTime: Long = 60000

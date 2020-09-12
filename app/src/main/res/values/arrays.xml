@@ -10,10 +10,6 @@
         <item>Triceps</item>
     </string-array>
 
-    <integer-array name="groups_image">
-
-    </integer-array>
-
     <string-array name="timer_values">
         <item>30</item>
         <item>60</item>

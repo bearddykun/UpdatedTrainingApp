@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.updatedtrainingapp.R
-import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
 import org.jetbrains.anko.find
 
 class TrainingsAdapter : RecyclerView.Adapter<TrainingsAdapter.TrainingViewHolder>() {

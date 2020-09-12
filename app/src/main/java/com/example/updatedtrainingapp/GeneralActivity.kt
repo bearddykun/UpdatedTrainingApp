@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
-import com.example.updatedtrainingapp.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_general.*
 import org.jetbrains.anko.find
@@ -34,18 +33,18 @@ abstract class GeneralActivity : AppCompatActivity() {
     }
 
     private fun showErrorSnack(error: CharSequence, coordinatorLayout: CoordinatorLayout) {
-        val snackbar = Snackbar
+        val snackBar = Snackbar
             .make(coordinatorLayout, error, Snackbar.LENGTH_INDEFINITE)
             .setAction(R.string.app_error_dismiss) { }
 
-        snackbar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
-        snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.black))
+        snackBar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+        snackBar.setActionTextColor(ContextCompat.getColor(this, R.color.black))
 
-        val sbView = snackbar.view
+        val sbView = snackBar.view
         val textView = sbView.find<TextView>(com.google.android.material.R.id.snackbar_text)
         textView.setTextColor(ContextCompat.getColor(this, R.color.black))
         textView.maxLines = 10
-        snackbar.show()
+        snackBar.show()
     }
 
     fun showProgressView() {
@@ -60,7 +59,7 @@ abstract class GeneralActivity : AppCompatActivity() {
         startActivity(activityClass, false)
     }
 
-    protected fun startActivity(activityClass: Class<*>, lockBackAction: Boolean) {
+    private fun startActivity(activityClass: Class<*>, lockBackAction: Boolean) {
         val intent = Intent(this, activityClass)
         if (lockBackAction) {
             intent.flags =

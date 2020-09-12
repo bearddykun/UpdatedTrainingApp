@@ -2,7 +2,6 @@ package com.example.updatedtrainingapp.fragments.currentExercise
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.example.updatedtrainingapp.MainActivity
 import com.example.updatedtrainingapp.R
@@ -56,12 +55,7 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
             val time = viewModel.getLastSetTime()
             viewModel.setTimer(time = time, activity = activity as MainActivity)
             viewModel.getRemainingTime()
-                ?.observe(viewLifecycleOwner, Observer { timerTextView.text = it.toString() })
-           /* viewModel.updateExerciseInfoDataBase(
-                trainingObject,
-                currentExerciseKiloTIET.text.toString(),
-                currentExerciseRepsTIET.text.toString()
-            )*/
+                ?.observe(viewLifecycleOwner, { timerTextView.text = it.toString() })
             adapter?.updateList(currentExerciseKiloTIET.text.toString() + " X " + currentExerciseRepsTIET.text.toString())
         }
     }
@@ -69,11 +63,12 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
     private fun loadAdapter() {
         viewModel.getTrainingData(
             Utils.getTrainingNameWithDate(args.exName)
-        )?.observe(viewLifecycleOwner, Observer {
+        )?.observe(viewLifecycleOwner, {
             if (it != null) {
                 trainingObject = it
             }
-            adapter?.swapAdapter(Utils.stringToList(trainingObject.trainingProgressList))
+
         })
+        adapter?.swapAdapter(mutableListOf("99X99"))
     }
 }

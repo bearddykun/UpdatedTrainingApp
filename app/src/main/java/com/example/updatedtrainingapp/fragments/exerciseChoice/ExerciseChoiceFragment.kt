@@ -2,7 +2,6 @@ package com.example.updatedtrainingapp.fragments.exerciseChoice
 
 import android.graphics.Color
 import android.view.View
-import androidx.lifecycle.Observer
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
 import com.example.updatedtrainingapp.dataBase.Constants
@@ -49,16 +48,12 @@ class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_exercise_choice),
     }
 
     private fun setAdapter() {
-        exerciseDBViewModel.getAllExercises()?.observe(viewLifecycleOwner, Observer { exerciseList ->
+        exerciseDBViewModel.getAllExercises()?.observe(viewLifecycleOwner, { exerciseList ->
             showExerciseList(getList(exerciseList))
         })
     }
 
     private fun showExerciseList(exerciseList: List<ExerciseObject>) {
-        if (exerciseList.isEmpty()) {
-            imageViewNoExercise.visibility = View.VISIBLE
-            return
-        }
         val adapter = ExercisesChoiceAdapter()
         adapter.swapAdapter(getList(exerciseList))
         adapter.setOnExerciseChoiceItemListener(this)
@@ -68,7 +63,7 @@ class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_exercise_choice),
     private fun addToTraining() {
         trainingViewModel.getTrainingWithDate(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
             ?.observe(viewLifecycleOwner,
-                Observer { training ->
+                { training ->
                     training?.trainingExerciseNameList = buildString()
                     training?.let { trainingViewModel.updateTraining(it) }
                 })

@@ -1,6 +1,5 @@
 package com.example.updatedtrainingapp.application
 
-import com.example.updatedtrainingapp.dataBase.Constants
 import org.jetbrains.anko.defaultSharedPreferences
 
 class MySharedPreferences {

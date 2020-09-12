@@ -7,11 +7,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.updatedtrainingapp.R
+import com.example.updatedtrainingapp.application.ThisApplication
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
-import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.find
-import org.jetbrains.anko.image
-import org.jetbrains.anko.imageResource
 
 class ExercisesChoiceAdapter :
     RecyclerView.Adapter<ExercisesChoiceAdapter.ExercisesChoiceViewHolder>() {
@@ -56,7 +54,7 @@ class ExercisesChoiceAdapter :
             holder.text.text = list!![position].exerciseName
             holder.image.setImageResource(R.drawable.ic_fitness_center_black_24dp)
         } else {
-            holder.text.text = "No exercises"
+            holder.text.text = ThisApplication.instance.getString(R.string.no_exercises)
         }
 
     class ExercisesChoiceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

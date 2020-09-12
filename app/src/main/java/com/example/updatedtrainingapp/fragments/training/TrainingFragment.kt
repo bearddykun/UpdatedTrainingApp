@@ -1,7 +1,6 @@
 package com.example.updatedtrainingapp.fragments.training
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
@@ -21,7 +20,7 @@ class TrainingFragment : BaseFragment(R.layout.training_fragment),
         super.onStart()
         trainingDayViewModel.getTrainingWithDate(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
             ?.let {
-                it.observe(viewLifecycleOwner, Observer { training ->
+                it.observe(viewLifecycleOwner, { training ->
                     val list = Utils.stringToList(training.trainingExerciseNameList)
                     list.remove("")
 

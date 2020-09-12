@@ -12,7 +12,7 @@ class TrainingAdapter : RecyclerView.Adapter<TrainingAdapter.ThisTrainingViewHol
 
     private var list: MutableList<String>? = null
 
-    var listener: OnTrainingItemClickListener? = null
+    private var listener: OnTrainingItemClickListener? = null
 
     interface OnTrainingItemClickListener {
         fun onTrainingItemClick(exerciseName: String)
@@ -34,15 +34,13 @@ class TrainingAdapter : RecyclerView.Adapter<TrainingAdapter.ThisTrainingViewHol
     }
 
     override fun onBindViewHolder(holder: ThisTrainingViewHolder, position: Int) {
-        if (list != null) {
+        list?.let { list ->
             holder.itemView.setOnClickListener {
-                list?.let { it[position] }?.let { exName ->
-                    listener?.onTrainingItemClick(
-                        exName
-                    )
-                }
+                listener?.onTrainingItemClick(
+                    list[position]
+                )
             }
-            holder.text.text = list!![position]
+            holder.text.text = list[position]
         }
     }
 

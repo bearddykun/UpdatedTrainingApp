@@ -2,7 +2,6 @@ package com.example.updatedtrainingapp.fragments.newExercise
 
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.example.updatedtrainingapp.MainActivity
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.dataBase.dbViewModels.ExerciseDBViewModel
@@ -40,7 +39,7 @@ class CreateNewExerciseFragment : BaseFragment(R.layout.fragment_create_new_exer
     private fun isExerciseInside(): Boolean {
         exerciseDBViewModel.getExerciseWithName(
             createExerciseNameEdit.text.toString()
-        )?.observe(viewLifecycleOwner, Observer {
+        )?.observe(viewLifecycleOwner, {
             isExerciseInside = it != null
         })
         return isExerciseInside

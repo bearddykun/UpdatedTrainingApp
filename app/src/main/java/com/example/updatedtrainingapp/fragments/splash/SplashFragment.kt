@@ -3,16 +3,13 @@ package com.example.updatedtrainingapp.fragments.splash
 
 import android.os.Bundle
 import android.os.Handler
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.fragments.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.

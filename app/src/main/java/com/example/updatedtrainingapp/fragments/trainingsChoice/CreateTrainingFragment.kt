@@ -17,7 +17,6 @@ import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
 import com.example.updatedtrainingapp.dataBase.Constants
 import com.example.updatedtrainingapp.dataBase.dbViewModels.TrainingDBViewModel
-import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
 import dagger.hilt.android.AndroidEntryPoint
 import org.jetbrains.anko.find
 
@@ -40,7 +39,7 @@ class CreateTrainingFragment :
     override fun onEditorAction(textView: TextView?, i: Int, keyEvent: KeyEvent?): Boolean {
         if (i == EditorInfo.IME_ACTION_DONE) {
             val list = MySharedPreferences.getList(Constants.SAVE_NEW_EXERCISE_LIST)
-            list?.also {
+            list.also {
                 it.add(textView?.text.toString())
                 MySharedPreferences.saveList(Constants.SAVE_NEW_EXERCISE_LIST, it)
             }

@@ -11,8 +11,6 @@ class Constants {
         const val LEGS_GROUP = "legs"
         const val ABS_GROUP = "abs"
 
-        const val DEFAULT_SET = "DEFAULT_SET"
-
         const val SAVE_TRAINING_NAME = "SAVE_TRAINING_NAME"
         const val SAVE_NEW_EXERCISE_LIST = "SAVE_NEW_EXERCISE_LIST"
 

@@ -1,7 +1,6 @@
 package com.example.updatedtrainingapp.fragments.trainingsChoice
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
@@ -32,14 +31,14 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
     }
 
     override fun onTrainingListItemClick(name: String) {
-        activity?.alert(getString(R.string.start_training), getString(R.string.strat_timer)) {
+        activity?.alert(getString(R.string.start_training), getString(R.string.start_training_timer)) {
             yesButton {
                 MySharedPreferences.saveString(
                     Constants.SAVE_TRAINING_NAME,
                     Utils.getTrainingNameWithDate(name)
                 )
                 trainingViewModel.getTrainingWithDate(name)
-                    ?.observe(viewLifecycleOwner, Observer {
+                    ?.observe(viewLifecycleOwner, {
                         if (it == null) {
                             trainingViewModel.insertTraining(
                                 TrainingObject(
