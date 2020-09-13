@@ -3,10 +3,7 @@ package com.example.updatedtrainingapp.fragments.training
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.updatedtrainingapp.R
-import com.example.updatedtrainingapp.application.MySharedPreferences
-import com.example.updatedtrainingapp.dataBase.Constants
 import com.example.updatedtrainingapp.fragments.BaseFragment
-import com.example.updatedtrainingapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.training_fragment.*
 
@@ -18,20 +15,13 @@ class TrainingFragment : BaseFragment(R.layout.training_fragment),
 
     override fun onStart() {
         super.onStart()
-        trainingDayViewModel.getTrainingWithDate(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
+        trainingDayViewModel.getExercisesWithTraining()
             ?.let {
-                it.observe(viewLifecycleOwner, { training ->
-                    val list = Utils.stringToList(training.trainingExerciseNameList)
-                    list.remove("")
-
+                it.observe(viewLifecycleOwner, { trainings ->
                     val adapter = TrainingAdapter()
-                    adapter.swapAdapter(list)
+                    adapter.swapAdapter(trainings)
                     adapter.setOnTrainingItemClickListener(this)
                     recyclerViewThisTraining.adapter = adapter
-                    MySharedPreferences.saveString(
-                        Utils.getCurrentTrainingList(),
-                        Utils.listToString(list)
-                    )
                 })
             }
     }

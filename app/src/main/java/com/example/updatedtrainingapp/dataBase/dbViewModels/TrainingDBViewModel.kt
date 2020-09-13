@@ -16,27 +16,27 @@ class TrainingDBViewModel @Inject constructor(application: Application) :
             application
         )?.let { TrainingRepository(it.trainingDao()) }
 
-    fun getTrainings(): LiveData<List<TrainingObject>>? {
-        return trainingRepository?.returnAllTrainings()
+    fun getExercises(): LiveData<List<TrainingObject>>? {
+        return trainingRepository?.returnAllExercises()
     }
 
-    fun getTraining(trainingName: String): LiveData<TrainingObject>? {
-        return trainingRepository?.getTraining(trainingName)
+    fun getExerciseWithData(exerciseName: String, data: String): LiveData<TrainingObject>? {
+        return trainingRepository?.getExerciseWithData(exerciseName, data)
     }
 
-    fun getTrainingWithDate(trainingName: String): LiveData<TrainingObject>? {
-        return trainingRepository?.getTrainingWithDate(trainingName)
+    fun insertExercise(trainingObject: TrainingObject) {
+        trainingRepository?.insertExerciseAsync(trainingObject)
     }
 
-    fun insertTraining(trainingObject: TrainingObject) {
-        trainingRepository?.insertTrainingAsync(trainingObject)
+    fun updateExercise(trainingObject: TrainingObject) {
+        trainingRepository?.updateExerciseAsync(trainingObject)
     }
 
-    fun updateTraining(trainingObject: TrainingObject) {
-        trainingRepository?.updateTrainingAsync(trainingObject)
+    fun deleteExercise(trainingName: TrainingObject) {
+        trainingRepository?.deleteExerciseAsync(trainingName)
     }
 
-    fun deleteTraining(trainingName: String) {
-        trainingRepository?.getTraining(trainingName)
+    fun getExercisesWithTraining(trainingName: String): LiveData<List<TrainingObject>>? {
+        return trainingRepository?.getExercisesWithTraining(trainingName)
     }
 }

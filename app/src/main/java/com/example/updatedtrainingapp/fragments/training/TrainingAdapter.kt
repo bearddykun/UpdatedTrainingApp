@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.updatedtrainingapp.R
+import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
 import org.jetbrains.anko.find
 
 class TrainingAdapter : RecyclerView.Adapter<TrainingAdapter.ThisTrainingViewHolder>() {
 
-    private var list: MutableList<String>? = null
+    private var list: List<TrainingObject>? = null
 
     private var listener: OnTrainingItemClickListener? = null
 
@@ -37,14 +38,14 @@ class TrainingAdapter : RecyclerView.Adapter<TrainingAdapter.ThisTrainingViewHol
         list?.let { list ->
             holder.itemView.setOnClickListener {
                 listener?.onTrainingItemClick(
-                    list[position]
+                    list[position].exerciseName
                 )
             }
-            holder.text.text = list[position]
+            holder.text.text = list[position].exerciseName
         }
     }
 
-    fun swapAdapter(list: MutableList<String>) {
+    fun swapAdapter(list: List<TrainingObject>) {
         this.list = list
         notifyDataSetChanged()
     }

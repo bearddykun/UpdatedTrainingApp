@@ -39,10 +39,10 @@ class Utils {
 
         fun getCurrentTrainingList(): String {
             val trainingName = MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME)
-            return trainingName + Constants.SAVE_NEW_EXERCISE_LIST
+            return trainingName + Constants.SAVE_NEW_TRAINING_LIST
         }
 
-        fun getTrainingNameWithDate(name: String): String {
+        fun getNameWithDate(name: String): String {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 name + LocalDate.now().toString()
             } else {

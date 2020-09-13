@@ -42,35 +42,40 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
                 activity?.selector(
                     getString(R.string.set_timer), it
                 ) { _, position ->
-                    viewModel.getRemainingTime()?.removeObservers(viewLifecycleOwner)
-                    viewModel.stopTimer()
-                    timerTextView.text = it[position]
                     viewModel.setLastSetTime(TimeUnit.SECONDS.toMillis(it[position].toLong()))
                 }
             }
+            viewModel.getRemainingTime()?.removeObservers(viewLifecycleOwner)
+            viewModel.resetTimer(activity = activity as MainActivity)
+            timerTextView.text =
+                TimeUnit.MILLISECONDS.toSeconds(viewModel.getLastSetTime()).toString()
         }
 
         timerButton.setOnClickListener {
             viewModel.getRemainingTime()?.removeObservers(viewLifecycleOwner)
-            viewModel.stopTimer()
-            val time = viewModel.getLastSetTime()
-            viewModel.setTimer(time = time, activity = activity as MainActivity)
+            viewModel.resetTimer(activity = activity as MainActivity)
             viewModel.getRemainingTime()
                 ?.observe(viewLifecycleOwner, { timerTextView.text = it.toString() })
             adapter?.updateList(currentExerciseKiloTIET.text.toString() + " X " + currentExerciseRepsTIET.text.toString())
+            viewModel.updateProgressList(trainingObject, currentExerciseKiloTIET.text.toString(), currentExerciseRepsTIET.text.toString())
         }
     }
 
     private fun loadAdapter() {
-        viewModel.getTrainingData(
-            Utils.getTrainingNameWithDate(args.exName)
+        viewModel.getExerciseWithDate(
+            Utils.getNameWithDate(args.exName)
         )?.observe(viewLifecycleOwner, {
             if (it != null) {
                 trainingObject = it
             }
             it?.let { list ->
-                adapter?.swapAdapter(Utils.stringToList(list.trainingProgressList))
+                adapter?.swapAdapter(Utils.stringToList(list.exerciseText))
             }
         })
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.updateProgressInDB(trainingObject)
     }
 }

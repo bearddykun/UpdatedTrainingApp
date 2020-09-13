@@ -8,27 +8,27 @@ import javax.inject.Inject
 
 class TrainingRepository @Inject constructor(private val trainingDao: TrainingDao) {
 
-    fun returnAllTrainings(): LiveData<List<TrainingObject>> {
-        return trainingDao.getAllTrainings()
+    fun returnAllExercises(): LiveData<List<TrainingObject>> {
+        return trainingDao.getAllExercises()
     }
 
-    fun insertTrainingAsync(trainingObject: TrainingObject) {
-        doAsync { trainingDao.insertTraining(trainingObject) }
+    fun insertExerciseAsync(trainingObject: TrainingObject) {
+        doAsync { trainingDao.insertExercise(trainingObject) }
     }
 
-    fun updateTrainingAsync(trainingObject: TrainingObject) {
-        doAsync { trainingDao.updateTraining(trainingObject) }
+    fun updateExerciseAsync(trainingObject: TrainingObject) {
+        doAsync { trainingDao.updateExercise(trainingObject) }
     }
 
-    fun deleteTrainingAsync(trainingObject: TrainingObject) {
-        doAsync { trainingDao.deleteTraining(trainingObject) }
+    fun deleteExerciseAsync(trainingObject: TrainingObject) {
+        doAsync { trainingDao.deleteExercise(trainingObject) }
     }
 
-    fun getTraining(name: String): LiveData<TrainingObject> {
-        return trainingDao.getTraining(name)
+    fun getExerciseWithData(name: String, data: String): LiveData<TrainingObject> {
+        return trainingDao.getExerciseWithData(name, data)
     }
 
-    fun getTrainingWithDate(name: String): LiveData<TrainingObject> {
-        return trainingDao.getTrainingWithDate(name)
+    fun getExercisesWithTraining(trainingName: String): LiveData<List<TrainingObject>>? {
+        return trainingDao.getExercisesWithTraining(trainingName)
     }
 }

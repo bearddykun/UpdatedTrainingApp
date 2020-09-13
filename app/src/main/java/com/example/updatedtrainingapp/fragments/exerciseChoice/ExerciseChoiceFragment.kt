@@ -8,6 +8,7 @@ import com.example.updatedtrainingapp.dataBase.Constants
 import com.example.updatedtrainingapp.dataBase.dbViewModels.ExerciseDBViewModel
 import com.example.updatedtrainingapp.dataBase.dbViewModels.TrainingDBViewModel
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
+import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
 import com.example.updatedtrainingapp.fragments.BaseFragment
 import com.example.updatedtrainingapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +20,7 @@ import javax.inject.Inject
 class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_exercise_choice),
     ExercisesChoiceAdapter.OnExerciseChoiceItemListener {
 
-    private val list: MutableList<String> = mutableListOf()
+    private var list: MutableSet<String>? = null
 
     @Inject
     lateinit var exerciseDBViewModel: ExerciseDBViewModel
@@ -29,7 +30,13 @@ class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_exercise_choice),
 
     override fun onStart() {
         super.onStart()
+        list = MySharedPreferences.getList(Constants.EXERCISE_LIST)
         setAdapter()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        list?.let { MySharedPreferences.saveList(Constants.EXERCISE_LIST, it.toSet()) }
     }
 
     override fun onExerciseChoiceItemClick(trainingName: String, view: View) {
@@ -37,39 +44,46 @@ class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_exercise_choice),
     }
 
     private fun addRemoveExercise(exerciseName: String, view: View) {
-        if (list.contains(exerciseName)) {
-            list.remove(exerciseName)
-            view.backgroundColor = Color.WHITE
-        } else {
-            list.add(exerciseName)
-            view.backgroundColor = Color.BLUE
+        list?.let {
+            if (it.contains(exerciseName)) {
+                it.remove(exerciseName)
+                view.backgroundColor = Color.WHITE
+            } else {
+                it.add(exerciseName)
+                view.backgroundColor = Color.BLUE
+            }
         }
-        addToTraining()
+        addExercise(exerciseName)
     }
 
     private fun setAdapter() {
         exerciseDBViewModel.getAllExercises()?.observe(viewLifecycleOwner, { exerciseList ->
-            showExerciseList(getList(exerciseList))
+            showExerciseList(
+                getList(exerciseList)
+            )
         })
     }
 
-    private fun showExerciseList(exerciseList: List<ExerciseObject>) {
+    private fun showExerciseList(
+        exerciseList: MutableList<ExerciseObject>
+    ) {
         val adapter = ExercisesChoiceAdapter()
-        adapter.swapAdapter(getList(exerciseList))
+        adapter.swapAdapter(exerciseList)
         adapter.setOnExerciseChoiceItemListener(this)
         exerciseChoiceRecyclerView.adapter = adapter
     }
 
-    private fun addToTraining() {
-        trainingViewModel.getTrainingWithDate(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
-            ?.observe(viewLifecycleOwner,
-                { training ->
-                    training?.trainingExerciseNameList = buildString()
-                    training?.let { trainingViewModel.updateTraining(it) }
-                })
+    private fun addExercise(exerciseName: String) {
+        trainingViewModel.insertExercise(
+            TrainingObject(
+                null,
+                exerciseName = exerciseName,
+                trainingName = MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME),
+            )
+        )
     }
 
-    private fun getList(exerciseList: List<ExerciseObject>): List<ExerciseObject> {
+    private fun getList(exerciseList: List<ExerciseObject>): MutableList<ExerciseObject> {
         val oldList =
             Utils.stringToList(
                 MySharedPreferences.getString(
@@ -83,17 +97,5 @@ class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_exercise_choice),
             }
         }
         return newExList
-    }
-
-    private fun buildString(): String {
-        return if (MySharedPreferences.isInside(Utils.getCurrentTrainingList())) {
-            val sb = StringBuilder()
-            sb.append(MySharedPreferences.getString(Utils.getCurrentTrainingList()))
-            sb.append(" , ")
-            sb.append(Utils.listToString(list))
-            sb.toString()
-        } else {
-            Utils.listToString(list)
-        }
     }
 }

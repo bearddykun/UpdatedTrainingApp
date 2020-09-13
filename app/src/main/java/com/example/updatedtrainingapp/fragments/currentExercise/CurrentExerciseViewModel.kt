@@ -15,9 +15,7 @@ import com.example.updatedtrainingapp.MainActivity
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.dataBase.dbViewModels.TrainingDBViewModel
 import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import com.example.updatedtrainingapp.utils.Utils
 import java.util.concurrent.TimeUnit
 
 class CurrentExerciseViewModel @ViewModelInject constructor(
@@ -58,7 +56,7 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
         return remainingTime
     }
 
-    fun setTimer(time: Long, activity: MainActivity) {
+    private fun setTimer(time: Long, activity: MainActivity) {
         timer = object : CountDownTimer(time, TimeUnit.SECONDS.toMillis(1)) {
             override fun onTick(millisUntilFinished: Long) {
                 remainingTime.value =
@@ -76,22 +74,28 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
         activity.applicationContext?.let { sendNotification(activity.applicationContext) }
     }
 
-    fun stopTimer() {
+    fun resetTimer(activity: MainActivity) {
         timer?.cancel()
+        setTimer(lastSetTime, activity)
     }
 
-    fun getTrainingData(exName: String): LiveData<TrainingObject>? {
-        return trainingViewModel.getTrainingWithDate(exName)
+    fun getExerciseWithDate(exName: String): LiveData<TrainingObject>? {
+        return trainingViewModel.getExerciseWithData(exName, Utils.getNameWithDate(exName))
     }
 
-    fun updateExerciseInfoDataBase(
+    fun updateProgressList(
         trainingObject: TrainingObject,
         kiloText: String,
         repsText: String
     ) {
-        trainingObject.trainingProgressList +=
-            "$kiloText $repsText "
-        trainingViewModel.updateTraining(trainingObject = trainingObject)
+        if (kiloText.isEmpty() || repsText.isEmpty()) return
+
+        trainingObject.exerciseText +=
+            "$kiloText X $repsText "
+    }
+
+    fun updateProgressInDB(trainingObject: TrainingObject) {
+        trainingViewModel.updateExercise(trainingObject = trainingObject)
     }
 
     fun getLastSetTime(): Long {

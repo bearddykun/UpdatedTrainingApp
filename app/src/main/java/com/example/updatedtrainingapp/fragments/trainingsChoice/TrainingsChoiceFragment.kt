@@ -31,25 +31,23 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
     }
 
     override fun onTrainingListItemClick(name: String) {
-        activity?.alert(getString(R.string.start_training), getString(R.string.start_training_timer)) {
+        activity?.alert(
+            getString(R.string.start_training),
+            getString(R.string.start_training_timer)
+        ) {
             yesButton {
                 MySharedPreferences.saveString(
                     Constants.SAVE_TRAINING_NAME,
-                    Utils.getTrainingNameWithDate(name)
+                    Utils.getNameWithDate(name)
                 )
-                trainingViewModel.getTrainingWithDate(name)
-                    ?.observe(viewLifecycleOwner, {
-                        if (it == null) {
-                            trainingViewModel.insertTraining(
-                                TrainingObject(
-                                    null,
-                                    name,
-                                    Utils.getTrainingNameWithDate(name)
-                                )
-                            )
-                        }
-                        startTraining()
-                    })
+                trainingViewModel.insertExercise(
+                    TrainingObject(
+                        null,
+                        name,
+                        Utils.getNameWithDate(name)
+                    )
+                )
+                startTraining()
             }
             noButton { }
         }?.show()
@@ -58,9 +56,9 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
     override fun onTrainingListItemLongClick(name: String) {
         activity?.alert(getString(R.string.delete), getString(R.string.delete_training)) {
             yesButton {
-                val list = MySharedPreferences.getList(Constants.SAVE_NEW_EXERCISE_LIST)
+                val list = MySharedPreferences.getList(Constants.SAVE_NEW_TRAINING_LIST)
                 list.remove(name)
-                MySharedPreferences.saveList(Constants.SAVE_NEW_EXERCISE_LIST, list)
+                MySharedPreferences.saveList(Constants.SAVE_NEW_TRAINING_LIST, list)
             }
             noButton { }
         }?.show()
@@ -76,7 +74,7 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
 
     private fun setAdapter() {
         val adapter = TrainingsAdapter()
-        adapter.swapAdapter(MySharedPreferences.getList(Constants.SAVE_NEW_EXERCISE_LIST).toList())
+        adapter.swapAdapter(MySharedPreferences.getList(Constants.SAVE_NEW_TRAINING_LIST).toList())
         adapter.setOnTrainingItemListener(this)
         adapter.setOnTrainingItemLongListener(this)
         trainingRecyclerView.adapter = adapter

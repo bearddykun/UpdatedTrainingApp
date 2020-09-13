@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.updatedtrainingapp.R
-import com.example.updatedtrainingapp.application.ThisApplication
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
 import org.jetbrains.anko.find
 
@@ -36,26 +35,25 @@ class ExercisesChoiceAdapter :
         return list?.size ?: 0
     }
 
-    fun swapAdapter(list: List<ExerciseObject>) {
+    fun swapAdapter(list: MutableList<ExerciseObject>) {
         this.list = list
         notifyDataSetChanged()
     }
 
-    override fun onBindViewHolder(holder: ExercisesChoiceViewHolder, position: Int) =
-        if (list!!.isNotEmpty()) {
+    override fun onBindViewHolder(holder: ExercisesChoiceViewHolder, position: Int) {
+        list?.let { list ->
             if (listener != null) {
                 holder.itemView.setOnClickListener {
                     listener?.onExerciseChoiceItemClick(
-                        list!![position].exerciseName,
+                        list[position].exerciseName,
                         holder.itemView
                     )
                 }
             }
-            holder.text.text = list!![position].exerciseName
-            holder.image.setImageResource(R.drawable.ic_fitness_center_black_24dp)
-        } else {
-            holder.text.text = ThisApplication.instance.getString(R.string.no_exercises)
+            holder.text.text = list[position].exerciseName
+            holder.image.setImageResource(list[position].exerciseImage.toInt())
         }
+    }
 
     class ExercisesChoiceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image = itemView.find<ImageView>(R.id.exerciseChoiceImage)

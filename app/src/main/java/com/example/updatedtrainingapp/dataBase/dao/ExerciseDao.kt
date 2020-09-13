@@ -19,6 +19,6 @@ interface ExerciseDao {
     @Delete
     fun deleteExercise(exerciseObject: ExerciseObject)
 
-    @Query("SELECT * FROM table_exercise WHERE exerciseName LIKE :exName")
+    @Query("SELECT * FROM table_exercise WHERE EXERCISE_NAME LIKE :exName")
     fun getExerciseWithName(exName: String): LiveData<ExerciseObject>
 }
