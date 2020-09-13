@@ -25,6 +25,7 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         adapter = CurrentExerciseAdapter()
+        currentExerciseRV.adapter = adapter
         loadAdapter()
     }
 
@@ -67,8 +68,9 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
             if (it != null) {
                 trainingObject = it
             }
-
+            it?.let { list ->
+                adapter?.swapAdapter(Utils.stringToList(list.trainingProgressList))
+            }
         })
-        adapter?.swapAdapter(mutableListOf("99X99"))
     }
 }

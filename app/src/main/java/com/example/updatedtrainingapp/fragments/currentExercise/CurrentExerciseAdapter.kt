@@ -18,10 +18,9 @@ class CurrentExerciseAdapter :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrentExerciseViewHolder {
-        return CurrentExerciseViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.exercise_choice_item, parent, false)
-        )
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.training_list_item, parent, false)
+        return CurrentExerciseViewHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -38,7 +37,9 @@ class CurrentExerciseAdapter :
     }
 
     fun updateList(set: String) {
-        list = mutableListOf()
+        if (list == null) {
+            list = mutableListOf()
+        }
         list?.add(set)
         notifyDataSetChanged()
     }
