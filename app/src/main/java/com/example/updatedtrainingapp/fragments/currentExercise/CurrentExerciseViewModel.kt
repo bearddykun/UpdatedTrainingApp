@@ -94,8 +94,12 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
         kiloText: String,
         repsText: String
     ) {
-        trainingObject.exerciseText +=
-            "$kiloText X $repsText "
+        val text = if (trainingObject.exerciseText.isNotEmpty()) {
+            " , $kiloText X $repsText"
+        } else {
+            "$kiloText X $repsText"
+        }
+        trainingObject.exerciseText += text
     }
 
     fun updateProgressInDB(trainingObject: TrainingObject) {

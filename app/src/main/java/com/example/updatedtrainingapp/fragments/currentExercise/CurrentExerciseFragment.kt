@@ -25,7 +25,6 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
     private val viewModel: CurrentExerciseViewModel by viewModels()
     private var trainingObject: TrainingObject = TrainingObject(
         null,
-        trainingName = MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME),
         trainingNameWithDate = Utils.getNameWithDate(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
     )
 
