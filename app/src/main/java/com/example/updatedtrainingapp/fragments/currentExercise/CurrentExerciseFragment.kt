@@ -57,7 +57,11 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
             viewModel.getRemainingTime()
                 ?.observe(viewLifecycleOwner, { timerTextView.text = it.toString() })
             adapter?.updateList(currentExerciseKiloTIET.text.toString() + " X " + currentExerciseRepsTIET.text.toString())
-            viewModel.updateProgressList(trainingObject, currentExerciseKiloTIET.text.toString(), currentExerciseRepsTIET.text.toString())
+            viewModel.updateProgressList(
+                trainingObject,
+                currentExerciseKiloTIET.text.toString(),
+                currentExerciseRepsTIET.text.toString()
+            )
         }
     }
 
