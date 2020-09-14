@@ -13,9 +13,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.updatedtrainingapp.MainActivity
 import com.example.updatedtrainingapp.R
+import com.example.updatedtrainingapp.application.MySharedPreferences
+import com.example.updatedtrainingapp.dataBase.Constants
 import com.example.updatedtrainingapp.dataBase.dbViewModels.TrainingDBViewModel
 import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
 import com.example.updatedtrainingapp.utils.Utils
+import org.jetbrains.anko.doAsync
 import java.util.concurrent.TimeUnit
 
 class CurrentExerciseViewModel @ViewModelInject constructor(
@@ -80,22 +83,34 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
     }
 
     fun getExerciseWithDate(exName: String): LiveData<TrainingObject>? {
-        return trainingViewModel.getExerciseWithData(exName, Utils.getNameWithDate(exName))
+        return trainingViewModel.getExerciseWithData(
+            exName,
+            Utils.getNameWithDate(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
+        )
     }
 
-    fun updateProgressList(
+    fun updateExerciseText(
         trainingObject: TrainingObject,
         kiloText: String,
         repsText: String
     ) {
-        if (kiloText.isEmpty() || repsText.isEmpty()) return
-
         trainingObject.exerciseText +=
             "$kiloText X $repsText "
     }
 
     fun updateProgressInDB(trainingObject: TrainingObject) {
-        trainingViewModel.updateExercise(trainingObject = trainingObject)
+        doAsync {
+            trainingViewModel.isExerciseInThisTraining(
+                trainingObject.exerciseName,
+                trainingObject.trainingNameWithDate
+            )?.let {
+                if (it) {
+                    trainingViewModel.updateExercise(trainingObject = trainingObject)
+                } else {
+                    trainingViewModel.insertExercise(trainingObject = trainingObject)
+                }
+            }
+        }
     }
 
     fun getLastSetTime(): Long {

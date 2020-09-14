@@ -20,7 +20,7 @@ import javax.inject.Inject
 class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_exercise_choice),
     ExercisesChoiceAdapter.OnExerciseChoiceItemListener {
 
-    private var list: MutableSet<String>? = null
+    private var list: MutableSet<String> = mutableSetOf()
 
     @Inject
     lateinit var exerciseDBViewModel: ExerciseDBViewModel
@@ -30,13 +30,7 @@ class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_exercise_choice),
 
     override fun onStart() {
         super.onStart()
-        list = MySharedPreferences.getList(Constants.EXERCISE_LIST)
         setAdapter()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        list?.let { MySharedPreferences.saveList(Constants.EXERCISE_LIST, it.toSet()) }
     }
 
     override fun onExerciseChoiceItemClick(trainingName: String, view: View) {
@@ -44,16 +38,13 @@ class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_exercise_choice),
     }
 
     private fun addRemoveExercise(exerciseName: String, view: View) {
-        list?.let {
-            if (it.contains(exerciseName)) {
-                it.remove(exerciseName)
-                view.backgroundColor = Color.WHITE
-            } else {
-                it.add(exerciseName)
-                view.backgroundColor = Color.BLUE
-            }
+        if (list.contains(exerciseName)) {
+            list.remove(exerciseName)
+            view.backgroundColor = Color.WHITE
+        } else {
+            list.add(exerciseName)
+            view.backgroundColor = Color.BLUE
         }
-        addExercise(exerciseName)
     }
 
     private fun setAdapter() {
@@ -97,5 +88,11 @@ class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_exercise_choice),
             }
         }
         return newExList
+    }
+
+    override fun onStop() {
+        super.onStop()
+        //FIXME duplicate items still possible
+        list.forEach { i -> addExercise(i) }
     }
 }

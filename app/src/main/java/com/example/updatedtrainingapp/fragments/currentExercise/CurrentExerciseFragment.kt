@@ -2,9 +2,12 @@ package com.example.updatedtrainingapp.fragments.currentExercise
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.updatedtrainingapp.MainActivity
 import com.example.updatedtrainingapp.R
+import com.example.updatedtrainingapp.application.MySharedPreferences
+import com.example.updatedtrainingapp.dataBase.Constants
 import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
 import com.example.updatedtrainingapp.fragments.BaseFragment
 import com.example.updatedtrainingapp.utils.Utils
@@ -20,7 +23,11 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
     private var adapter: CurrentExerciseAdapter? = null
 
     private val viewModel: CurrentExerciseViewModel by viewModels()
-    private var trainingObject: TrainingObject = TrainingObject(null)
+    private var trainingObject: TrainingObject = TrainingObject(
+        null,
+        trainingName = MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME),
+        trainingNameWithDate = Utils.getNameWithDate(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
+    )
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -32,6 +39,7 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
     override fun onStart() {
         super.onStart()
         onClicks()
+        trainingObject.exerciseName = args.exName
         exerciseNameBT.text = args.exName
     }
 
@@ -56,18 +64,29 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
             viewModel.resetTimer(activity = activity as MainActivity)
             viewModel.getRemainingTime()
                 ?.observe(viewLifecycleOwner, { timerTextView.text = it.toString() })
-            adapter?.updateList(currentExerciseKiloTIET.text.toString() + " X " + currentExerciseRepsTIET.text.toString())
-            viewModel.updateProgressList(
-                trainingObject,
-                currentExerciseKiloTIET.text.toString(),
-                currentExerciseRepsTIET.text.toString()
+
+            if (currentExerciseKiloTIET.text.toString()
+                    .isNotEmpty() || currentExerciseRepsTIET.text.toString().isNotEmpty()
+            ) {
+                adapter?.updateList(currentExerciseKiloTIET.text.toString() + " X " + currentExerciseRepsTIET.text.toString())
+                viewModel.updateExerciseText(
+                    trainingObject,
+                    currentExerciseKiloTIET.text.toString(),
+                    currentExerciseRepsTIET.text.toString()
+                )
+            }
+        }
+
+        exerciseNameBT.setOnClickListener {
+            findNavController().navigate(
+                CurrentExerciseFragmentDirections.actionCurrentExerciseFragmentToFragmentTrainingDay()
             )
         }
     }
 
     private fun loadAdapter() {
         viewModel.getExerciseWithDate(
-            Utils.getNameWithDate(args.exName)
+            args.exName
         )?.observe(viewLifecycleOwner, {
             if (it != null) {
                 trainingObject = it
