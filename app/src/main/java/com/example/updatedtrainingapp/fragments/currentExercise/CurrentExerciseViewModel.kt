@@ -25,6 +25,10 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
     private val trainingViewModel: TrainingDBViewModel
 ) : ViewModel() {
 
+    var trainingObject: TrainingObject = TrainingObject(
+        null,
+        trainingNameWithDate = Utils.getNameWithDate(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
+    )
     private val channelId: String = "com.example.updatedtrainingapp.fragments.currentExercise"
     private var remainingTime: MutableLiveData<String> = MutableLiveData("60")
     private var lastSetTime: Long = 60000

@@ -23,10 +23,6 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
     private var adapter: CurrentExerciseAdapter? = null
 
     private val viewModel: CurrentExerciseViewModel by viewModels()
-    private var trainingObject: TrainingObject = TrainingObject(
-        null,
-        trainingNameWithDate = Utils.getNameWithDate(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
-    )
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -38,7 +34,7 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
     override fun onStart() {
         super.onStart()
         onClicks()
-        trainingObject.exerciseName = args.exName
+        viewModel.trainingObject.exerciseName = args.exName
         exerciseNameBT.text = args.exName
     }
 
@@ -69,7 +65,7 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
             ) {
                 adapter?.updateList(currentExerciseKiloTIET.text.toString() + " X " + currentExerciseRepsTIET.text.toString())
                 viewModel.updateExerciseText(
-                    trainingObject,
+                    viewModel.trainingObject,
                     currentExerciseKiloTIET.text.toString(),
                     currentExerciseRepsTIET.text.toString()
                 )
@@ -88,7 +84,7 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
             args.exName
         )?.observe(viewLifecycleOwner, {
             if (it != null) {
-                trainingObject = it
+                viewModel.trainingObject = it
             }
             it?.let { list ->
                 adapter?.swapAdapter(Utils.stringToList(list.exerciseText))
@@ -98,6 +94,6 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
 
     override fun onStop() {
         super.onStop()
-        viewModel.updateProgressInDB(trainingObject)
+        viewModel.updateProgressInDB(viewModel.trainingObject)
     }
 }
