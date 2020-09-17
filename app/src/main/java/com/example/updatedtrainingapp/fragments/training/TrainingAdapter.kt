@@ -3,6 +3,7 @@ package com.example.updatedtrainingapp.fragments.training
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.updatedtrainingapp.R
@@ -25,7 +26,7 @@ class TrainingAdapter : RecyclerView.Adapter<TrainingAdapter.ThisTrainingViewHol
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ThisTrainingViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.this_training_item, parent, false)
+            .inflate(R.layout.exercise_item, parent, false)
 
         return ThisTrainingViewHolder(view)
     }
@@ -42,6 +43,7 @@ class TrainingAdapter : RecyclerView.Adapter<TrainingAdapter.ThisTrainingViewHol
                 )
             }
             holder.text.text = list[position].exerciseName
+            holder.image.setImageResource(list[position].exerciseImage.toInt())
         }
     }
 
@@ -51,6 +53,7 @@ class TrainingAdapter : RecyclerView.Adapter<TrainingAdapter.ThisTrainingViewHol
     }
 
     class ThisTrainingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val text = itemView.find<TextView>(R.id.thisTrainingExerciseTextView)
+        val text = itemView.find<TextView>(R.id.exerciseText)
+        val image = itemView.find<ImageView>(R.id.exerciseImage)
     }
 }

@@ -13,6 +13,7 @@ class DatabaseContract {
             const val DATE = "DATE"
             const val EXERCISE_NAME = "EXERCISE_NAME"
             const val EXERCISE_TEXT = "EXERCISE_TEXT"
+            const val EXERCISE_IMAGE = "EXERCISE_IMAGE"
             const val REAL_DATE = "REAL_DATE"
             const val WEIGHT = "WEIGHT"
             const val COMMENTS = "COMMENTS"

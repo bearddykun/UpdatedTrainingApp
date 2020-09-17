@@ -10,14 +10,14 @@ import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
 import org.jetbrains.anko.find
 
-class ExercisesChoiceAdapter :
+class ExercisesChoiceAdapter() :
     RecyclerView.Adapter<ExercisesChoiceAdapter.ExercisesChoiceViewHolder>() {
 
     private var list: List<ExerciseObject>? = null
     private var listener: OnExerciseChoiceItemListener? = null
 
     interface OnExerciseChoiceItemListener {
-        fun onExerciseChoiceItemClick(trainingName: String, view: View)
+        fun onExerciseChoiceItemClick(pair: Pair<String, String>, view: View)
     }
 
     fun setOnExerciseChoiceItemListener(listener: OnExerciseChoiceItemListener) {
@@ -26,7 +26,7 @@ class ExercisesChoiceAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ExercisesChoiceViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.exercise_choice_item, parent, false)
+            .inflate(R.layout.exercise_item, parent, false)
 
         return ExercisesChoiceViewHolder(view)
     }
@@ -45,7 +45,10 @@ class ExercisesChoiceAdapter :
             if (listener != null) {
                 holder.itemView.setOnClickListener {
                     listener?.onExerciseChoiceItemClick(
-                        list[position].exerciseName,
+                        Pair(
+                            list[position].exerciseName,
+                            list[position].exerciseImage
+                        ),
                         holder.itemView
                     )
                 }
@@ -56,7 +59,7 @@ class ExercisesChoiceAdapter :
     }
 
     class ExercisesChoiceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val image = itemView.find<ImageView>(R.id.exerciseChoiceImage)
-        val text = itemView.find<TextView>(R.id.exerciseChoiceText)
+        val image = itemView.find<ImageView>(R.id.exerciseImage)
+        val text = itemView.find<TextView>(R.id.exerciseText)
     }
 }

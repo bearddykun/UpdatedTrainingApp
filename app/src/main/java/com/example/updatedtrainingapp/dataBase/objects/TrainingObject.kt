@@ -11,6 +11,7 @@ data class TrainingObject(
         @ColumnInfo(name = DatabaseContract.TrainingColumns.DATE) var date: String = "",
         @ColumnInfo(name = DatabaseContract.TrainingColumns.EXERCISE_NAME) var exerciseName: String = "",
         @ColumnInfo(name = DatabaseContract.TrainingColumns.EXERCISE_TEXT) var exerciseText: String = "",
+        @ColumnInfo(name = DatabaseContract.TrainingColumns.EXERCISE_IMAGE) var exerciseImage: String = "",
         @ColumnInfo(name = DatabaseContract.TrainingColumns.REAL_DATE) var realDate: String = "",
         @ColumnInfo(name = DatabaseContract.TrainingColumns.WEIGHT) var weight: String = "",
         @ColumnInfo(name = DatabaseContract.TrainingColumns.COMMENTS) var comments: String = "",

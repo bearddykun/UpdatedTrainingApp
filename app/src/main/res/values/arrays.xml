@@ -8,6 +8,7 @@
         <item>Legs</item>
         <item>Shoulders</item>
         <item>Triceps</item>
+        <item>Traps</item>
     </string-array>
 
     <string-array name="timer_values">
