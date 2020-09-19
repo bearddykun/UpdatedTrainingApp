@@ -1,27 +1,41 @@
 package com.example.updatedtrainingapp.fragments.exerciseChoice
 
 import android.graphics.Color
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
 import com.example.updatedtrainingapp.dataBase.Constants
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
+import com.example.updatedtrainingapp.databinding.FragmentExerciseChoiceBinding
 import com.example.updatedtrainingapp.fragments.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_exercise_choice.*
 import org.jetbrains.anko.backgroundColor
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_exercise_choice),
     ExercisesChoiceAdapter.OnExerciseChoiceItemListener {
 
-    @Inject
-    lateinit var viewModel: ExerciseChoiceViewModel
+    private var _binding: FragmentExerciseChoiceBinding? = null
+    private val binding get() = _binding
+
+    private val viewModel: ExerciseChoiceViewModel by viewModels()
 
     override fun onStart() {
         super.onStart()
         setAdapter()
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentExerciseChoiceBinding.inflate(inflater, container, false)
+        return binding?.root
     }
 
     override fun onExerciseChoiceItemClick(pair: Pair<String, String>, view: View) {
@@ -62,11 +76,16 @@ class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_exercise_choice),
             ExercisesChoiceAdapter()
         adapter.swapAdapter(exerciseList)
         adapter.setOnExerciseChoiceItemListener(this)
-        exerciseChoiceRecyclerView.adapter = adapter
+        binding?.exerciseChoiceRecyclerView?.adapter = adapter
     }
 
     override fun onStop() {
         super.onStop()
         viewModel.list.forEach { i -> viewModel.addExercise(i) }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

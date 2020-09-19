@@ -6,15 +6,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.updatedtrainingapp.MainActivity
 import com.example.updatedtrainingapp.R
-import com.example.updatedtrainingapp.application.MySharedPreferences
-import com.example.updatedtrainingapp.dataBase.Constants
-import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
 import com.example.updatedtrainingapp.fragments.BaseFragment
 import com.example.updatedtrainingapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.current_exercise_fragment.*
 import org.jetbrains.anko.selector
-import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment) {
@@ -36,29 +32,27 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
         onClicks()
         viewModel.trainingObject.exerciseName = args.exName
         exerciseNameBT.text = args.exName
+        viewModel.getRemainingTime()
+            ?.observe(viewLifecycleOwner, { timerTextView.text = it.toString() })
     }
 
     private fun onClicks() {
         timerTextView.setOnClickListener {
+            viewModel.resetTimer(activity = activity as MainActivity)
             val timerList = activity?.resources?.getStringArray(R.array.timer_values)?.toList()
             timerList?.let {
                 activity?.selector(
                     getString(R.string.set_timer), it
                 ) { _, position ->
-                    viewModel.setLastSetTime(TimeUnit.SECONDS.toMillis(it[position].toLong()))
+                    viewModel.setLastSetTime(it[position])
+                    timerTextView.text = it[position]
                 }
             }
-            viewModel.getRemainingTime()?.removeObservers(viewLifecycleOwner)
-            viewModel.resetTimer(activity = activity as MainActivity)
-            timerTextView.text =
-                TimeUnit.MILLISECONDS.toSeconds(viewModel.getLastSetTime()).toString()
         }
 
         timerButton.setOnClickListener {
-            viewModel.getRemainingTime()?.removeObservers(viewLifecycleOwner)
             viewModel.resetTimer(activity = activity as MainActivity)
-            viewModel.getRemainingTime()
-                ?.observe(viewLifecycleOwner, { timerTextView.text = it.toString() })
+            viewModel.startTimer()
 
             if (currentExerciseKiloTIET.text.toString()
                     .isNotEmpty() || currentExerciseRepsTIET.text.toString().isNotEmpty()

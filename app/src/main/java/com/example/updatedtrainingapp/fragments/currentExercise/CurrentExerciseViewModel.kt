@@ -31,7 +31,7 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
     )
     private val channelId: String = "com.example.updatedtrainingapp.fragments.currentExercise"
     private var remainingTime: MutableLiveData<String> = MutableLiveData("60")
-    private var lastSetTime: Long = 60000
+    private var lastSetTime: String = "60"
     private var timer: CountDownTimer? = null
 
     private fun sendNotification(context: Context) {
@@ -73,7 +73,11 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
             override fun onFinish() {
                 sendNotification(activity)
             }
-        }.start()
+        }
+    }
+
+    fun startTimer() {
+        timer?.start()
     }
 
     private fun sendNotification(activity: MainActivity) {
@@ -83,7 +87,8 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
 
     fun resetTimer(activity: MainActivity) {
         timer?.cancel()
-        setTimer(lastSetTime, activity)
+        remainingTime.value = lastSetTime
+        setTimer(TimeUnit.SECONDS.toMillis(lastSetTime.toLong()), activity)
     }
 
     fun getExerciseWithDate(exName: String): LiveData<TrainingObject>? {
@@ -121,11 +126,7 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
         }
     }
 
-    fun getLastSetTime(): Long {
-        return lastSetTime
-    }
-
-    fun setLastSetTime(time: Long) {
+    fun setLastSetTime(time: String) {
         lastSetTime = time
     }
 }
