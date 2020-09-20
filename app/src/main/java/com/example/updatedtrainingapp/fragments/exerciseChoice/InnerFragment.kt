@@ -15,7 +15,6 @@ import org.jetbrains.anko.backgroundColor
 import java.util.*
 
 private const val ARG_PARAM1 = "param1"
-private const val ARG_ARRAY = "array"
 
 @AndroidEntryPoint
 class InnerFragment : Fragment(), ExercisesChoiceAdapter.OnExerciseChoiceItemListener {

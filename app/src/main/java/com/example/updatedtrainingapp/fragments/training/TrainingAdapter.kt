@@ -15,13 +15,22 @@ class TrainingAdapter : RecyclerView.Adapter<TrainingAdapter.ThisTrainingViewHol
     private var list: List<TrainingObject>? = null
 
     private var listener: OnTrainingItemClickListener? = null
+    private var longListener: OnTrainingItemLongClickListener? = null
 
     interface OnTrainingItemClickListener {
         fun onTrainingItemClick(exerciseName: String)
     }
 
+    interface OnTrainingItemLongClickListener {
+        fun onTrainingItemLongClick(trainingObject: TrainingObject)
+    }
+
     fun setOnTrainingItemClickListener(listener: OnTrainingItemClickListener) {
         this.listener = listener
+    }
+
+    fun setOnTrainingItemLongClickListener(listener: OnTrainingItemLongClickListener) {
+        this.longListener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ThisTrainingViewHolder {
@@ -41,6 +50,10 @@ class TrainingAdapter : RecyclerView.Adapter<TrainingAdapter.ThisTrainingViewHol
                 listener?.onTrainingItemClick(
                     list[position].exerciseName
                 )
+            }
+            holder.itemView.setOnLongClickListener {
+                longListener?.onTrainingItemLongClick(list[position])
+                true
             }
             holder.text.text = list[position].exerciseName
             holder.image.setImageResource(list[position].exerciseImage.toInt())

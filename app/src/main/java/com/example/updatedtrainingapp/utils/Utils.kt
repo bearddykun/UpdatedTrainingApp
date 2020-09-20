@@ -1,5 +1,7 @@
 package com.example.updatedtrainingapp.utils
 
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Build
 import com.example.updatedtrainingapp.application.MySharedPreferences
 import com.example.updatedtrainingapp.dataBase.Constants
@@ -50,6 +52,18 @@ class Utils {
                 val dateFormat = SimpleDateFormat("YYYY-MM-dd", Locale.UK)
                 name + dateFormat.format(date)
             }
+        }
+
+        fun getAlertDialog(context: Context, title: String, message: String, func: () -> Unit) {
+            val alert = AlertDialog.Builder(context)
+            alert.apply {
+                setMessage(message)
+                setTitle(title)
+                setPositiveButton("OK") { _, _ ->
+                    func()
+                }
+                setNegativeButton("NO") { _, _ -> }
+            }.show()
         }
     }
 }

@@ -16,7 +16,7 @@ class ViewPagerAdapter(fm: FragmentManager, private val list: List<ExerciseObjec
         val filteredList = mutableListOf<ExerciseObject>()
         for (o in list) {
             if (o.exerciseGroup.toLowerCase(Locale.ROOT) == array[position].toLowerCase(Locale.ROOT))
-            filteredList.add(o)
+                filteredList.add(o)
         }
         return InnerFragment.newInstance(filteredList)
     }
@@ -26,6 +26,6 @@ class ViewPagerAdapter(fm: FragmentManager, private val list: List<ExerciseObjec
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return array[position]
+        return (position + 1).toString()
     }
 }

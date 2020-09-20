@@ -17,4 +17,8 @@ class TrainingViewModel @ViewModelInject constructor(private val trainingDBViewM
             MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME)
         )
     }
+
+    fun deleteTrainingExercise(trainingObject: TrainingObject) {
+        trainingDBViewModel.deleteExercise(trainingObject)
+    }
 }

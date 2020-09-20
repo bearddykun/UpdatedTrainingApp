@@ -11,6 +11,7 @@ import com.example.updatedtrainingapp.fragments.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_choose_exercise.*
 
+
 @AndroidEntryPoint
 class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_choose_exercise) {
 
@@ -33,6 +34,17 @@ class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_choose_exercise) {
         return binding?.root
     }
 
+    private val imageArray = arrayOf(
+        R.mipmap.abs,
+        R.mipmap.back,
+        R.mipmap.biceps,
+        R.mipmap.chest,
+        R.mipmap.legs,
+        R.mipmap.shoulders,
+        R.mipmap.triceps,
+        R.mipmap.traps
+    )
+
     private fun setAdapter() {
         viewModel.getAllExercises()?.observe(viewLifecycleOwner, { exerciseList ->
             binding?.mainViewPager?.adapter =
@@ -40,7 +52,10 @@ class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_choose_exercise) {
                     requireActivity().supportFragmentManager,
                     viewModel.getList(exerciseList)
                 )
-            mainTabs.setupWithViewPager(mainViewPager)
+            binding?.mainTabs?.setupWithViewPager(mainViewPager)
+            for (i in 0 until mainTabs.tabCount) {
+                binding?.mainTabs?.getTabAt(i)?.setIcon(imageArray[i])
+            }
         })
     }
 
