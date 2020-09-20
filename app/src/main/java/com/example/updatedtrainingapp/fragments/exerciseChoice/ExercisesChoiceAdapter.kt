@@ -35,7 +35,7 @@ class ExercisesChoiceAdapter() :
         return list?.size ?: 0
     }
 
-    fun swapAdapter(list: MutableList<ExerciseObject>) {
+    fun swapAdapter(list: List<ExerciseObject>) {
         this.list = list
         notifyDataSetChanged()
     }

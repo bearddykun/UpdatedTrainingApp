@@ -11,20 +11,16 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
 import com.example.updatedtrainingapp.dataBase.Constants
-import com.example.updatedtrainingapp.dataBase.dbViewModels.TrainingDBViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import org.jetbrains.anko.find
 
 @AndroidEntryPoint
 class CreateTrainingFragment :
     DialogFragment(), TextView.OnEditorActionListener {
-
-    private val trainingViewModel: TrainingDBViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

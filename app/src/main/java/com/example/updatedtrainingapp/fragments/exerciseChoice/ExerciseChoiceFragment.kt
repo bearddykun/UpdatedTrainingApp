@@ -1,28 +1,23 @@
 package com.example.updatedtrainingapp.fragments.exerciseChoice
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.example.updatedtrainingapp.R
-import com.example.updatedtrainingapp.application.MySharedPreferences
-import com.example.updatedtrainingapp.dataBase.Constants
-import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
-import com.example.updatedtrainingapp.databinding.FragmentExerciseChoiceBinding
+import com.example.updatedtrainingapp.databinding.FragmentChooseExerciseBinding
 import com.example.updatedtrainingapp.fragments.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import org.jetbrains.anko.backgroundColor
+import kotlinx.android.synthetic.main.fragment_choose_exercise.*
 
 @AndroidEntryPoint
-class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_exercise_choice),
-    ExercisesChoiceAdapter.OnExerciseChoiceItemListener {
+class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_choose_exercise) {
 
-    private var _binding: FragmentExerciseChoiceBinding? = null
+    private var _binding: FragmentChooseExerciseBinding? = null
     private val binding get() = _binding
 
-    private val viewModel: ExerciseChoiceViewModel by viewModels()
+    private val viewModel: ExerciseChoiceViewModel by activityViewModels()
 
     override fun onStart() {
         super.onStart()
@@ -34,54 +29,25 @@ class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_exercise_choice),
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentExerciseChoiceBinding.inflate(inflater, container, false)
+        _binding = FragmentChooseExerciseBinding.inflate(inflater, container, false)
         return binding?.root
-    }
-
-    override fun onExerciseChoiceItemClick(pair: Pair<String, String>, view: View) {
-        addRemoveExercise(pair, view)
-    }
-
-    private fun addRemoveExercise(pair: Pair<String, String>, view: View) {
-        viewModel.list.forEach { pairInList ->
-            if (pairInList.first == pair.first) {
-                viewModel.list.remove(pairInList)
-                view.backgroundColor = Color.WHITE
-                return
-            }
-        }
-        viewModel.list.add(pair)
-        view.backgroundColor = Color.BLUE
     }
 
     private fun setAdapter() {
         viewModel.getAllExercises()?.observe(viewLifecycleOwner, { exerciseList ->
-            val list = MySharedPreferences.getList(Constants.EXERCISE_LIST)
-            val newList = mutableListOf<ExerciseObject>()
-            exerciseList.forEach {
-                if (!list.contains(it.exerciseName)) {
-                    newList.add(it)
-                }
-            }
-            showExerciseList(
-                viewModel.getList(newList)
-            )
+            binding?.mainViewPager?.adapter =
+                ViewPagerAdapter(
+                    requireActivity().supportFragmentManager,
+                    viewModel.getList(exerciseList)
+                )
+            mainTabs.setupWithViewPager(mainViewPager)
         })
-    }
-
-    private fun showExerciseList(
-        exerciseList: MutableList<ExerciseObject>
-    ) {
-        val adapter =
-            ExercisesChoiceAdapter()
-        adapter.swapAdapter(exerciseList)
-        adapter.setOnExerciseChoiceItemListener(this)
-        binding?.exerciseChoiceRecyclerView?.adapter = adapter
     }
 
     override fun onStop() {
         super.onStop()
         viewModel.list.forEach { i -> viewModel.addExercise(i) }
+        viewModel.clearList()
     }
 
     override fun onDestroyView() {

@@ -48,4 +48,8 @@ class ExerciseChoiceViewModel @ViewModelInject constructor(
         }
         return newExList
     }
+
+    fun clearList() {
+        list.clear()
+    }
 }
