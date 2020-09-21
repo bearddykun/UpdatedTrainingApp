@@ -1,11 +1,14 @@
 package com.example.updatedtrainingapp.fragments.newExercise
 
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.updatedtrainingapp.MainActivity
 import com.example.updatedtrainingapp.R
-import com.example.updatedtrainingapp.dataBase.dbViewModels.ExerciseDBViewModel
-import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
+import com.example.updatedtrainingapp.databinding.FragmentCreateNewExerciseBinding
 import com.example.updatedtrainingapp.fragments.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_create_new_exercise.*
@@ -14,66 +17,66 @@ import kotlinx.android.synthetic.main.fragment_create_new_exercise.*
 class CreateNewExerciseFragment : BaseFragment(R.layout.fragment_create_new_exercise),
     CreateNewExerciseAdapter.OnCreateNewExerciseListener {
 
-    private val exerciseDBViewModel: ExerciseDBViewModel by viewModels()
-    private var exImageId = 0
-    private var exGroupName = ""
-    private var isExerciseInside = false
+    private val viewModel: NewExerciseViewModel by viewModels()
+    private var binding: FragmentCreateNewExerciseBinding? = null
 
     override fun onStart() {
         super.onStart()
         val adapter = CreateNewExerciseAdapter()
         adapter.setOnCreateNewExerciseListener(this)
-        createNewExerciseRecyclerView.adapter = adapter
+        binding?.createNewExerciseRecyclerView?.adapter = adapter
         createNewExOnClick()
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentCreateNewExerciseBinding.inflate(inflater, container, false)
+        return binding?.root
+    }
+
     private fun createNewExOnClick() {
-        createExerciseBtn.setOnClickListener {
-            addExerciseToDb(
-                isExerciseInside(),
-                createExerciseNameEdit.text.toString(), exGroupName, exImageId
-            )
+        binding?.createExerciseBtn?.setOnClickListener {
+            if (validateFields(
+                    binding?.createExerciseNameEdit?.text.toString(),
+                    binding?.createExerciseGroupText?.text.toString()
+                )
+            ) {
+                isExerciseInside()
+            }
         }
     }
 
-    private fun isExerciseInside(): Boolean {
-        exerciseDBViewModel.getExerciseWithName(
-            createExerciseNameEdit.text.toString()
-        )?.observe(viewLifecycleOwner, {
-            isExerciseInside = it != null
-        })
-        return isExerciseInside
+    private fun isExerciseInside() {
+        viewModel.getExerciseWithName(
+            binding?.createExerciseNameEdit?.text.toString()
+        ).observe(viewLifecycleOwner) {
+            if (it == null) {
+                viewModel.addExerciseToDb(createExerciseNameEdit.text.toString())
+            } else {
+                (activity as MainActivity).showErrorSnack("Already in DB")
+            }
+        }
     }
-
 
     override fun chooseMuscleGroup(imageId: Int, muscleGroup: String) {
-        exImageId = imageId
-        exGroupName = muscleGroup
+        binding?.createExerciseGroupImage?.setImageResource(imageId)
+        viewModel.chooseMuscleGroup(imageId, muscleGroup)
     }
 
-    private fun addExerciseToDb(
-        isExerciseInside: Boolean,
-        exName: String,
-        exGroupName: String,
-        exImageId: Int
-    ) {
-        if (isExerciseInside) {
-            (activity as MainActivity).showErrorSnack("Already in DB")
-            return
-        }
-        if (exName == "" || exGroupName == "" || exImageId == 0) {
-            validateFields(exName, exGroupName, exImageId)
-            return
-        }
-        val exercise = ExerciseObject(null, exName, exGroupName, exImageId.toString())
-        exerciseDBViewModel.insertExercise(exercise)
-    }
-
-    private fun validateFields(exName: String, exGroupName: String, exImageId: Int) {
-        when {
-            exName == "" -> (activity as MainActivity).showErrorSnack("No name")
-            exGroupName == "" -> (activity as MainActivity).showErrorSnack("No group")
-            exImageId == 0 -> (activity as MainActivity).showErrorSnack("No image")
+    private fun validateFields(exName: String, exGroupName: String): Boolean {
+        return when {
+            exName == "" -> {
+                (activity as MainActivity).showErrorSnack("No name")
+                return false
+            }
+            exGroupName == "" -> {
+                (activity as MainActivity).showErrorSnack("No group")
+                return false
+            }
+            else -> true
         }
     }
 }

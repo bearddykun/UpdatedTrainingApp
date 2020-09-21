@@ -1,44 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="fragments.newExercise.CreateNewExerciseFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="fragments.newExercise.CreateNewExerciseFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/dp16"
-        android:orientation="vertical"
-        tools:context=".ui.thisTraining.fragments.newExercise.CreateNewExerciseActivity">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/createExerciseGroupText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/createExerciseNameLayout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/createExerciseNameEdit"
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/createExerciseGroupImage"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/enter_name_for_new_exercise"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_weight="1"
+                android:src="@mipmap/arni_abs" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/createExerciseNameLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/createExerciseNameEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_name_for_new_exercise"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/createNewExerciseRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:layoutAnimation="@tools:sample/cities" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </LinearLayout>
 
@@ -46,9 +56,9 @@
         android:id="@+id/createExerciseBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/create"
         android:layout_margin="@dimen/dp56"
         android:src="@drawable/ic_done_black_24dp"
+        android:text="@string/create"
         app:layout_anchor="@id/createNewExerciseRecyclerView"
         app:layout_anchorGravity="bottom|end" />
 
