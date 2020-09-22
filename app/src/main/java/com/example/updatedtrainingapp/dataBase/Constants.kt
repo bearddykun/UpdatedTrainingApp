@@ -3,7 +3,6 @@ package com.example.updatedtrainingapp.dataBase
 class Constants {
 
     companion object {
-        const val EXERCISE_LIST = "EXERCISE_LIST"
         const val BICEPS_GROUP = "biceps"
         const val TRICEPS_GROUP = "triceps"
         const val SHOULDERS_GROUP = "shoulders"

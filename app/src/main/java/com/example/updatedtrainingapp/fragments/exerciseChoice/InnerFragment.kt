@@ -56,19 +56,17 @@ class InnerFragment : Fragment(), ExercisesChoiceAdapter.OnExerciseChoiceItemLis
         }
     }
 
-    override fun onExerciseChoiceItemClick(pair: Pair<String, String>, view: View) {
-        addRemoveExercise(pair, view)
+    override fun onExerciseChoiceItemClick(exercise: String, view: View) {
+        addRemoveExercise(exercise, view)
     }
 
-    private fun addRemoveExercise(pair: Pair<String, String>, view: View) {
-        viewModel.list.forEach { pairInList ->
-            if (pairInList.first == pair.first) {
-                viewModel.list.remove(pairInList)
-                view.backgroundColor = Color.WHITE
-                return
-            }
+    private fun addRemoveExercise(exercise: String, view: View) {
+        if (viewModel.listOfNewExercises.contains(exercise)) {
+            viewModel.listOfNewExercises.remove(exercise)
+            view.backgroundColor = Color.WHITE
+            return
         }
-        viewModel.list.add(pair)
+        viewModel.listOfNewExercises.add(exercise)
         view.backgroundColor = Color.BLUE
     }
 }

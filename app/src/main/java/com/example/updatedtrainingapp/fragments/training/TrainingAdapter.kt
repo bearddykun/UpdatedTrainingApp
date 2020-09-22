@@ -7,12 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.updatedtrainingapp.R
-import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
+import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
 import org.jetbrains.anko.find
 
 class TrainingAdapter : RecyclerView.Adapter<TrainingAdapter.ThisTrainingViewHolder>() {
 
-    private var list: List<TrainingObject>? = null
+    private var list: List<ExerciseObject>? = null
 
     private var listener: OnTrainingItemClickListener? = null
     private var longListener: OnTrainingItemLongClickListener? = null
@@ -22,7 +22,7 @@ class TrainingAdapter : RecyclerView.Adapter<TrainingAdapter.ThisTrainingViewHol
     }
 
     interface OnTrainingItemLongClickListener {
-        fun onTrainingItemLongClick(trainingObject: TrainingObject)
+        fun onTrainingItemLongClick(exerciseName: String)
     }
 
     fun setOnTrainingItemClickListener(listener: OnTrainingItemClickListener) {
@@ -46,13 +46,15 @@ class TrainingAdapter : RecyclerView.Adapter<TrainingAdapter.ThisTrainingViewHol
 
     override fun onBindViewHolder(holder: ThisTrainingViewHolder, position: Int) {
         list?.let { list ->
+            if (list[position].exerciseName.isEmpty() || list[position].exerciseImage.isEmpty()) return
+
             holder.itemView.setOnClickListener {
                 listener?.onTrainingItemClick(
                     list[position].exerciseName
                 )
             }
             holder.itemView.setOnLongClickListener {
-                longListener?.onTrainingItemLongClick(list[position])
+                longListener?.onTrainingItemLongClick(list[position].exerciseName)
                 true
             }
             holder.text.text = list[position].exerciseName
@@ -60,7 +62,7 @@ class TrainingAdapter : RecyclerView.Adapter<TrainingAdapter.ThisTrainingViewHol
         }
     }
 
-    fun swapAdapter(list: List<TrainingObject>) {
+    fun swapAdapter(list: List<ExerciseObject>) {
         this.list = list
         notifyDataSetChanged()
     }

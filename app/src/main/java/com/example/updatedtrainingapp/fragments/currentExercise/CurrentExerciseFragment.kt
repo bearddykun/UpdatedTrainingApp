@@ -1,11 +1,15 @@
 package com.example.updatedtrainingapp.fragments.currentExercise
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.updatedtrainingapp.MainActivity
 import com.example.updatedtrainingapp.R
+import com.example.updatedtrainingapp.databinding.CurrentExerciseFragmentBinding
 import com.example.updatedtrainingapp.fragments.BaseFragment
 import com.example.updatedtrainingapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,25 +23,35 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
     private var adapter: CurrentExerciseAdapter? = null
 
     private val viewModel: CurrentExerciseViewModel by viewModels()
+    private var binding: CurrentExerciseFragmentBinding? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         adapter = CurrentExerciseAdapter()
-        currentExerciseRV.adapter = adapter
+        binding?.currentExerciseRV?.adapter = adapter
         loadAdapter()
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = CurrentExerciseFragmentBinding.inflate(inflater, container, false)
+        return binding?.root
     }
 
     override fun onStart() {
         super.onStart()
+        viewModel.setTrainingObjectData(args.exName)
         onClicks()
-        viewModel.trainingObject.exerciseName = args.exName
-        exerciseNameBT.text = args.exName
+        binding?.exerciseNameBT?.text = args.exName
         viewModel.getRemainingTime()
             ?.observe(viewLifecycleOwner, { timerTextView.text = it.toString() })
     }
 
     private fun onClicks() {
-        timerTextView.setOnClickListener {
+        binding?.timerTextView?.setOnClickListener {
             viewModel.resetTimer(activity = activity as MainActivity)
             val timerList = activity?.resources?.getStringArray(R.array.timer_values)?.toList()
             timerList?.let {
@@ -45,28 +59,30 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
                     getString(R.string.set_timer), it
                 ) { _, position ->
                     viewModel.setLastSetTime(it[position])
-                    timerTextView.text = it[position]
+                    binding?.timerTextView?.text = it[position]
                 }
             }
         }
 
-        timerButton.setOnClickListener {
+        binding?.timerButton?.setOnClickListener {
             viewModel.resetTimer(activity = activity as MainActivity)
             viewModel.startTimer()
 
-            if (currentExerciseKiloTIET.text.toString()
-                    .isNotEmpty() || currentExerciseRepsTIET.text.toString().isNotEmpty()
+            if (binding?.currentExerciseKiloTIET?.text.toString()
+                    .isNotEmpty() || binding?.currentExerciseRepsTIET?.text.toString().isNotEmpty()
             ) {
-                adapter?.updateList(currentExerciseKiloTIET.text.toString() + " X " + currentExerciseRepsTIET.text.toString())
+                adapter?.updateList(
+                    binding?.currentExerciseKiloTIET?.text.toString() + " X " +
+                            binding?.currentExerciseRepsTIET?.text.toString()
+                )
                 viewModel.updateExerciseText(
-                    viewModel.trainingObject,
-                    currentExerciseKiloTIET.text.toString(),
-                    currentExerciseRepsTIET.text.toString()
+                    binding?.currentExerciseKiloTIET?.text.toString(),
+                    binding?.currentExerciseRepsTIET?.text.toString()
                 )
             }
         }
 
-        exerciseNameBT.setOnClickListener {
+        binding?.exerciseNameBT?.setOnClickListener {
             findNavController().navigate(
                 CurrentExerciseFragmentDirections.actionCurrentExerciseFragmentToFragmentTrainingDay()
             )
@@ -74,21 +90,24 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
     }
 
     private fun loadAdapter() {
-        viewModel.getExerciseWithDate(
-            args.exName
+        viewModel.getExerciseInTraining(
         )?.observe(viewLifecycleOwner, {
-            if (it != null) {
+            it?.let { trainingObject ->
+                it.realDate = Utils.getDate()
                 viewModel.trainingObject = it
-            }
-            it?.let { list ->
-                adapter?.swapAdapter(Utils.stringToList(list.exerciseText))
+                adapter?.swapAdapter(Utils.stringToList(trainingObject.exerciseText))
             }
         })
     }
 
     override fun onStop() {
+        var inside = false
+        viewModel.getExerciseWithDate()?.observe(viewLifecycleOwner, {
+            inside = true
+        })
+        viewModel.updateProgressInDB(inside)
         super.onStop()
-        viewModel.updateProgressInDB(viewModel.trainingObject)
+
     }
 
     override fun onDestroy() {

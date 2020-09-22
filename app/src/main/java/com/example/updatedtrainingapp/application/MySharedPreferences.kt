@@ -5,7 +5,8 @@ import org.jetbrains.anko.defaultSharedPreferences
 class MySharedPreferences {
 
     companion object {
-        private val sharedPreferencesEditor = ThisApplication.instance.defaultSharedPreferences.edit()
+        private val sharedPreferencesEditor =
+            ThisApplication.instance.defaultSharedPreferences.edit()
         private val sharedPreferences = ThisApplication.instance.defaultSharedPreferences
 
         fun saveBoolean(key: String, boolean: Boolean) {
@@ -30,13 +31,13 @@ class MySharedPreferences {
             return sharedPreferences.contains(key)
         }
 
-        fun saveString(key: String, string: String){
+        fun saveString(key: String, string: String) {
             sharedPreferencesEditor.putString(key, string)
             sharedPreferencesEditor.apply()
         }
 
-        fun getString(key: String): String{
-            return sharedPreferences.getString(key, "")!!
+        fun getString(key: String): String {
+            return sharedPreferences.getString(key, "") as String
         }
 
         fun getList(listKey: String): MutableSet<String> {

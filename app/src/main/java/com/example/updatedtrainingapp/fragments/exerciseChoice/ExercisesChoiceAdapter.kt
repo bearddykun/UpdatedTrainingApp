@@ -10,14 +10,14 @@ import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
 import org.jetbrains.anko.find
 
-class ExercisesChoiceAdapter() :
+class ExercisesChoiceAdapter :
     RecyclerView.Adapter<ExercisesChoiceAdapter.ExercisesChoiceViewHolder>() {
 
     private var list: List<ExerciseObject>? = null
     private var listener: OnExerciseChoiceItemListener? = null
 
     interface OnExerciseChoiceItemListener {
-        fun onExerciseChoiceItemClick(pair: Pair<String, String>, view: View)
+        fun onExerciseChoiceItemClick(exercise: String, view: View)
     }
 
     fun setOnExerciseChoiceItemListener(listener: OnExerciseChoiceItemListener) {
@@ -45,10 +45,7 @@ class ExercisesChoiceAdapter() :
             if (listener != null) {
                 holder.itemView.setOnClickListener {
                     listener?.onExerciseChoiceItemClick(
-                        Pair(
-                            list[position].exerciseName,
-                            list[position].exerciseImage
-                        ),
+                        list[position].exerciseName,
                         holder.itemView
                     )
                 }

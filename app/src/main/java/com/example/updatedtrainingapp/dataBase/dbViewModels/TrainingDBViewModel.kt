@@ -40,11 +40,22 @@ class TrainingDBViewModel @Inject constructor(application: Application) :
         return trainingRepository?.getExercisesWithTraining(trainingName)
     }
 
-    fun isExerciseInThisTraining(exerciseName: String, trainingNameWithDate: String): Boolean? {
-        return trainingRepository?.isExerciseInThisTraining(exerciseName, trainingNameWithDate)
+    fun getExerciseWithTrainingName(
+        exerciseName: String,
+        trainingName: String
+    ): LiveData<TrainingObject>? {
+        return trainingRepository?.getExerciseWithTrainingName(exerciseName, trainingName)
     }
 
-    fun getTrainingsWithData(date: String) : LiveData<List<TrainingObject>>? {
+    fun isExerciseInThisTraining(
+        exerciseName: String,
+        realDate: String,
+        trainingName: String
+    ): LiveData<TrainingObject>? {
+        return trainingRepository?.isExerciseInThisTraining(exerciseName, realDate, trainingName)
+    }
+
+    fun getTrainingsWithData(date: String): LiveData<List<TrainingObject>>? {
         return trainingRepository?.getTrainingsWithData(date)
     }
 }

@@ -27,9 +27,19 @@ interface TrainingDao {
     @Delete
     fun deleteExercise(trainingObject: TrainingObject)
 
-    @Query("SELECT * FROM table_training WHERE EXERCISE_NAME LIKE :exerciseName AND TRAINING_NAME_WITH_DATE LIKE :trainingNameWithDate LIMIT 1")
-    fun isExerciseInThisTraining(exerciseName: String, trainingNameWithDate: String): Boolean
+    @Query("SELECT * FROM table_training WHERE EXERCISE_NAME LIKE :exerciseName AND REAL_DATE LIKE :realDate AND TRAINING_NAME LIKE :trainingName LIMIT 1")
+    fun isExerciseInThisTraining(
+        exerciseName: String,
+        realDate: String,
+        trainingName: String
+    ): LiveData<TrainingObject>
 
     @Query("SELECT * FROM table_training WHERE REAL_DATE LIKE :date")
     fun getTrainingsWithData(date: String): LiveData<List<TrainingObject>>
+
+    @Query("SELECT * FROM table_training WHERE EXERCISE_NAME LIKE :exerciseName AND TRAINING_NAME LIKE :trainingName LIMIT 1")
+    fun getExerciseWithTrainingName(
+        exerciseName: String,
+        trainingName: String
+    ): LiveData<TrainingObject>?
 }

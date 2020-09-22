@@ -12,7 +12,7 @@ import java.util.*
 class Utils {
 
     companion object {
-        fun listToString(list: MutableList<String>): String {
+        private fun listToString(list: MutableList<String>): String {
             val stringBuilder = StringBuilder()
             for (i in 0 until list.size) {
                 if (list[i] != "") {
@@ -32,16 +32,28 @@ class Utils {
                 mutableListOf()
         }
 
+        fun getTrainingExerciseList(): MutableList<String> {
+            return stringToList(
+                MySharedPreferences.getString(
+                    MySharedPreferences.getString(
+                        Constants.SAVE_TRAINING_NAME
+                    )
+                )
+            )
+        }
+
+        fun saveTrainingExerciseString(list: MutableList<String>) {
+            MySharedPreferences.saveString(
+                MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME),
+                listToString(list)
+            )
+        }
+
         fun getCurrentTime(): String {
             val calendar = Calendar.getInstance()
             val date = calendar.time
             val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.UK)
             return dateFormat.format(date)
-        }
-
-        fun getCurrentTrainingList(): String {
-            val trainingName = MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME)
-            return trainingName + Constants.SAVE_NEW_TRAINING_LIST
         }
 
         fun getNameWithDate(name: String): String {

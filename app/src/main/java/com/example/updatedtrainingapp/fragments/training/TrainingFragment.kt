@@ -1,15 +1,14 @@
 package com.example.updatedtrainingapp.fragments.training
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.updatedtrainingapp.R
-import com.example.updatedtrainingapp.application.MySharedPreferences
-import com.example.updatedtrainingapp.dataBase.Constants
-import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
+import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
 import com.example.updatedtrainingapp.databinding.TrainingFragmentBinding
 import com.example.updatedtrainingapp.fragments.BaseFragment
 import com.example.updatedtrainingapp.utils.Utils
@@ -21,20 +20,31 @@ class TrainingFragment : BaseFragment(R.layout.training_fragment),
 
     private val viewModel: TrainingViewModel by viewModels()
     private var binding: TrainingFragmentBinding? = null
+    private var adapter: TrainingAdapter? = null
 
     override fun onStart() {
         super.onStart()
-        viewModel.getExercisesWithTraining()
-            ?.let {
-                it.observe(viewLifecycleOwner, { trainings ->
-                    saveTrainingExercises(trainings)
-                    val adapter = TrainingAdapter()
-                    adapter.swapAdapter(trainings)
-                    adapter.setOnTrainingItemClickListener(this)
-                    adapter.setOnTrainingItemLongClickListener(this)
-                    binding?.recyclerViewThisTraining?.adapter = adapter
-                })
-            }
+        setAdapter()
+    }
+
+    private fun fetchExerciseData() {
+        val exerciseList: MutableList<ExerciseObject> = mutableListOf()
+        val list = Utils.getTrainingExerciseList()
+        list.forEach {
+            viewModel.getExerciseWithName(it)?.observe(viewLifecycleOwner, { exercise ->
+                exerciseList.add(exercise)
+                if (exerciseList.size == list.size)
+                    adapter?.swapAdapter(exerciseList)
+            })
+        }
+    }
+
+    private fun setAdapter() {
+        adapter = TrainingAdapter()
+        adapter?.setOnTrainingItemClickListener(this)
+        adapter?.setOnTrainingItemLongClickListener(this)
+        binding?.recyclerViewThisTraining?.adapter = adapter
+        Handler().postDelayed({ fetchExerciseData() }, 100)
     }
 
     override fun onCreateView(
@@ -54,18 +64,13 @@ class TrainingFragment : BaseFragment(R.layout.training_fragment),
         )
     }
 
-    private fun saveTrainingExercises(trainings: List<TrainingObject>) {
-        val list = mutableSetOf<String>()
-        trainings.forEach {
-            list.add(it.exerciseName)
-        }
-        MySharedPreferences.saveList(Constants.EXERCISE_LIST, list)
-    }
-
-    override fun onTrainingItemLongClick(trainingObject: TrainingObject) {
+    override fun onTrainingItemLongClick(exerciseName: String) {
         Utils.getAlertDialog(
             requireActivity(),
-            getString(R.string.delete), "Sure you want to delete this?"
-        ) { viewModel.deleteTrainingExercise(trainingObject) }
+            getString(R.string.delete), "Sure you want to delete $exerciseName?"
+        ) {
+            viewModel.deleteTrainingExercise(exerciseName)
+            fetchExerciseData()
+        }
     }
 }

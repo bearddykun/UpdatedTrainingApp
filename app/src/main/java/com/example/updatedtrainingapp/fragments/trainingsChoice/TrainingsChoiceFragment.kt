@@ -10,7 +10,6 @@ import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
 import com.example.updatedtrainingapp.dataBase.Constants
 import com.example.updatedtrainingapp.dataBase.dbViewModels.TrainingDBViewModel
-import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
 import com.example.updatedtrainingapp.databinding.TrainingsChoiceFragmentBinding
 import com.example.updatedtrainingapp.fragments.BaseFragment
 import com.example.updatedtrainingapp.utils.Utils
@@ -44,7 +43,7 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
     override fun onTrainingListItemClick(name: String) {
         Utils.getAlertDialog(
             requireActivity(),
-            getString(R.string.start_training),
+            "${getString(R.string.start_training)} $name?",
             getString(R.string.start_training_timer)
         )
         {
@@ -52,13 +51,9 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
                 Constants.SAVE_TRAINING_NAME,
                 name
             )
-            trainingViewModel.insertExercise(
-                TrainingObject(
-                    null,
-                    trainingName = name,
-                    trainingNameWithDate = Utils.getNameWithDate(name)
-                )
-            )
+            if (!MySharedPreferences.isInside(name)) {
+                Utils.saveTrainingExerciseString(mutableListOf())
+            }
             startTraining()
         }
     }

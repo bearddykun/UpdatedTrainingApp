@@ -18,18 +18,13 @@ import com.example.updatedtrainingapp.dataBase.Constants
 import com.example.updatedtrainingapp.dataBase.dbViewModels.TrainingDBViewModel
 import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
 import com.example.updatedtrainingapp.utils.Utils
-import org.jetbrains.anko.doAsync
 import java.util.concurrent.TimeUnit
 
 class CurrentExerciseViewModel @ViewModelInject constructor(
     private val trainingViewModel: TrainingDBViewModel
 ) : ViewModel() {
 
-    var trainingObject: TrainingObject = TrainingObject(
-        null,
-        realDate = Utils.getDate(),
-        trainingName = MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME),
-    )
+    var trainingObject: TrainingObject = TrainingObject(null)
     private val channelId: String = "com.example.updatedtrainingapp.fragments.currentExercise"
     private var remainingTime: MutableLiveData<String> = MutableLiveData("60")
     private var lastSetTime: String = "60"
@@ -92,15 +87,22 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
         setTimer(TimeUnit.SECONDS.toMillis(lastSetTime.toLong()), activity)
     }
 
-    fun getExerciseWithDate(exName: String): LiveData<TrainingObject>? {
-        return trainingViewModel.getExerciseWithData(
-            exName,
-            Utils.getDate()
+    fun getExerciseWithDate(): LiveData<TrainingObject>? {
+        return trainingViewModel.isExerciseInThisTraining(
+            trainingObject.exerciseName,
+            trainingObject.realDate,
+            trainingObject.trainingName
+        )
+    }
+
+    fun getExerciseInTraining(): LiveData<TrainingObject>? {
+        return trainingViewModel.getExerciseWithTrainingName(
+            trainingObject.exerciseName,
+            trainingObject.trainingName
         )
     }
 
     fun updateExerciseText(
-        trainingObject: TrainingObject,
         kiloText: String,
         repsText: String
     ) {
@@ -112,22 +114,21 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
         trainingObject.exerciseText += text
     }
 
-    fun updateProgressInDB(trainingObject: TrainingObject) {
-        doAsync {
-            trainingViewModel.isExerciseInThisTraining(
-                trainingObject.exerciseName,
-                trainingObject.realDate
-            )?.let {
-                if (it) {
-                    trainingViewModel.updateExercise(trainingObject = trainingObject)
-                } else {
-                    trainingViewModel.insertExercise(trainingObject = trainingObject)
-                }
-            }
+    fun updateProgressInDB(isExerciseExists: Boolean) {
+        if (isExerciseExists) {
+            trainingViewModel.updateExercise(trainingObject = trainingObject)
+        } else {
+            trainingViewModel.insertExercise(trainingObject = trainingObject)
         }
     }
 
     fun setLastSetTime(time: String) {
         lastSetTime = time
+    }
+
+    fun setTrainingObjectData(exName: String) {
+        trainingObject.exerciseName = exName
+        trainingObject.trainingName = MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME)
+        trainingObject.realDate = Utils.getDate()
     }
 }

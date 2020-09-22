@@ -61,8 +61,7 @@ class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_choose_exercise) {
 
     override fun onStop() {
         super.onStop()
-        viewModel.list.forEach { i -> viewModel.addExercise(i) }
-        viewModel.clearList()
+        viewModel.addExercise()
     }
 
     override fun onDestroyView() {
