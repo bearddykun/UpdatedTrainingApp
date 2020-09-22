@@ -90,4 +90,9 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
         super.onStop()
         viewModel.updateProgressInDB(viewModel.trainingObject)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.resetTimer(requireActivity() as MainActivity)
+    }
 }

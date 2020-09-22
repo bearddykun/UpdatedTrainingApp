@@ -43,4 +43,8 @@ class TrainingDBViewModel @Inject constructor(application: Application) :
     fun isExerciseInThisTraining(exerciseName: String, trainingNameWithDate: String): Boolean? {
         return trainingRepository?.isExerciseInThisTraining(exerciseName, trainingNameWithDate)
     }
+
+    fun getTrainingsWithData(date: String) : LiveData<List<TrainingObject>>? {
+        return trainingRepository?.getTrainingsWithData(date)
+    }
 }

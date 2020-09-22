@@ -10,7 +10,7 @@ interface TrainingDao {
     @Query("SELECT * FROM table_training")
     fun getAllExercises(): LiveData<List<TrainingObject>>
 
-    @Query("SELECT * FROM table_training WHERE EXERCISE_NAME LIKE :name AND TRAINING_NAME_WITH_DATE LIKE :data LIMIT 1")
+    @Query("SELECT * FROM table_training WHERE EXERCISE_NAME LIKE :name AND REAL_DATE LIKE :data LIMIT 1")
     fun getExerciseWithData(name: String, data: String): LiveData<TrainingObject>
 
     @Query("SELECT * FROM table_training WHERE TRAINING_NAME LIKE :trainingName")
@@ -29,4 +29,7 @@ interface TrainingDao {
 
     @Query("SELECT * FROM table_training WHERE EXERCISE_NAME LIKE :exerciseName AND TRAINING_NAME_WITH_DATE LIKE :trainingNameWithDate LIMIT 1")
     fun isExerciseInThisTraining(exerciseName: String, trainingNameWithDate: String): Boolean
+
+    @Query("SELECT * FROM table_training WHERE REAL_DATE LIKE :date")
+    fun getTrainingsWithData(date: String): LiveData<List<TrainingObject>>
 }

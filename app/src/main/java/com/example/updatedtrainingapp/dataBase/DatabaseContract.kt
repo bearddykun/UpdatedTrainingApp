@@ -18,7 +18,6 @@ class DatabaseContract {
             const val WEIGHT = "WEIGHT"
             const val COMMENTS = "COMMENTS"
             const val TRAINING_NAME = "TRAINING_NAME"
-            const val TRAINING_NAME_WITH_DATE = "TRAINING_NAME_WITH_DATE"
             const val TOTAL_WEIGHT = "TOTAL_WEIGHT"
             const val TRAINING_TIME_BETWEEN_SETS = "TRAINING_TIME_BETWEEN_SETS"
             const val TRAINING_TOTAL_TIME = "TRAINING_TOTAL_TIME"

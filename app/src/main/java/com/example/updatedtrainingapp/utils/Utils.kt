@@ -54,6 +54,16 @@ class Utils {
             }
         }
 
+        fun getDate(): String {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                LocalDate.now().toString().replace("-", "")
+            } else {
+                val date = Calendar.getInstance().time
+                val dateFormat = SimpleDateFormat("YYYYMMdd", Locale.UK)
+                dateFormat.format(date)
+            }
+        }
+
         fun getAlertDialog(context: Context, title: String, message: String, func: () -> Unit) {
             val alert = AlertDialog.Builder(context)
             alert.apply {

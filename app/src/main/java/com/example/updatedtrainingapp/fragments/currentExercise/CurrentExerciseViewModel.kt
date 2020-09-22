@@ -27,7 +27,8 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
 
     var trainingObject: TrainingObject = TrainingObject(
         null,
-        trainingNameWithDate = Utils.getNameWithDate(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
+        realDate = Utils.getDate(),
+        trainingName = MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME),
     )
     private val channelId: String = "com.example.updatedtrainingapp.fragments.currentExercise"
     private var remainingTime: MutableLiveData<String> = MutableLiveData("60")
@@ -94,7 +95,7 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
     fun getExerciseWithDate(exName: String): LiveData<TrainingObject>? {
         return trainingViewModel.getExerciseWithData(
             exName,
-            Utils.getNameWithDate(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
+            Utils.getDate()
         )
     }
 
@@ -115,7 +116,7 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
         doAsync {
             trainingViewModel.isExerciseInThisTraining(
                 trainingObject.exerciseName,
-                trainingObject.trainingNameWithDate
+                trainingObject.realDate
             )?.let {
                 if (it) {
                     trainingViewModel.updateExercise(trainingObject = trainingObject)

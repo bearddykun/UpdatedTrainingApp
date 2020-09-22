@@ -50,13 +50,13 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
         {
             MySharedPreferences.saveString(
                 Constants.SAVE_TRAINING_NAME,
-                Utils.getNameWithDate(name)
+                name
             )
             trainingViewModel.insertExercise(
                 TrainingObject(
                     null,
-                    name,
-                    Utils.getNameWithDate(name)
+                    trainingName = name,
+                    trainingNameWithDate = Utils.getNameWithDate(name)
                 )
             )
             startTraining()

@@ -18,12 +18,12 @@
             android:id="@+id/trainingContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="@dimen/dp16">
+            android:layout_margin="@dimen/dp16"
+            android:orientation="vertical">
 
             <TextView
-                style="@style/TextAppearance.MaterialComponents.Headline2"
                 android:id="@+id/textMainBiceps"
+                style="@style/TextAppearance.MaterialComponents.Headline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/biceps" />
@@ -35,4 +35,9 @@
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/storyButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

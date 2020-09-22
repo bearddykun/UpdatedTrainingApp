@@ -23,6 +23,9 @@
      <action
          android:id="@+id/action_fragment_main_menu_to_fragment_this_training_fragment"
          app:destination="@id/trainings_choice_fragment" />
+     <action
+         android:id="@+id/action_fragment_main_menu_to_fragment_calendar"
+         app:destination="@id/fragment_calendar" />
  </fragment>
 
       <fragment
@@ -82,6 +85,16 @@
         <argument
             android:name="exName"
             app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_calendar"
+        android:name="com.example.updatedtrainingapp.fragments.calendar.CalendarFragment"
+        android:label="CalendarFragment"
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/action_fragment_calendar_to_fragment_main_menu"
+            app:destination="@id/fragment_main_menu" />
     </fragment>
 
 </navigation>

@@ -35,4 +35,8 @@ class TrainingRepository @Inject constructor(private val trainingDao: TrainingDa
     fun isExerciseInThisTraining(exerciseName: String, trainingNameWithDate: String): Boolean {
         return trainingDao.isExerciseInThisTraining(exerciseName, trainingNameWithDate)
     }
+
+    fun getTrainingsWithData(date: String): LiveData<List<TrainingObject>> {
+        return trainingDao.getTrainingsWithData(date)
+    }
 }
