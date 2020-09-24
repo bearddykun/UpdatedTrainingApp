@@ -1,16 +1,16 @@
 package com.example.updatedtrainingapp.fragments.currentExercise
 
+import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
 import android.os.Build
 import android.os.CountDownTimer
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.updatedtrainingapp.MainActivity
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
@@ -21,8 +21,9 @@ import com.example.updatedtrainingapp.utils.Utils
 import java.util.concurrent.TimeUnit
 
 class CurrentExerciseViewModel @ViewModelInject constructor(
-    private val trainingViewModel: TrainingDBViewModel
-) : ViewModel() {
+    application: Application, private val trainingViewModel: TrainingDBViewModel
+) : AndroidViewModel(application) {
+    private val context = getApplication<Application>().applicationContext
 
     var trainingObject: TrainingObject = TrainingObject(null)
     private val channelId: String = "com.example.updatedtrainingapp.fragments.currentExercise"
@@ -30,7 +31,7 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
     private var lastSetTime: String = "60"
     private var timer: CountDownTimer? = null
 
-    private fun sendNotification(context: Context) {
+    private fun sendNotification() {
         if (Build.VERSION.SDK_INT >= 26) {
             val channel = NotificationChannel(
                 channelId,
@@ -59,7 +60,7 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
         return remainingTime
     }
 
-    private fun setTimer(time: Long, activity: MainActivity) {
+    private fun setTimer(time: Long) {
         timer = object : CountDownTimer(time, TimeUnit.SECONDS.toMillis(1)) {
             override fun onTick(millisUntilFinished: Long) {
                 remainingTime.value =
@@ -67,7 +68,7 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
             }
 
             override fun onFinish() {
-                sendNotification(activity)
+                sendNotificationWithSound()
             }
         }
     }
@@ -76,15 +77,15 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
         timer?.start()
     }
 
-    private fun sendNotification(activity: MainActivity) {
-        activity.soundManager.playPTCD()
-        activity.applicationContext?.let { sendNotification(activity.applicationContext) }
+    private fun sendNotificationWithSound() {
+        (context as MainActivity).soundManager.playPTCD()
+        sendNotification()
     }
 
-    fun resetTimer(activity: MainActivity) {
+    fun resetTimer() {
         timer?.cancel()
         remainingTime.value = lastSetTime
-        setTimer(TimeUnit.SECONDS.toMillis(lastSetTime.toLong()), activity)
+        setTimer(TimeUnit.SECONDS.toMillis(lastSetTime.toLong()))
     }
 
     fun getExerciseWithDate(): LiveData<TrainingObject>? {

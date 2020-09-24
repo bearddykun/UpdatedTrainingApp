@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.updatedtrainingapp.MainActivity
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.databinding.CurrentExerciseFragmentBinding
 import com.example.updatedtrainingapp.fragments.BaseFragment
@@ -52,7 +51,7 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
 
     private fun onClicks() {
         binding?.timerTextView?.setOnClickListener {
-            viewModel.resetTimer(activity = activity as MainActivity)
+            viewModel.resetTimer()
             val timerList = activity?.resources?.getStringArray(R.array.timer_values)?.toList()
             timerList?.let {
                 activity?.selector(
@@ -65,7 +64,7 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
         }
 
         binding?.timerButton?.setOnClickListener {
-            viewModel.resetTimer(activity = activity as MainActivity)
+            viewModel.resetTimer()
             viewModel.startTimer()
 
             if (binding?.currentExerciseKiloTIET?.text.toString()
@@ -112,6 +111,6 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
 
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.resetTimer(requireActivity() as MainActivity)
+        viewModel.resetTimer()
     }
 }
