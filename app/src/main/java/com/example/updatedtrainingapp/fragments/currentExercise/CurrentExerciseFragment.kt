@@ -42,7 +42,6 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
 
     override fun onStart() {
         super.onStart()
-        viewModel.setTrainingObjectData(args.exName)
         onClicks()
         binding?.exerciseNameBT?.text = args.exName
         viewModel.getRemainingTime()
@@ -89,24 +88,19 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
     }
 
     private fun loadAdapter() {
-        viewModel.getExerciseInTraining(
+        viewModel.getExerciseWithDate(
+            args.exName
         )?.observe(viewLifecycleOwner, {
             it?.let { trainingObject ->
-                it.realDate = Utils.getDate()
-                viewModel.trainingObject = it
+                viewModel.setExistingTrainingObject(trainingObject)
                 adapter?.swapAdapter(Utils.stringToList(trainingObject.exerciseText))
             }
         })
     }
 
     override fun onStop() {
-        var inside = false
-        viewModel.getExerciseWithDate()?.observe(viewLifecycleOwner, {
-            inside = true
-        })
-        viewModel.updateProgressInDB(inside)
+        viewModel.insertProgressInDB()
         super.onStop()
-
     }
 
     override fun onDestroy() {

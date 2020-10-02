@@ -39,7 +39,7 @@
             tools:ignore="RtlSymmetry" />
 
         <TextView
-            android:id="@+id/set_here"
+            android:id="@+id/exerciseDataTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="16dp"

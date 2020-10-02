@@ -25,11 +25,12 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
 ) : AndroidViewModel(application) {
     private val context = getApplication<Application>().applicationContext
 
-    var trainingObject: TrainingObject = TrainingObject(null)
+    private var trainingObject: TrainingObject = TrainingObject(null)
     private val channelId: String = "com.example.updatedtrainingapp.fragments.currentExercise"
     private var remainingTime: MutableLiveData<String> = MutableLiveData("60")
     private var lastSetTime: String = "60"
     private var timer: CountDownTimer? = null
+    private var isUpdate = false
 
     private fun sendNotification() {
         if (Build.VERSION.SDK_INT >= 26) {
@@ -88,18 +89,11 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
         setTimer(TimeUnit.SECONDS.toMillis(lastSetTime.toLong()))
     }
 
-    fun getExerciseWithDate(): LiveData<TrainingObject>? {
+    fun getExerciseWithDate(exName: String): LiveData<TrainingObject>? {
         return trainingViewModel.isExerciseInThisTraining(
-            trainingObject.exerciseName,
-            trainingObject.realDate,
-            trainingObject.trainingName
-        )
-    }
-
-    fun getExerciseInTraining(): LiveData<TrainingObject>? {
-        return trainingViewModel.getExerciseWithTrainingName(
-            trainingObject.exerciseName,
-            trainingObject.trainingName
+            exName,
+            Utils.getDate(),
+            MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME)
         )
     }
 
@@ -115,9 +109,9 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
         trainingObject.exerciseText += text
     }
 
-    fun updateProgressInDB(isExerciseExists: Boolean) {
-        if (isExerciseExists) {
-            trainingViewModel.updateExercise(trainingObject = trainingObject)
+    fun insertProgressInDB() {
+        if (isUpdate) {
+            trainingViewModel.updateExercise(trainingObject)
         } else {
             trainingViewModel.insertExercise(trainingObject = trainingObject)
         }
@@ -127,9 +121,8 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
         lastSetTime = time
     }
 
-    fun setTrainingObjectData(exName: String) {
-        trainingObject.exerciseName = exName
-        trainingObject.trainingName = MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME)
-        trainingObject.realDate = Utils.getDate()
+    fun setExistingTrainingObject(trainingObject: TrainingObject) {
+        this.trainingObject = trainingObject
+        isUpdate = true
     }
 }
