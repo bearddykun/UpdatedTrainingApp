@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.updatedtrainingapp.R
+import com.example.updatedtrainingapp.application.MySharedPreferences
+import com.example.updatedtrainingapp.dataBase.Constants
 import com.example.updatedtrainingapp.databinding.FragmentMainMenuBinding
 import com.example.updatedtrainingapp.fragments.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,8 +43,12 @@ class MainMenuFragment : BaseFragment(R.layout.fragment_main_menu) {
         }
         binding?.storyButton?.setOnClickListener {
             findNavController().navigate(
-            MainMenuFragmentDirections.actionFragmentMainMenuToFragmentCalendar()
+                MainMenuFragmentDirections.actionFragmentMainMenuToFragmentCalendar()
             )
         }
+        viewModel.getTrainingWithName(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
+            ?.observe(viewLifecycleOwner, {
+            viewModel.prepareStatistics(it)
+            })
     }
 }

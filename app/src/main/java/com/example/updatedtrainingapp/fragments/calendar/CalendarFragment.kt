@@ -46,7 +46,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar) {
     private fun showViewsAndData(list: List<TrainingObject>) {
         val exerciseDataList = mutableListOf<String>()
         val exerciseCommentList = mutableListOf<String>()
-        val exerciseWeightList = mutableListOf<String>()
+        val exerciseWeightList = mutableListOf<Int>()
         var trainingName = ""
         list.forEach {
             exerciseDataList.add("${it.exerciseName} \n\n${it.exerciseText}\n\n")
@@ -56,7 +56,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar) {
         }
         var exerciseData = ""
         var exerciseComment = ""
-        var exerciseWeight = ""
+        var exerciseWeight = 0
 
         exerciseDataList.forEach { exerciseData += it }
         exerciseCommentList.forEach { exerciseComment += it }
@@ -66,7 +66,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar) {
         exerciseComment = exerciseComment, exerciseTotalWeight = exerciseWeight)
         binding?.exerciseDataTV?.text = calendarObject.exerciseData
         binding?.showComments?.text = calendarObject.exerciseComment
-        binding?.showTotalWeight?.text = calendarObject.exerciseTotalWeight
+        binding?.showTotalWeight?.text = calendarObject.exerciseTotalWeight.toString()
         binding?.textInCalendar?.text = calendarObject.trainingName
 
         goneOrVisible(binding?.exerciseDataTV)

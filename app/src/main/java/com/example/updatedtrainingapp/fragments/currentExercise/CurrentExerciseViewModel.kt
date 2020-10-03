@@ -76,6 +76,7 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
             "$kiloText X $repsText"
         }
         trainingObject.exerciseText += text
+        trainingObject.trainingWeight += kiloText.toInt()
     }
 
     fun insertProgressInDB() {

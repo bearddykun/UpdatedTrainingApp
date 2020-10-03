@@ -16,7 +16,7 @@ data class TrainingObject(
         @ColumnInfo(name = DatabaseContract.TrainingColumns.WEIGHT) var weight: String = "",
         @ColumnInfo(name = DatabaseContract.TrainingColumns.COMMENTS) var comments: String = "",
         @ColumnInfo(name = DatabaseContract.TrainingColumns.TRAINING_NAME) var trainingName: String = "",
-        @ColumnInfo(name = DatabaseContract.TrainingColumns.TOTAL_WEIGHT) var trainingWeight: String = "",
+        @ColumnInfo(name = DatabaseContract.TrainingColumns.TOTAL_WEIGHT) var trainingWeight: Int = 0,
         @ColumnInfo(name = DatabaseContract.TrainingColumns.TRAINING_TIME_BETWEEN_SETS) var trainingTimeBetweenSets: String = "",
         @ColumnInfo(name = DatabaseContract.TrainingColumns.TRAINING_TOTAL_TIME) var trainingTotalTime: String = ""
 )

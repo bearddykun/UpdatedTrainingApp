@@ -13,7 +13,7 @@ interface TrainingDao {
     @Query("SELECT * FROM table_training WHERE EXERCISE_NAME LIKE :name AND REAL_DATE LIKE :data LIMIT 1")
     fun getExerciseWithData(name: String, data: String): LiveData<TrainingObject>
 
-    @Query("SELECT * FROM table_training WHERE TRAINING_NAME LIKE :trainingName")
+    @Query("SELECT * FROM table_training WHERE TRAINING_NAME LIKE :trainingName ORDER BY REAL_DATE ASC")
     fun getExercisesWithTraining(
         trainingName: String
     ): LiveData<List<TrainingObject>>

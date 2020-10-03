@@ -4,5 +4,5 @@ class CalendarObject(
     var trainingName: String,
     var exerciseData: String,
     var exerciseComment: String,
-    var exerciseTotalWeight: String
+    var exerciseTotalWeight: Int
 )
