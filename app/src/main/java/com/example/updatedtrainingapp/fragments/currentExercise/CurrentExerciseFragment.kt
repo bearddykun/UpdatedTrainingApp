@@ -17,7 +17,6 @@ import com.example.updatedtrainingapp.databinding.CurrentExerciseFragmentBinding
 import com.example.updatedtrainingapp.fragments.BaseFragment
 import com.example.updatedtrainingapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
-import org.jetbrains.anko.selector
 
 @AndroidEntryPoint
 class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment) {
@@ -62,15 +61,7 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
     private fun onClicks() {
         binding?.timerTextView?.setOnClickListener {
             viewModel.resetTimer()
-            val timerList = activity?.resources?.getStringArray(R.array.timer_values)?.toList()
-            timerList?.let {
-                activity?.selector(
-                    getString(R.string.set_timer), it
-                ) { _, position ->
-                    viewModel.setLastSetTime(it[position])
-                    viewModel.getRemainingTime()?.value = it[position]
-                }
-            }
+            Utils.getTimerChoiceDialog(requireActivity(), viewModel)
         }
 
         binding?.timerButton?.setOnClickListener {

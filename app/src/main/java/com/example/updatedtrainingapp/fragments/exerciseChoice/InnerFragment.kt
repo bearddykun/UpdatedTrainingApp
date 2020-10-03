@@ -11,7 +11,6 @@ import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_exercise_choice.*
-import org.jetbrains.anko.backgroundColor
 import java.util.*
 
 private const val ARG_PARAM1 = "param1"
@@ -63,10 +62,10 @@ class InnerFragment : Fragment(), ExercisesChoiceAdapter.OnExerciseChoiceItemLis
     private fun addRemoveExercise(exercise: String, view: View) {
         if (viewModel.listOfNewExercises.contains(exercise)) {
             viewModel.listOfNewExercises.remove(exercise)
-            view.backgroundColor = Color.WHITE
+            view.setBackgroundColor(Color.WHITE)
             return
         }
         viewModel.listOfNewExercises.add(exercise)
-        view.backgroundColor = Color.BLUE
+        view.setBackgroundColor(Color.BLUE)
     }
 }

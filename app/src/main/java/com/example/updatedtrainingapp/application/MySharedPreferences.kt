@@ -1,13 +1,15 @@
 package com.example.updatedtrainingapp.application
 
-import org.jetbrains.anko.defaultSharedPreferences
+import android.content.SharedPreferences
+
+private const val NAME = "myPrefs"
 
 class MySharedPreferences {
 
     companion object {
-        private val sharedPreferencesEditor =
-            ThisApplication.instance.defaultSharedPreferences.edit()
-        private val sharedPreferences = ThisApplication.instance.defaultSharedPreferences
+        private val sharedPreferencesEditor: SharedPreferences.Editor =
+            ThisApplication.instance.getSharedPreferences(NAME, 0).edit()
+        private val sharedPreferences = ThisApplication.instance.getSharedPreferences(NAME, 0)
 
         fun saveBoolean(key: String, boolean: Boolean) {
             sharedPreferencesEditor.putBoolean(key, boolean)

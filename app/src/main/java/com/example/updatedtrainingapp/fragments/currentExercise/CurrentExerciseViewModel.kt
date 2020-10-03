@@ -6,12 +6,14 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.updatedtrainingapp.application.MySharedPreferences
 import com.example.updatedtrainingapp.dataBase.Constants
 import com.example.updatedtrainingapp.dataBase.dbViewModels.TrainingDBViewModel
 import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
 import com.example.updatedtrainingapp.utils.SoundManager
 import com.example.updatedtrainingapp.utils.Utils
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 class CurrentExerciseViewModel @ViewModelInject constructor(
@@ -25,7 +27,7 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
     private var timer: CountDownTimer? = null
     private var isUpdate = false
 
-    fun getRemainingTime(): MutableLiveData<String>? {
+    fun getRemainingTime(): MutableLiveData<String> {
         return remainingTimerTime
     }
 
@@ -77,10 +79,12 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
     }
 
     fun insertProgressInDB() {
-        if (isUpdate) {
-            trainingViewModel.updateExercise(trainingObject)
-        } else {
-            trainingViewModel.insertExercise(trainingObject = trainingObject)
+        viewModelScope.launch {
+            if (isUpdate) {
+                trainingViewModel.updateExercise(trainingObject)
+            } else {
+                trainingViewModel.insertExercise(trainingObject = trainingObject)
+            }
         }
     }
 

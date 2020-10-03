@@ -10,7 +10,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_general.*
-import org.jetbrains.anko.find
 
 abstract class GeneralActivity : AppCompatActivity() {
 
@@ -41,7 +40,7 @@ abstract class GeneralActivity : AppCompatActivity() {
         snackBar.setActionTextColor(ContextCompat.getColor(this, R.color.black))
 
         val sbView = snackBar.view
-        val textView = sbView.find<TextView>(com.google.android.material.R.id.snackbar_text)
+        val textView: TextView = sbView.findViewById(com.google.android.material.R.id.snackbar_text)
         textView.setTextColor(ContextCompat.getColor(this, R.color.black))
         textView.maxLines = 10
         snackBar.show()

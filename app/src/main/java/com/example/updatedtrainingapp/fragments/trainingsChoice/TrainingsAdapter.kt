@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.updatedtrainingapp.R
-import org.jetbrains.anko.find
 
 class TrainingsAdapter : RecyclerView.Adapter<TrainingsAdapter.TrainingViewHolder>() {
 
@@ -62,6 +61,6 @@ class TrainingsAdapter : RecyclerView.Adapter<TrainingsAdapter.TrainingViewHolde
     }
 
     class TrainingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val text = itemView.find<TextView>(R.id.trainingListText)
+        val text: TextView = itemView.findViewById(R.id.trainingListText)
     }
 }

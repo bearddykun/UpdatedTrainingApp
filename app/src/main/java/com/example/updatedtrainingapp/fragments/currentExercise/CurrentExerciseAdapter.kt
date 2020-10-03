@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.updatedtrainingapp.R
-import org.jetbrains.anko.find
 
 class CurrentExerciseAdapter :
     RecyclerView.Adapter<CurrentExerciseAdapter.CurrentExerciseViewHolder>() {
@@ -14,7 +13,7 @@ class CurrentExerciseAdapter :
     private var list: MutableList<String>? = null
 
     class CurrentExerciseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val trainingListText = itemView.find<TextView>(R.id.trainingListText)
+        val trainingListText: TextView = itemView.findViewById(R.id.trainingListText)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrentExerciseViewHolder {

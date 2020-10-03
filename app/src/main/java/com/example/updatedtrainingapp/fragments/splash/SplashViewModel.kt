@@ -3,6 +3,7 @@ package com.example.updatedtrainingapp.fragments.splash
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
 import com.example.updatedtrainingapp.dataBase.Constants.Companion.ABS_GROUP
@@ -14,6 +15,8 @@ import com.example.updatedtrainingapp.dataBase.Constants.Companion.SHOULDERS_GRO
 import com.example.updatedtrainingapp.dataBase.Constants.Companion.TRICEPS_GROUP
 import com.example.updatedtrainingapp.dataBase.dbViewModels.ExerciseDBViewModel
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SplashViewModel @ViewModelInject constructor(
     private val exerciseDBViewModel: ExerciseDBViewModel
@@ -189,13 +192,15 @@ class SplashViewModel @ViewModelInject constructor(
     }
 
     private fun insertExercise(image: Int, exerciseName: String, group: String) {
-        exerciseDBViewModel.insertExercise(
-            ExerciseObject(
-                null,
-                exerciseName = exerciseName,
-                exerciseGroup = group,
-                exerciseImage = image.toString()
+        viewModelScope.launch(Dispatchers.Main) {
+            exerciseDBViewModel.insertExercise(
+                ExerciseObject(
+                    null,
+                    exerciseName = exerciseName,
+                    exerciseGroup = group,
+                    exerciseImage = image.toString()
+                )
             )
-        )
+        }
     }
 }

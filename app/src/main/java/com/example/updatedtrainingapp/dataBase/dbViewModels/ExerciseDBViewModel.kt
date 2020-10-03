@@ -24,15 +24,15 @@ class ExerciseDBViewModel @Inject constructor(application: Application) :
         return exerciseRepository?.getExerciseWithName(name)
     }
 
-    fun insertExercise(exerciseObject: ExerciseObject) {
+    suspend fun insertExercise(exerciseObject: ExerciseObject) {
         exerciseRepository?.insertExerciseAsync(exerciseObject)
     }
 
-    fun deleteExercise(exerciseObject: ExerciseObject) {
+    suspend fun deleteExercise(exerciseObject: ExerciseObject) {
         exerciseRepository?.deleteExerciseAsync(exerciseObject)
     }
 
-    fun updateExercise(exerciseObject: ExerciseObject) {
+    suspend fun updateExercise(exerciseObject: ExerciseObject) {
         exerciseRepository?.updateExerciseAsync(exerciseObject)
     }
 }

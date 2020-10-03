@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
-import org.jetbrains.anko.find
 
 class ExercisesChoiceAdapter :
     RecyclerView.Adapter<ExercisesChoiceAdapter.ExercisesChoiceViewHolder>() {
@@ -56,7 +55,7 @@ class ExercisesChoiceAdapter :
     }
 
     class ExercisesChoiceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val image = itemView.find<ImageView>(R.id.exerciseImage)
-        val text = itemView.find<TextView>(R.id.exerciseText)
+        val image:ImageView = itemView.findViewById(R.id.exerciseImage)
+        val text:TextView = itemView.findViewById(R.id.exerciseText)
     }
 }

@@ -8,8 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.ThisApplication
-import org.jetbrains.anko.find
-import org.jetbrains.anko.imageResource
 
 class CreateNewExerciseAdapter :
     RecyclerView.Adapter<CreateNewExerciseAdapter.CreateNewExerciseViewHolder>() {
@@ -56,12 +54,12 @@ class CreateNewExerciseAdapter :
                 )
             }
         }
-        holder.icon.imageResource = imageArray[position]
+        holder.icon.setImageResource(imageArray[position])
         holder.text.text = array[position]
     }
 
     class CreateNewExerciseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val icon = itemView.find<ImageView>(R.id.exerciseImage)
-        val text = itemView.find<TextView>(R.id.exerciseText)
+        val icon: ImageView = itemView.findViewById(R.id.exerciseImage)
+        val text: TextView = itemView.findViewById<TextView>(R.id.exerciseText)
     }
 }

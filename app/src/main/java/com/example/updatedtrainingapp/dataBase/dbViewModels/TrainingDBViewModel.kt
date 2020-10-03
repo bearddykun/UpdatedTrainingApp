@@ -24,15 +24,15 @@ class TrainingDBViewModel @Inject constructor(application: Application) :
         return trainingRepository?.getExerciseWithData(exerciseName, data)
     }
 
-    fun insertExercise(trainingObject: TrainingObject) {
+    suspend fun insertExercise(trainingObject: TrainingObject) {
         trainingRepository?.insertExerciseAsync(trainingObject)
     }
 
-    fun updateExercise(trainingObject: TrainingObject) {
+    suspend fun updateExercise(trainingObject: TrainingObject) {
         trainingRepository?.updateExerciseAsync(trainingObject)
     }
 
-    fun deleteExercise(trainingName: TrainingObject) {
+    suspend fun deleteExercise(trainingName: TrainingObject) {
         trainingRepository?.deleteExerciseAsync(trainingName)
     }
 

@@ -3,6 +3,8 @@ package com.example.updatedtrainingapp.dataBase.repositories
 import androidx.lifecycle.LiveData
 import com.example.updatedtrainingapp.dataBase.dao.ExerciseDao
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ExerciseRepository @Inject constructor(private val exerciseDao: ExerciseDao) {
@@ -15,15 +17,21 @@ class ExerciseRepository @Inject constructor(private val exerciseDao: ExerciseDa
         return exerciseDao.getExerciseWithName(exName)
     }
 
-    fun insertExerciseAsync(exerciseObject: ExerciseObject) {
-        exerciseDao.insertExercise(exerciseObject)
+    suspend fun insertExerciseAsync(exerciseObject: ExerciseObject) {
+        withContext(Dispatchers.Default) {
+            exerciseDao.insertExercise(exerciseObject)
+        }
     }
 
-    fun updateExerciseAsync(exerciseObject: ExerciseObject) {
-        exerciseDao.updateExercise(exerciseObject)
+    suspend fun updateExerciseAsync(exerciseObject: ExerciseObject) {
+        withContext(Dispatchers.Default) {
+            exerciseDao.updateExercise(exerciseObject)
+        }
     }
 
-    fun deleteExerciseAsync(exerciseObject: ExerciseObject) {
-        exerciseDao.deleteExercise(exerciseObject)
+    suspend fun deleteExerciseAsync(exerciseObject: ExerciseObject) {
+        withContext(Dispatchers.Default) {
+            exerciseDao.deleteExercise(exerciseObject)
+        }
     }
 }

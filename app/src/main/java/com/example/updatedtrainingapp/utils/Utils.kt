@@ -3,8 +3,10 @@ package com.example.updatedtrainingapp.utils
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Build
+import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
 import com.example.updatedtrainingapp.dataBase.Constants
+import com.example.updatedtrainingapp.fragments.currentExercise.CurrentExerciseViewModel
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
@@ -86,6 +88,21 @@ class Utils {
                 }
                 setNegativeButton("NO") { _, _ -> }
             }.show()
+        }
+
+        fun getTimerChoiceDialog(context: Context, viewModel: CurrentExerciseViewModel) {
+            val array = context.resources?.getStringArray(R.array.timer_values)
+            array?.let {
+                val alertDialog = AlertDialog.Builder(context)
+                alertDialog.apply {
+                    setTitle(context.getString(R.string.set_timer))
+                    setItems(it) { _, position ->
+                        viewModel.setLastSetTime(it[position])
+                        viewModel.getRemainingTime().value = it[position]
+                    }
+                }
+                alertDialog.show()
+            }
         }
     }
 }

@@ -3,8 +3,10 @@ package com.example.updatedtrainingapp.fragments.newExercise
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.updatedtrainingapp.dataBase.dbViewModels.ExerciseDBViewModel
 import com.example.updatedtrainingapp.dataBase.objects.ExerciseObject
+import kotlinx.coroutines.launch
 
 class NewExerciseViewModel @ViewModelInject constructor(private val exerciseDBViewModel: ExerciseDBViewModel) :
     ViewModel() {
@@ -21,7 +23,9 @@ class NewExerciseViewModel @ViewModelInject constructor(private val exerciseDBVi
         exName: String
     ) {
         val exercise = ExerciseObject(null, exName, exGroupName, exImageId.toString())
-        exerciseDBViewModel.insertExercise(exercise)
+        viewModelScope.launch {
+            exerciseDBViewModel.insertExercise(exercise)
+        }
     }
 
     fun getExerciseWithName(name: String): LiveData<ExerciseObject> {

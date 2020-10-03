@@ -16,7 +16,6 @@ import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
 import com.example.updatedtrainingapp.dataBase.Constants
 import dagger.hilt.android.AndroidEntryPoint
-import org.jetbrains.anko.find
 
 @AndroidEntryPoint
 class CreateTrainingFragment :
@@ -28,7 +27,7 @@ class CreateTrainingFragment :
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_create_training, container, false)
-        view.find<EditText>(R.id.trainingFragmentText).setOnEditorActionListener(this)
+        view.findViewById<EditText>(R.id.trainingFragmentText).setOnEditorActionListener(this)
         return view
     }
 
