@@ -1,9 +1,14 @@
 package com.example.updatedtrainingapp.fragments.currentExercise
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -12,12 +17,12 @@ import com.example.updatedtrainingapp.databinding.CurrentExerciseFragmentBinding
 import com.example.updatedtrainingapp.fragments.BaseFragment
 import com.example.updatedtrainingapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.current_exercise_fragment.*
 import org.jetbrains.anko.selector
 
 @AndroidEntryPoint
 class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment) {
 
+    private val channelId: String = "com.example.updatedtrainingapp.fragments.currentExercise"
     private val args: CurrentExerciseFragmentArgs by navArgs()
     private var adapter: CurrentExerciseAdapter? = null
 
@@ -37,6 +42,8 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
         savedInstanceState: Bundle?
     ): View? {
         binding = CurrentExerciseFragmentBinding.inflate(inflater, container, false)
+        binding?.lifecycleOwner = this
+        binding?.viewModel = viewModel
         return binding?.root
     }
 
@@ -45,7 +52,11 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
         onClicks()
         binding?.exerciseNameBT?.text = args.exName
         viewModel.getRemainingTime()
-            ?.observe(viewLifecycleOwner, { timerTextView.text = it.toString() })
+            ?.observe(viewLifecycleOwner, {
+                if (it.toString() == "") {
+                    sendNotification()
+                }
+            })
     }
 
     private fun onClicks() {
@@ -57,7 +68,7 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
                     getString(R.string.set_timer), it
                 ) { _, position ->
                     viewModel.setLastSetTime(it[position])
-                    binding?.timerTextView?.text = it[position]
+                    viewModel.getRemainingTime()?.value = it[position]
                 }
             }
         }
@@ -106,5 +117,30 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
     override fun onDestroy() {
         super.onDestroy()
         viewModel.resetTimer()
+    }
+
+    private fun sendNotification() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            val channel = NotificationChannel(
+                channelId,
+                requireActivity().getString(R.string.notification_channel_id),
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            NotificationManagerCompat.from(requireActivity())
+                .createNotificationChannel(channel)
+            val builder =
+                NotificationCompat.Builder(requireActivity(), channelId)
+                    .setSmallIcon(R.drawable.ic_fitness_center_black_24dp)
+                    .setContentTitle(requireActivity().getString(R.string.training))
+                    .setContentText(requireActivity().getString(R.string.rest_over))
+                    .setStyle(
+                        NotificationCompat.BigTextStyle()
+                            .bigText(requireActivity().getString(R.string.rest_over))
+                    )
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+            NotificationManagerCompat.from(requireActivity())
+                .notify(1, builder.build())
+        }
     }
 }

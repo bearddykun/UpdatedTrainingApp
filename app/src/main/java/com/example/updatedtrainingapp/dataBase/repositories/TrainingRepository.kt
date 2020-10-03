@@ -3,7 +3,6 @@ package com.example.updatedtrainingapp.dataBase.repositories
 import androidx.lifecycle.LiveData
 import com.example.updatedtrainingapp.dataBase.dao.TrainingDao
 import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
-import org.jetbrains.anko.doAsync
 import javax.inject.Inject
 
 class TrainingRepository @Inject constructor(private val trainingDao: TrainingDao) {
@@ -13,15 +12,15 @@ class TrainingRepository @Inject constructor(private val trainingDao: TrainingDa
     }
 
     fun insertExerciseAsync(trainingObject: TrainingObject) {
-        doAsync { trainingDao.insertExercise(trainingObject) }
+        trainingDao.insertExercise(trainingObject)
     }
 
     fun updateExerciseAsync(trainingObject: TrainingObject) {
-        doAsync { trainingDao.updateExercise(trainingObject) }
+        trainingDao.updateExercise(trainingObject)
     }
 
     fun deleteExerciseAsync(trainingObject: TrainingObject) {
-        doAsync { trainingDao.deleteExercise(trainingObject) }
+        trainingDao.deleteExercise(trainingObject)
     }
 
     fun getExerciseWithData(name: String, data: String): LiveData<TrainingObject> {
