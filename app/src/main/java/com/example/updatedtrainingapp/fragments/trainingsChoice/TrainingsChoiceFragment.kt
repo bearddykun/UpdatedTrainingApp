@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.application.MySharedPreferences
 import com.example.updatedtrainingapp.dataBase.Constants
-import com.example.updatedtrainingapp.dataBase.dbViewModels.TrainingDBViewModel
 import com.example.updatedtrainingapp.databinding.TrainingsChoiceFragmentBinding
 import com.example.updatedtrainingapp.fragments.BaseFragment
 import com.example.updatedtrainingapp.utils.Utils
@@ -20,14 +19,11 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
     TrainingsAdapter.OnTrainingItemListener,
     TrainingsAdapter.OnTrainingItemLongListener {
 
-    private val trainingViewModel: TrainingDBViewModel by viewModels()
+    private val viewModel: TrainingsChoiceViewModel by viewModels()
     private var binding: TrainingsChoiceFragmentBinding? = null
 
-    private fun startTraining() {
-        if (!MySharedPreferences.isInside(Constants.SAVE_START_TIME)) {
-            val startTime = System.currentTimeMillis()
-            MySharedPreferences.saveLong(Constants.SAVE_START_TIME, startTime)
-        }
+    private fun startTraining(name: String) {
+        viewModel.startTraining(name)
         findNavController().navigate(TrainingsChoiceFragmentDirections.actionFragmentThisTrainingFragmentToFragmentTrainingDay())
     }
 
@@ -47,14 +43,7 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
             getString(R.string.start_training_timer)
         )
         {
-            MySharedPreferences.saveString(
-                Constants.SAVE_TRAINING_NAME,
-                name
-            )
-            if (!MySharedPreferences.isInside(name)) {
-                Utils.saveTrainingExerciseString(mutableListOf())
-            }
-            startTraining()
+            startTraining(name)
         }
     }
 
@@ -65,9 +54,7 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
             getString(R.string.delete_training)
         )
         {
-            val list = MySharedPreferences.getList(Constants.SAVE_NEW_TRAINING_LIST)
-            list.remove(name)
-            MySharedPreferences.saveList(Constants.SAVE_NEW_TRAINING_LIST, list)
+            viewModel.deleteAndUpdate(name)
         }
     }
 
