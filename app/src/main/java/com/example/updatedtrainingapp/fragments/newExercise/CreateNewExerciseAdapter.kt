@@ -60,6 +60,6 @@ class CreateNewExerciseAdapter :
 
     class CreateNewExerciseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val icon: ImageView = itemView.findViewById(R.id.exerciseImage)
-        val text: TextView = itemView.findViewById<TextView>(R.id.exerciseText)
+        val text: TextView = itemView.findViewById(R.id.exerciseText)
     }
 }

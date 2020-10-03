@@ -81,7 +81,7 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
     fun insertProgressInDB() {
         viewModelScope.launch {
             if (isUpdate) {
-                trainingViewModel.updateExercise(trainingObject)
+                trainingViewModel.updateExercise(trainingObject = trainingObject)
             } else {
                 trainingViewModel.insertExercise(trainingObject = trainingObject)
             }

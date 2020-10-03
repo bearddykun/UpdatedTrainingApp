@@ -37,127 +37,127 @@ class SplashViewModel @ViewModelInject constructor(
     }
 
     private fun putInDB() {
-        insertExercise(R.mipmap.burbell_incline_bench, "Barbell Incline Bench Press", CHEST_GROUP);
-        insertExercise(R.mipmap.bench_press, "Bench Press", "CHEST");
-        insertExercise(R.mipmap.decline_bench_press, "Decline Bench Press", CHEST_GROUP);
+        insertExercise(R.mipmap.burbell_incline_bench, "Barbell Incline Bench Press", CHEST_GROUP)
+        insertExercise(R.mipmap.bench_press, "Bench Press", "CHEST")
+        insertExercise(R.mipmap.decline_bench_press, "Decline Bench Press", CHEST_GROUP)
         insertExercise(
             R.mipmap.decline_dumbbell_bench_press,
             "Decline Dumbbell Bench Press",
             CHEST_GROUP
-        );
-        insertExercise(R.mipmap.dumbbell_bench_press, "Dumbbell Bench Press", CHEST_GROUP);
-        insertExercise(R.mipmap.dumbbell_flyes, "Dumbbell Flyes", CHEST_GROUP);
+        )
+        insertExercise(R.mipmap.dumbbell_bench_press, "Dumbbell Bench Press", CHEST_GROUP)
+        insertExercise(R.mipmap.dumbbell_flyes, "Dumbbell Flies", CHEST_GROUP)
         insertExercise(
             R.mipmap.incline_dumbbell_bench_press,
             "Incline Dumbbell Bench Press",
             CHEST_GROUP
-        );
-        insertExercise(R.mipmap.incline_dumbbell_flyes, "Incline Dumbbell Flyes", CHEST_GROUP);
-        insertExercise(R.mipmap.low_cable_crossover, "Low Cable Crossover", CHEST_GROUP);
-        insertExercise(R.mipmap.machine_bench_press, "Machine Bench Press", CHEST_GROUP);
-        insertExercise(R.mipmap.macine_flye, "Machine Fly", CHEST_GROUP);
-        insertExercise(R.mipmap.bent_over_barbell_row, "Bent Over Barbell Row", BACK_GROUP);
+        )
+        insertExercise(R.mipmap.incline_dumbbell_flyes, "Incline Dumbbell Flies", CHEST_GROUP)
+        insertExercise(R.mipmap.low_cable_crossover, "Low Cable Crossover", CHEST_GROUP)
+        insertExercise(R.mipmap.machine_bench_press, "Machine Bench Press", CHEST_GROUP)
+        insertExercise(R.mipmap.macine_flye, "Machine Fly", CHEST_GROUP)
+        insertExercise(R.mipmap.bent_over_barbell_row, "Bent Over Barbell Row", BACK_GROUP)
         insertExercise(R.mipmap.chin_up, "Chin-up", BACK_GROUP)
         insertExercise(
             R.mipmap.close_grip_front_lat_pulldown,
             "Close Grip Front Lat Pulldown",
             BACK_GROUP
-        );
-        insertExercise(R.mipmap.lying_t_bar_row, "Lying T-bar Row", BACK_GROUP);
-        insertExercise(R.mipmap.one_arm_dumbbell_row, "One Arm Dumbbell Row", BACK_GROUP);
+        )
+        insertExercise(R.mipmap.lying_t_bar_row, "Lying T-bar Row", BACK_GROUP)
+        insertExercise(R.mipmap.one_arm_dumbbell_row, "One Arm Dumbbell Row", BACK_GROUP)
         insertExercise(
             R.mipmap.reverse_grip_bent_over_rows,
             "Reverse Grip Bent-over Rows",
             BACK_GROUP
-        );
-        insertExercise(R.mipmap.reverse_mashine_flyes, "Reverse Machine Flyes", BACK_GROUP);
-        insertExercise(R.mipmap.seated_cable_row, "Seated Cable Row", BACK_GROUP);
-        insertExercise(R.mipmap.underhand_cable_pulldown, "Underhand Cable Pulldown", BACK_GROUP);
-        insertExercise(R.mipmap.wide_grip_lat_pulldown, "Wide Grip Lat Pulldown", BACK_GROUP);
-        insertExercise(R.mipmap.burbell_curl, "Barbell Curl", BICEPS_GROUP);
-        insertExercise(R.mipmap.concentration_curls, "Concentration Curls", BICEPS_GROUP);
-        insertExercise(R.mipmap.cross_body_hammer_curl, "Cross Body Hammer Curl", BICEPS_GROUP);
+        )
+        insertExercise(R.mipmap.reverse_mashine_flyes, "Reverse Machine Flies", BACK_GROUP)
+        insertExercise(R.mipmap.seated_cable_row, "Seated Cable Row", BACK_GROUP)
+        insertExercise(R.mipmap.underhand_cable_pulldown, "Underhand Cable Pulldown", BACK_GROUP)
+        insertExercise(R.mipmap.wide_grip_lat_pulldown, "Wide Grip Lat Pulldown", BACK_GROUP)
+        insertExercise(R.mipmap.burbell_curl, "Barbell Curl", BICEPS_GROUP)
+        insertExercise(R.mipmap.concentration_curls, "Concentration Curls", BICEPS_GROUP)
+        insertExercise(R.mipmap.cross_body_hammer_curl, "Cross Body Hammer Curl", BICEPS_GROUP)
         insertExercise(
             R.mipmap.dumbbell_alternate_bicep_curl,
             "Dumbbell Alternate Bicep Curl",
             BICEPS_GROUP
-        );
-        insertExercise(R.mipmap.dumbbell_bicep_curl, "Dumbbell Bicep Curl", BICEPS_GROUP);
-        insertExercise(R.mipmap.dummbell_priacher_curl, "Dumbbell Preacher Curl", BICEPS_GROUP);
-        insertExercise(R.mipmap.overhead_cable_curl, "Overhead Cable Curl", BICEPS_GROUP);
-        insertExercise(R.mipmap.preacher_curl, "Preacher Curl", BICEPS_GROUP);
-        insertExercise(R.mipmap.seated_dumbbell_curls, "Seated Dumbbell Curls", BICEPS_GROUP);
+        )
+        insertExercise(R.mipmap.dumbbell_bicep_curl, "Dumbbell Bicep Curl", BICEPS_GROUP)
+        insertExercise(R.mipmap.dummbell_priacher_curl, "Dumbbell Preacher Curl", BICEPS_GROUP)
+        insertExercise(R.mipmap.overhead_cable_curl, "Overhead Cable Curl", BICEPS_GROUP)
+        insertExercise(R.mipmap.preacher_curl, "Preacher Curl", BICEPS_GROUP)
+        insertExercise(R.mipmap.seated_dumbbell_curls, "Seated Dumbbell Curls", BICEPS_GROUP)
         insertExercise(
             R.mipmap.standing_biceps_cable_curl,
             "Standing Biceps Cable Curl",
             BICEPS_GROUP
-        );
-        insertExercise(R.mipmap.standing_reverse_curl, "Standing Reverse Curl", BICEPS_GROUP);
+        )
+        insertExercise(R.mipmap.standing_reverse_curl, "Standing Reverse Curl", BICEPS_GROUP)
         insertExercise(
             R.mipmap.barbell_shrag_behind_the_back,
             "Barbell Shrug Behind The Back",
             "TRAPS"
-        );
-        insertExercise(R.mipmap.burbell_shrug, "Barbell Shrug", "TRAPS");
-        insertExercise(R.mipmap.dumbbell_shrug, "Dumbbell Shrug", "TRAPS");
-        insertExercise(R.mipmap.bench_dips, "Bench Dips", TRICEPS_GROUP);
+        )
+        insertExercise(R.mipmap.burbell_shrug, "Barbell Shrug", "TRAPS")
+        insertExercise(R.mipmap.dumbbell_shrug, "Dumbbell Shrug", "TRAPS")
+        insertExercise(R.mipmap.bench_dips, "Bench Dips", TRICEPS_GROUP)
         insertExercise(
             R.mipmap.cable_one_arm_triceps_extension,
             "Cable One Arm Triceps Extension",
             TRICEPS_GROUP
-        );
+        )
         insertExercise(
             R.mipmap.cable_rope_overhead_extention,
             "Cable Rope Overhead Extension",
             TRICEPS_GROUP
-        );
+        )
         insertExercise(
             R.mipmap.close_grip_burbell_press,
             "Close Grip Barbell Press",
             TRICEPS_GROUP
-        );
-        insertExercise(R.mipmap.dips_triceps, "Dips Triceps", TRICEPS_GROUP);
+        )
+        insertExercise(R.mipmap.dips_triceps, "Dips Triceps", TRICEPS_GROUP)
         insertExercise(
             R.mipmap.dumbbell_one_arm_triceps_extension,
             "Dumbbell One Arm Triceps Extension",
             TRICEPS_GROUP
-        );
-        insertExercise(R.mipmap.lying_triceps_press, "Lying Triceps Press", TRICEPS_GROUP);
+        )
+        insertExercise(R.mipmap.lying_triceps_press, "Lying Triceps Press", TRICEPS_GROUP)
         insertExercise(
             R.mipmap.push_ups_close_triceps_position,
             "Push Ups Close Triceps Position",
             TRICEPS_GROUP
-        );
-        insertExercise(R.mipmap.standing_triceps_press, "Standing Triceps Press", TRICEPS_GROUP);
+        )
+        insertExercise(R.mipmap.standing_triceps_press, "Standing Triceps Press", TRICEPS_GROUP)
         insertExercise(
             R.mipmap.tricep_dumbbell_kickback,
             "Triceps Dumbbell Kickback",
             TRICEPS_GROUP
-        );
-        insertExercise(R.mipmap.triceps_pushdown, "Triceps Pushdown", TRICEPS_GROUP);
+        )
+        insertExercise(R.mipmap.triceps_pushdown, "Triceps Pushdown", TRICEPS_GROUP)
         insertExercise(
             R.mipmap.alternating_deltoid_raise,
             "Alternating Deltoid Raise",
             SHOULDERS_GROUP
-        );
-        insertExercise(R.mipmap.arnold_dumbbell_press, "Arnold Dumbbell Press", SHOULDERS_GROUP);
-        insertExercise(R.mipmap.barbell_shoulder_press, "Barbell Shoulder Press", SHOULDERS_GROUP);
+        )
+        insertExercise(R.mipmap.arnold_dumbbell_press, "Arnold Dumbbell Press", SHOULDERS_GROUP)
+        insertExercise(R.mipmap.barbell_shoulder_press, "Barbell Shoulder Press", SHOULDERS_GROUP)
         insertExercise(
             R.mipmap.bent_over_dumbbell_rear_delt_raise,
             "Bent Over Dumbbell Rear Delt Raise",
             SHOULDERS_GROUP
-        );
-        insertExercise(R.mipmap.burball_rea_delt_rows, "Barbell Rea Delt Rows", SHOULDERS_GROUP);
-        insertExercise(R.mipmap.cable_rear_delt_fly, "Cable Rear Delt Fly", SHOULDERS_GROUP);
+        )
+        insertExercise(R.mipmap.burball_rea_delt_rows, "Barbell Rea Delt Rows", SHOULDERS_GROUP)
+        insertExercise(R.mipmap.cable_rear_delt_fly, "Cable Rear Delt Fly", SHOULDERS_GROUP)
         insertExercise(
             R.mipmap.dumbbell_shoulder_press,
             "Dumbbell Shoulder Press",
             SHOULDERS_GROUP
-        );
-        insertExercise(R.mipmap.front_dumbbell_raise, "Front Dumbbell Raise", SHOULDERS_GROUP);
-        insertExercise(R.mipmap.reverse_masine_fly, "Reverse Machine Fly", SHOULDERS_GROUP);
-        insertExercise(R.mipmap.shoulder_press, "Shoulder Press", SHOULDERS_GROUP);
-        insertExercise(R.mipmap.side_lateral_raise, "Side Lateral Raise", SHOULDERS_GROUP);
+        )
+        insertExercise(R.mipmap.front_dumbbell_raise, "Front Dumbbell Raise", SHOULDERS_GROUP)
+        insertExercise(R.mipmap.reverse_masine_fly, "Reverse Machine Fly", SHOULDERS_GROUP)
+        insertExercise(R.mipmap.shoulder_press, "Shoulder Press", SHOULDERS_GROUP)
+        insertExercise(R.mipmap.side_lateral_raise, "Side Lateral Raise", SHOULDERS_GROUP)
         insertExercise(R.mipmap.barbell_lunge, "Barbell Lunge", LEGS_GROUP)
         insertExercise(R.mipmap.barbell_squat, "Barbell Squat", LEGS_GROUP)
         insertExercise(R.mipmap.dumbbell_lunges, "Dumbbell Lunges", LEGS_GROUP)

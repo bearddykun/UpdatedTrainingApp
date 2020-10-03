@@ -51,7 +51,7 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
         onClicks()
         binding?.exerciseNameBT?.text = args.exName
         viewModel.getRemainingTime()
-            ?.observe(viewLifecycleOwner, {
+            .observe(viewLifecycleOwner, {
                 if (it.toString() == "") {
                     sendNotification()
                 }
