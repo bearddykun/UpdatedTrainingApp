@@ -22,7 +22,11 @@ class MainMenuFragment : BaseFragment(R.layout.fragment_main_menu) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.graphView?.addSeries(viewModel.getSeries())
+        viewModel.getTrainingWithName(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
+            ?.observe(viewLifecycleOwner, {
+                if (!it.isNullOrEmpty())
+                binding?.graphView?.addSeries(viewModel.prepareStatistics(it))
+            })
     }
 
     override fun onCreateView(
@@ -46,9 +50,5 @@ class MainMenuFragment : BaseFragment(R.layout.fragment_main_menu) {
                 MainMenuFragmentDirections.actionFragmentMainMenuToFragmentCalendar()
             )
         }
-        viewModel.getTrainingWithName(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
-            ?.observe(viewLifecycleOwner, {
-            viewModel.prepareStatistics(it)
-            })
     }
 }
