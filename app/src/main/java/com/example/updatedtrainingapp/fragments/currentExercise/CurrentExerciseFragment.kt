@@ -2,6 +2,7 @@ package com.example.updatedtrainingapp.fragments.currentExercise
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -36,6 +37,7 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
         super.onActivityCreated(savedInstanceState)
         adapter = CurrentExerciseAdapter()
         binding?.currentExerciseRV?.adapter = adapter
+        viewModel.updateTrainingObject(args.exName)
         loadAdapter()
     }
 
@@ -63,11 +65,12 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
 
         viewModel.getMaxWeight().observe(viewLifecycleOwner, {
             if (it > MySharedPreferences.getInt(Constants.SAVE_MAX_WEIGHT)) {
-                binding?.maxWeightTV?.animate()?.translationX(-300f)?.translationY(300f)?.duration =
-                    2000
+                binding?.maxWeightTV?.animate()?.translationX(-500f)?.translationY(500f)?.duration = 2000
+                binding?.maxWeightTV?.setBackgroundColor(Color.RED)
                 Handler(Looper.getMainLooper()).postDelayed(
                     {
                         viewModel.playUra(it)
+                        binding?.maxWeightTV?.setBackgroundColor(Color.WHITE)
                         binding?.maxWeightTV?.animate()?.translationX(0f)
                             ?.translationY(0f)?.duration =
                             2000

@@ -83,7 +83,7 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
             "$kiloText X $repsText"
         }
         trainingObject.exerciseText += text
-        trainingObject.trainingWeight += kiloText.toInt()
+        trainingObject.trainingWeight += kiloText.toInt() * repsText.toInt()
     }
 
     private fun updateMaxWeight(weightLifted: Int) {
@@ -116,5 +116,11 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
     fun playUra(newRecord: Int) {
         soundManager.playNewRecord()
         MySharedPreferences.saveInt(Constants.SAVE_MAX_WEIGHT + trainingObject.exerciseName, newRecord)
+    }
+
+    fun updateTrainingObject(exerciseName: String) {
+        trainingObject.realDate = Utils.getDate()
+        trainingObject.exerciseName = exerciseName
+        trainingObject.trainingName = MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME)
     }
 }

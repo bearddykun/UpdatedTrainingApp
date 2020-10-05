@@ -16,9 +16,9 @@ class MainMenuViewModel @ViewModelInject constructor(private val trainingDBViewM
     }
 
     fun prepareStatistics(list: List<TrainingObject>?): LineGraphSeries<DataPoint>? {
-        val array = arrayOf<DataPoint>()
+        val array: Array<DataPoint?> = arrayOfNulls(list?.size ?: 0)
         list?.let { listOfObjects ->
-            for (i in 0..listOfObjects.size) {
+            for (i in listOfObjects.indices) {
                 array[i] = (DataPoint(i.toDouble(), listOfObjects[i].trainingWeight.toDouble()))
             }
         }
