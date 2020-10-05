@@ -4,6 +4,8 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.updatedtrainingapp.R
+import com.example.updatedtrainingapp.application.MySharedPreferences
+import com.example.updatedtrainingapp.dataBase.Constants
 import com.example.updatedtrainingapp.databinding.CurrentExerciseFragmentBinding
 import com.example.updatedtrainingapp.fragments.BaseFragment
 import com.example.updatedtrainingapp.utils.Utils
@@ -56,6 +60,21 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
                     sendNotification()
                 }
             })
+
+        viewModel.getMaxWeight().observe(viewLifecycleOwner, {
+            if (it > MySharedPreferences.getInt(Constants.SAVE_MAX_WEIGHT)) {
+                binding?.maxWeightTV?.animate()?.translationX(-300f)?.translationY(300f)?.duration =
+                    2000
+                Handler(Looper.getMainLooper()).postDelayed(
+                    {
+                        viewModel.playUra(it)
+                        binding?.maxWeightTV?.animate()?.translationX(0f)
+                            ?.translationY(0f)?.duration =
+                            2000
+                    }, 2000
+                )
+            }
+        })
     }
 
     private fun onClicks() {
@@ -72,8 +91,7 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
                     .isNotEmpty() || binding?.currentExerciseRepsTIET?.text.toString().isNotEmpty()
             ) {
                 adapter?.updateList(
-                    binding?.currentExerciseKiloTIET?.text.toString() + " X " +
-                            binding?.currentExerciseRepsTIET?.text.toString()
+                    "${binding?.currentExerciseKiloTIET?.text.toString()}  X  ${binding?.currentExerciseRepsTIET?.text.toString()}"
                 )
                 viewModel.updateExerciseText(
                     binding?.currentExerciseKiloTIET?.text.toString(),

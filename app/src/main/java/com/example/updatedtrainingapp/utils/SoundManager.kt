@@ -12,13 +12,16 @@ import javax.inject.Inject
  */
 class SoundManager @Inject constructor(private val soundPool: SoundPool) {
     private var restOver = -1
+    private var newRecord = -1
 
     fun loadSound() {
         try {
             val assetManager: AssetManager = ThisApplication.instance.assets
-            val descriptor: AssetFileDescriptor
+            var descriptor: AssetFileDescriptor
             descriptor = assetManager.openFd("PutThatCookieDown.ogg")
             restOver = soundPool.load(descriptor, 0)
+            descriptor = assetManager.openFd("coin_pickup.ogg")
+            newRecord = soundPool.load(descriptor, 0)
 
         } catch (e: IOException) {
             e.printStackTrace()
@@ -28,10 +31,15 @@ class SoundManager @Inject constructor(private val soundPool: SoundPool) {
     fun playSound(sound: String?) {
         when (sound) {
             "PutThatCookieDown" -> soundPool.play(restOver, 1f, 1f, 0, 0, 1f)
+            "coin_pickup.ogg" -> soundPool.play(newRecord, 1f, 1f, 0, 0, 1f)
         }
     }
 
     fun playPTCD() {
         soundPool.play(restOver, 1f, 1f, 0, 0, 1f)
+    }
+
+    fun playNewRecord() {
+        soundPool.play(newRecord, 1f, 1f, 0, 0, 1f)
     }
 }

@@ -15,5 +15,6 @@ class Constants {
         const val SAVE_NEW_TRAINING_LIST = "SAVE_NEW_TRAINING_LIST"
 
         const val SAVE_START_TIME = "SAVE_START_TIME"
+        const val SAVE_MAX_WEIGHT = "SAVE_MAX_WEIGHT"
     }
 }

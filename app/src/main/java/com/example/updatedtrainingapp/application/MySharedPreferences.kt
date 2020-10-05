@@ -29,6 +29,15 @@ class MySharedPreferences {
             return sharedPreferences.getLong(key, 0)
         }
 
+        fun saveInt(key: String, int: Int) {
+            sharedPreferencesEditor.putInt(key, int)
+            sharedPreferencesEditor.apply()
+        }
+
+        fun getInt(key: String): Int {
+            return sharedPreferences.getInt(key, 0)
+        }
+
         fun isInside(key: String): Boolean {
             return sharedPreferences.contains(key)
         }

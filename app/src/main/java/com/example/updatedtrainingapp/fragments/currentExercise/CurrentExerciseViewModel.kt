@@ -26,9 +26,15 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
     private var lastSetTime: String = "60"
     private var timer: CountDownTimer? = null
     private var isUpdate = false
+    private var maxWeightLifted: MutableLiveData<Int> =
+        MutableLiveData(MySharedPreferences.getInt(Constants.SAVE_MAX_WEIGHT + trainingObject.exerciseName))
 
     fun getRemainingTime(): MutableLiveData<String> {
         return remainingTimerTime
+    }
+
+    fun getMaxWeight(): MutableLiveData<Int> {
+        return maxWeightLifted
     }
 
     private fun setTimer(time: Long) {
@@ -70,6 +76,7 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
         kiloText: String,
         repsText: String
     ) {
+        updateMaxWeight(kiloText.toInt())
         val text = if (trainingObject.exerciseText.isNotEmpty()) {
             " , $kiloText X $repsText"
         } else {
@@ -77,6 +84,14 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
         }
         trainingObject.exerciseText += text
         trainingObject.trainingWeight += kiloText.toInt()
+    }
+
+    private fun updateMaxWeight(weightLifted: Int) {
+        maxWeightLifted.value?.let {
+            if (weightLifted > it) {
+                maxWeightLifted.value = weightLifted
+            }
+        }
     }
 
     fun insertProgressInDB() {
@@ -96,5 +111,10 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
     fun setExistingTrainingObject(trainingObject: TrainingObject) {
         this.trainingObject = trainingObject
         isUpdate = true
+    }
+
+    fun playUra(newRecord: Int) {
+        soundManager.playNewRecord()
+        MySharedPreferences.saveInt(Constants.SAVE_MAX_WEIGHT + trainingObject.exerciseName, newRecord)
     }
 }
