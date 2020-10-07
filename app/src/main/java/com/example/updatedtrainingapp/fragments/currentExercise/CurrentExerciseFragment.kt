@@ -64,7 +64,7 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
             })
 
         viewModel.getMaxWeight().observe(viewLifecycleOwner, {
-            if (it > MySharedPreferences.getInt(Constants.SAVE_MAX_WEIGHT)) {
+            if (it > MySharedPreferences.getInt(Constants.SAVE_MAX_WEIGHT + args.exName)) {
                 binding?.maxWeightTV?.animate()?.translationX(-500f)?.translationY(500f)?.duration = 2000
                 binding?.maxWeightTV?.setBackgroundColor(Color.RED)
                 Handler(Looper.getMainLooper()).postDelayed(

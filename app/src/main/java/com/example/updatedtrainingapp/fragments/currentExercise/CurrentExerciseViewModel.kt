@@ -26,8 +26,8 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
     private var lastSetTime: String = "60"
     private var timer: CountDownTimer? = null
     private var isUpdate = false
-    private var maxWeightLifted: MutableLiveData<Int> =
-        MutableLiveData(MySharedPreferences.getInt(Constants.SAVE_MAX_WEIGHT + trainingObject.exerciseName))
+    private var maxWeightLifted: MutableLiveData<Int> = MutableLiveData()
+
 
     fun getRemainingTime(): MutableLiveData<String> {
         return remainingTimerTime
@@ -115,12 +115,17 @@ class CurrentExerciseViewModel @ViewModelInject constructor(
 
     fun playUra(newRecord: Int) {
         soundManager.playNewRecord()
-        MySharedPreferences.saveInt(Constants.SAVE_MAX_WEIGHT + trainingObject.exerciseName, newRecord)
+        MySharedPreferences.saveInt(
+            Constants.SAVE_MAX_WEIGHT + trainingObject.exerciseName,
+            newRecord
+        )
+        maxWeightLifted.value = newRecord
     }
 
     fun updateTrainingObject(exerciseName: String) {
         trainingObject.realDate = Utils.getDate()
         trainingObject.exerciseName = exerciseName
         trainingObject.trainingName = MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME)
+        maxWeightLifted.value = MySharedPreferences.getInt(Constants.SAVE_MAX_WEIGHT + exerciseName)
     }
 }
