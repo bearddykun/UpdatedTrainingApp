@@ -20,5 +20,7 @@
     <string name="delete_training">Want to delete this Training?</string>
     <string name="init_timer_value">60</string>
     <string name="no_exercises">No exercises</string>
+    <string name="trainings_history">Trainings History</string>
+    <string name="to_training_choice">To Training Choice</string>
 
 </resources>

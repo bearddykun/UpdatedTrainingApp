@@ -73,6 +73,11 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
         adapter.setOnTrainingItemLongListener(this)
         binding?.trainingRecyclerView?.adapter = adapter
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 }
 
 

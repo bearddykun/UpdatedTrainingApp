@@ -79,4 +79,9 @@ class CreateNewExerciseFragment : BaseFragment(R.layout.fragment_create_new_exer
             else -> true
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 }

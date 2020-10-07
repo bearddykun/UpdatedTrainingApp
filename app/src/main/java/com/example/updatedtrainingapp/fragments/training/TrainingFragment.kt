@@ -73,4 +73,9 @@ class TrainingFragment : BaseFragment(R.layout.training_fragment),
             fetchExerciseData()
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 }

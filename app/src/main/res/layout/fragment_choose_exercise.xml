@@ -4,12 +4,12 @@
     android:layout_height="match_parent">
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/mainViewPager"
+        android:id="@+id/exerciseChoiceViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/mainTabs"
+            android:id="@+id/exerciseChoiceTabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary" />

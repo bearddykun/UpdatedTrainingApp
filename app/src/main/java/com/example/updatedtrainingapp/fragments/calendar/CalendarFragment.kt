@@ -62,8 +62,10 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar) {
         exerciseCommentList.forEach { exerciseComment += it }
         exerciseWeightList.forEach { exerciseWeight += it }
 
-        val calendarObject = CalendarObject(trainingName = trainingName, exerciseData = exerciseData,
-        exerciseComment = exerciseComment, exerciseTotalWeight = exerciseWeight)
+        val calendarObject = CalendarObject(
+            trainingName = trainingName, exerciseData = exerciseData,
+            exerciseComment = exerciseComment, exerciseTotalWeight = exerciseWeight
+        )
         binding?.exerciseDataTV?.text = calendarObject.exerciseData
         binding?.showComments?.text = calendarObject.exerciseComment
         binding?.showTotalWeight?.text = calendarObject.exerciseTotalWeight.toString()
@@ -82,5 +84,10 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar) {
         } else {
             textView?.visibility = View.GONE
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

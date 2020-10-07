@@ -47,14 +47,14 @@ class ExerciseChoiceFragment : BaseFragment(R.layout.fragment_choose_exercise) {
 
     private fun setAdapter() {
         viewModel.getAllExercises()?.observe(viewLifecycleOwner, { exerciseList ->
-            binding?.mainViewPager?.adapter =
+            binding?.exerciseChoiceViewPager?.adapter =
                 ViewPagerAdapter(
                     requireActivity().supportFragmentManager,
                     viewModel.getList(exerciseList)
                 )
-            binding?.mainTabs?.setupWithViewPager(mainViewPager)
-            for (i in 0 until mainTabs.tabCount) {
-                binding?.mainTabs?.getTabAt(i)?.setIcon(imageArray[i])
+            binding?.exerciseChoiceTabs?.setupWithViewPager(exerciseChoiceViewPager)
+            for (i in 0 until exerciseChoiceTabs.tabCount) {
+                binding?.exerciseChoiceTabs?.getTabAt(i)?.setIcon(imageArray[i])
             }
         })
     }

@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.updatedtrainingapp.R
-import com.example.updatedtrainingapp.application.MySharedPreferences
-import com.example.updatedtrainingapp.dataBase.Constants
 import com.example.updatedtrainingapp.databinding.FragmentMainMenuBinding
 import com.example.updatedtrainingapp.fragments.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,18 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainMenuFragment : BaseFragment(R.layout.fragment_main_menu) {
 
-    private val viewModel: MainMenuViewModel by viewModels()
+    private val viewModel: MainMenuViewModel by activityViewModels()
     private var binding: FragmentMainMenuBinding? = null
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewModel.getTrainingWithName(MySharedPreferences.getString(Constants.SAVE_TRAINING_NAME))
-            ?.observe(viewLifecycleOwner, {
-                if (!it.isNullOrEmpty())
-                binding?.graphView?.addSeries(viewModel.prepareStatistics(it))
-            })
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,20 +23,34 @@ class MainMenuFragment : BaseFragment(R.layout.fragment_main_menu) {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMainMenuBinding.inflate(inflater, container, false)
+        binding?.viewModel = viewModel
         return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding?.graphChoiceViewPager?.adapter = ViewPagerAdapter(
+            requireActivity().supportFragmentManager,
+            viewModel.getTrainingList()
+        )
     }
 
     override fun onStart() {
         super.onStart()
-        binding?.trainingContainer?.setOnClickListener {
+        binding?.startTrainingBtn?.setOnClickListener {
             findNavController().navigate(
                 MainMenuFragmentDirections.actionFragmentMainMenuToFragmentThisTrainingFragment()
             )
         }
-        binding?.storyButton?.setOnClickListener {
+        binding?.historyBtn?.setOnClickListener {
             findNavController().navigate(
                 MainMenuFragmentDirections.actionFragmentMainMenuToFragmentCalendar()
             )
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

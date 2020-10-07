@@ -3,6 +3,7 @@ package com.example.updatedtrainingapp.fragments.splash
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -22,7 +23,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
     }
 
     private fun startApp() {
-        Handler().postDelayed(
+        Handler(Looper.getMainLooper()).postDelayed(
             { findNavController().navigate(SplashFragmentDirections.actionFragmentSplashToFragmentMainMenu()) },
             3000
         )

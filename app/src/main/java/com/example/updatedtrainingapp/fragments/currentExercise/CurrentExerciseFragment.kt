@@ -155,4 +155,9 @@ class CurrentExerciseFragment : BaseFragment(R.layout.current_exercise_fragment)
                 .notify(1, builder.build())
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 }
