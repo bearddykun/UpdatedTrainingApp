@@ -2,6 +2,8 @@ package com.example.updatedtrainingapp.fragments.training
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +46,7 @@ class TrainingFragment : BaseFragment(R.layout.training_fragment),
         adapter?.setOnTrainingItemClickListener(this)
         adapter?.setOnTrainingItemLongClickListener(this)
         binding?.recyclerViewThisTraining?.adapter = adapter
-        Handler().postDelayed({ fetchExerciseData() }, 100)
+        Handler(Looper.getMainLooper()).postDelayed({ fetchExerciseData() }, 100)
     }
 
     override fun onCreateView(

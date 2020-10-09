@@ -1,5 +1,6 @@
 package com.example.updatedtrainingapp.fragments.mainMenu
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.databinding.FragmentMainMenuBinding
 import com.example.updatedtrainingapp.fragments.BaseFragment
+import com.example.updatedtrainingapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MainMenuFragment : BaseFragment(R.layout.fragment_main_menu) {
@@ -46,6 +49,15 @@ class MainMenuFragment : BaseFragment(R.layout.fragment_main_menu) {
             findNavController().navigate(
                 MainMenuFragmentDirections.actionFragmentMainMenuToFragmentCalendar()
             )
+        }
+        onBackClick {
+            Utils.getAlertDialog(requireActivity(), "Leave the app", "Are you sure you want to quit the app?"
+            ) {
+                val a = Intent(Intent.ACTION_MAIN)
+                a.addCategory(Intent.CATEGORY_HOME)
+                a.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(a)
+            }
         }
     }
 

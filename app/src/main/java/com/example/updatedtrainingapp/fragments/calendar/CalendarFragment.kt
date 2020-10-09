@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.updatedtrainingapp.R
 import com.example.updatedtrainingapp.dataBase.objects.CalendarObject
 import com.example.updatedtrainingapp.dataBase.objects.TrainingObject
@@ -40,6 +41,10 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar) {
                     {
                         showViewsAndData(it)
                     })
+        }
+
+        onBackClick {
+            findNavController().navigate(CalendarFragmentDirections.actionFragmentCalendarToFragmentMainMenu2())
         }
     }
 

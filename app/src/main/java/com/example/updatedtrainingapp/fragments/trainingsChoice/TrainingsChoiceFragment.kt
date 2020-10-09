@@ -11,6 +11,7 @@ import com.example.updatedtrainingapp.application.MySharedPreferences
 import com.example.updatedtrainingapp.dataBase.Constants
 import com.example.updatedtrainingapp.databinding.TrainingsChoiceFragmentBinding
 import com.example.updatedtrainingapp.fragments.BaseFragment
+import com.example.updatedtrainingapp.fragments.training.TrainingFragmentDirections
 import com.example.updatedtrainingapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -64,6 +65,9 @@ class TrainingsChoiceFragment : BaseFragment(R.layout.trainings_choice_fragment)
             findNavController().navigate(TrainingsChoiceFragmentDirections.actionFragmentThisTrainingFragmentToFragmentCreateTraining())
         }
         setAdapter()
+        onBackClick {
+            findNavController().navigate(TrainingsChoiceFragmentDirections.actionTrainingsChoiceFragmentToFragmentMainMenu())
+        }
     }
 
     private fun setAdapter() {

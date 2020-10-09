@@ -2,6 +2,7 @@ package com.example.updatedtrainingapp
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -13,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : GeneralActivity() {
+class MainActivity : GeneralActivity(), FragmentManager.OnBackStackChangedListener {
 
     @Inject
     lateinit var soundManager: SoundManager
@@ -25,6 +26,9 @@ class MainActivity : GeneralActivity() {
         runOnUiThread {
             setupBottomNavigation()
         }
+        supportFragmentManager.addOnBackStackChangedListener(this);
+        shouldDisplayHomeUp()
+
         findNavController(R.id.nav_host_fragment).addOnDestinationChangedListener { _, destination, _ ->
             showBottomNavigation(destination)
         }
@@ -52,6 +56,20 @@ class MainActivity : GeneralActivity() {
             R.id.fragment_training_day -> nav_view.visibility = View.VISIBLE
             else -> nav_view.visibility = View.GONE
         }
+    }
+
+    override fun onBackStackChanged() {
+        shouldDisplayHomeUp()
+    }
+
+    private fun shouldDisplayHomeUp() {
+        val canGoBack = supportFragmentManager.backStackEntryCount > 0
+        supportActionBar?.setDisplayHomeAsUpEnabled(canGoBack)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }
 
